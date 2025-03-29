@@ -3,6 +3,7 @@ import { getDictionary } from "./dictionaries";
 import AuthWrapper from "@/components/AuthWrapper";
 import NavBar from "@/components/NavBar";
 import type { ReactNode } from "react";
+import { Toaster } from "sonner";
 
 // fonts 
 const geistSans = Geist({
@@ -35,6 +36,7 @@ export default async function RootLayout({
   return (
     <html lang={lang} className={`${geistSans.variable} ${geistMono.variable}`}>
       <body>
+        <Toaster richColors />
         <AuthWrapper>
           <NavBar />
           <main className="container mx-auto p-4">{children}</main>
