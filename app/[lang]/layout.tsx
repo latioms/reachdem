@@ -1,8 +1,9 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import { getDictionary } from "./dictionaries";
 import AuthWrapper from "@/components/AuthWrapper";
-import NavBar from "@/components/NavBar";
+import NavBar from "@/components/Layout/Navbar";
 import { Toaster } from "sonner";
+import { ThemeProvider } from "next-themes";
 
 // fonts 
 const geistSans = Geist({
@@ -15,7 +16,6 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-//metadata, params and SEO
 export async function generateStaticParams() {
   return [{ lang: "en" }, { lang: "fr" }];
 }
@@ -35,11 +35,13 @@ export default async function RootLayout({
   return (
     <html lang={lang} className={`${geistSans.variable} ${geistMono.variable}`}>
       <body>
-        <AuthWrapper>
-          <Toaster richColors />
-          <NavBar />
-          <main className="container mx-auto p-4">{children}</main>
-        </AuthWrapper>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <AuthWrapper>
+            <Toaster richColors />
+            <NavBar />
+            <main className="container mx-auto p-4">{children}</main>
+          </AuthWrapper>
+        </ThemeProvider>
       </body>
     </html>
   );
