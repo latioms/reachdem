@@ -1,11 +1,6 @@
-interface Props {
-    params: {
-        order: string;
-        lang: string;
-    }
-}
 
-export default function SuccessPage({ params }: Props) {
+export default async function SuccessPage({ params }:{ params:  Promise<{ order : string}> }) {
+    const order = (await params).order
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100">
             <div className="bg-white p-8 rounded-lg shadow-md max-w-md w-full text-center">
@@ -16,7 +11,7 @@ export default function SuccessPage({ params }: Props) {
                 </div>
                 <h1 className="text-2xl font-bold text-gray-800 mb-4">Commande Confirmée!</h1>
                 <p className="text-gray-600 mb-4">
-                    Votre commande #{params.order} a été traitée avec succès.
+                    Votre commande #{order} a été traitée avec succès.
                 </p>
                 <p className="text-sm text-gray-500">
                     Un email de confirmation vous sera envoyé prochainement.
