@@ -1,7 +1,9 @@
 {
-    "lang": "fr",
-    "lang_name": "Français",
-
-    "hello": "Bonjour",
-    "welcome": "Bienvenue dans notre application !"
+  "lang": "fr",
+  "lang_name": "Français",
+  "hello": "Bonjour",
+  "welcome": "Bienvenue dans notre application !",
+  "LocaleSwitcher": {
+    "label": "FR"
+  }
 }

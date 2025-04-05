@@ -1,9 +1,13 @@
 'use client'
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, startTransition, useTransition } from 'react';
 import Link from 'next/link';
-import { Sun, Moon, User, LogOut, ChevronDown } from 'lucide-react';
+import { Sun, Moon, User, LogOut, ChevronDown, Router } from 'lucide-react';
 import { useTheme } from 'next-themes';
-import  checkAuth  from '@/app/actions/chechAuth'; // Import the checkAuth function
+import checkAuth from '@/app/actions/chechAuth'; // Import the checkAuth function
+import { Locale, useLocale } from 'next-intl';
+import { usePathname, useRouter } from '@/i18n/navigation';
+import {useParams} from 'next/navigation';
+import LocaleSwitcher from '../ui/LocaleSwitcher';
 
 // Define navigation links
 const navLinks = [
@@ -13,14 +17,16 @@ const navLinks = [
     { href: '/contact', label: 'Contact' },
 ];
 
-export default function Navbar({ initialLang = 'en' }: { initialLang?: string }) {
+export default function Navbar() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [currentLang, setCurrentLang] = useState(initialLang);
     const [isLangOpen, setIsLangOpen] = useState(false);
     const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const { theme, setTheme } = useTheme();
+    const [isPending, startTransition] = useTransition();
 
+    const { theme, setTheme } = useTheme();
+    const lang = useLocale(); // Get the current locale from next-intl
+    const [currentLang, setCurrentLang] = useState(lang); // Set the initial language based on the locale
     // Check authentication status on component mount
     useEffect(() => {
         const fetchAuthStatus = async () => {
@@ -44,10 +50,26 @@ export default function Navbar({ initialLang = 'en' }: { initialLang?: string })
         setIsMobileMenuOpen(!isMobileMenuOpen);
     };
 
-    const handleLangChange = (lang: string) => {
+    const router = useRouter();
+    const params = useParams();
+    const pathname = usePathname();
+
+    const handleLangChange = (locale: string) => {
+
         setCurrentLang(lang);
         setIsLangOpen(false);
         // Add logic for actual language change (e.g., update i18n context)
+        const nextLocale = locale as Locale; 
+        console.log(`Changing language to: ${nextLocale}`);
+        startTransition(() => {
+            router.replace(
+                // @ts-expect-error -- TypeScript will validate that only known `params`
+                // are used in combination with a given `pathname`. Since the two will
+                // always match for the current route, we can skip runtime checks.
+                {  params, pathname },
+                { locale: nextLocale }
+            );
+        });
         console.log(`Language changed to: ${lang}`);
     };
 
@@ -87,21 +109,7 @@ export default function Navbar({ initialLang = 'en' }: { initialLang?: string })
                     <div className="flex items-center gap-2.5">
 
                         {/* Language Switcher */}
-                        <div className="relative">
-                            <button
-                                onClick={() => setIsLangOpen(!isLangOpen)}
-                                className="inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-sm px-2 py-1 text-sm font-medium transition-colors focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 text-muted-foreground dark:text-gray-300 hover:bg-accent dark:hover:bg-gray-700"
-                            >
-                                {currentLang.toUpperCase()}
-                                <ChevronDown size={16} className={`transition-transform duration-200 ${isLangOpen ? 'rotate-180' : ''}`} />
-                            </button>
-                            {isLangOpen && (
-                                <div className="absolute right-0 mt-2 w-20 rounded-md border bg-background shadow-lg dark:bg-gray-800 dark:border-gray-700">
-                                    <button onClick={() => handleLangChange('en')} className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600">EN</button>
-                                    <button onClick={() => handleLangChange('fr')} className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600">FR</button>
-                                </div>
-                            )}
-                        </div>
+                        <LocaleSwitcher/>
 
                         {!isLoggedIn ? (
                             <>
@@ -129,7 +137,7 @@ export default function Navbar({ initialLang = 'en' }: { initialLang?: string })
                                     <User size={20} />
                                     <span className="sr-only">User menu</span>
                                 </button>
-                                
+
                                 {isUserMenuOpen && (
                                     <div className="absolute right-0 mt-2 w-48 rounded-md border bg-background shadow-lg dark:bg-gray-800 dark:border-gray-700">
                                         <Link href="/dashboard" className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600">
@@ -156,7 +164,7 @@ export default function Navbar({ initialLang = 'en' }: { initialLang?: string })
                         </div>
 
                         {/* Mobile Menu Button */}
-                        <button 
+                        <button
                             onClick={toggleMobileMenu}
                             className="text-muted-foreground relative flex size-8 lg:hidden dark:text-gray-400"
                         >
@@ -173,28 +181,27 @@ export default function Navbar({ initialLang = 'en' }: { initialLang?: string })
             </div>
 
             {/* Mobile Menu - Update visibility based on state */}
-            <div className={`absolute inset-0 top-full container flex h-[calc(100vh-64px)] flex-col transition-all duration-300 ease-in-out lg:hidden ${
-                isMobileMenuOpen ? 'visible opacity-100 translate-x-0' : 'invisible translate-x-full opacity-0'
-            } bg-sand-100 dark:bg-gray-900`}>
+            <div className={`absolute inset-0 top-full container flex h-[calc(100vh-64px)] flex-col transition-all duration-300 ease-in-out lg:hidden ${isMobileMenuOpen ? 'visible opacity-100 translate-x-0' : 'invisible translate-x-full opacity-0'
+                } bg-sand-100 dark:bg-gray-900`}>
                 {/* Mobile Menu Content - Adapt based on isLoggedIn */}
                 <div className="flex flex-col space-y-4 p-4">
                     {!isLoggedIn && navLinks.map((link) => (
-                         <Link key={link.href} href={link.href} className="text-primary p-2 font-normal text-lg dark:text-white">
-                             {link.label}
-                         </Link>
+                        <Link key={link.href} href={link.href} className="text-primary p-2 font-normal text-lg dark:text-white">
+                            {link.label}
+                        </Link>
                     ))}
-                     {/* Add mobile versions of Login/Signup or Dashboard/Logout */}
-                     {!isLoggedIn ? (
+                    {/* Add mobile versions of Login/Signup or Dashboard/Logout */}
+                    {!isLoggedIn ? (
                         <>
                             <Link href="/login" className="text-primary p-2 font-normal text-lg dark:text-white">Login</Link>
                             <Link href="/signup" className="text-primary p-2 font-normal text-lg dark:text-white">Sign Up</Link>
                         </>
-                     ) : (
+                    ) : (
                         <>
-                             <Link href="/dashboard" className="text-primary p-2 font-normal text-lg dark:text-white">Dashboard</Link>
-                             <button onClick={handleLogout} className="text-red-600 p-2 font-normal text-lg dark:text-red-400 text-left">Logout</button>
+                            <Link href="/dashboard" className="text-primary p-2 font-normal text-lg dark:text-white">Dashboard</Link>
+                            <button onClick={handleLogout} className="text-red-600 p-2 font-normal text-lg dark:text-red-400 text-left">Logout</button>
                         </>
-                     )}
+                    )}
                 </div>
             </div>
         </header>
