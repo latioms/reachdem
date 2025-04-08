@@ -1,10 +1,9 @@
 'use client';
 
 import clsx from 'clsx';
-import {useParams} from 'next/navigation';
-import {ReactNode, useTransition, useState} from 'react';
-import {Locale} from '@/i18n/routing';
-import {usePathname, useRouter} from '@/i18n/navigation';
+import { useParams } from 'next/navigation';
+import { useTransition, useState } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 import { ChevronDown } from 'lucide-react';
 
 type Props = {
@@ -25,18 +24,15 @@ export default function LocaleSwitcherSelect({
   const [isOpen, setIsOpen] = useState(false);
   const [currentLocale, setCurrentLocale] = useState(defaultValue);
 
-  function handleLocaleChange(nextLocale: Locale) {
+  function handleLocaleChange(nextLocale: string) {
     setCurrentLocale(nextLocale);
     setIsOpen(false);
     
+    // Update the URL to include the new locale
     startTransition(() => {
-      router.replace(
-        // @ts-expect-error -- TypeScript will validate that only known `params`
-        // are used in combination with a given `pathname`. Since the two will
-        // always match for the current route, we can skip runtime checks.
-        {pathname, params},
-        {locale: nextLocale}
-      );
+      // Create new path by replacing the current locale segment
+      const newPathname = pathname?.replace(`/${params.locale}`, `/${nextLocale}`) || `/${nextLocale}`;
+      router.push(newPathname);
     });
   }
 
@@ -59,7 +55,7 @@ export default function LocaleSwitcherSelect({
           {options.map((option) => (
             <button
               key={option.value}
-              onClick={() => handleLocaleChange(option.value as Locale)}
+              onClick={() => handleLocaleChange(option.value)}
               className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600"
             >
               {option.label}

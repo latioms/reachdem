@@ -1,13 +1,12 @@
 'use client'
 import React, { useState, useEffect, startTransition, useTransition } from 'react';
 import Link from 'next/link';
-import { Sun, Moon, User, LogOut, ChevronDown, Router } from 'lucide-react';
+import { Sun, Moon, User } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import checkAuth from '@/app/actions/chechAuth'; // Import the checkAuth function
-import { Locale, useLocale } from 'next-intl';
-import { usePathname, useRouter } from '@/i18n/navigation';
-import {useParams} from 'next/navigation';
+import { useParams } from 'next/navigation';
 import LocaleSwitcher from '../ui/LocaleSwitcher';
+import { usePathname, useRouter } from 'next/navigation';
 
 // Define navigation links
 const navLinks = [
@@ -25,8 +24,10 @@ export default function Navbar() {
     const [isPending, startTransition] = useTransition();
 
     const { theme, setTheme } = useTheme();
-    const lang = useLocale(); // Get the current locale from next-intl
-    const [currentLang, setCurrentLang] = useState(lang); // Set the initial language based on the locale
+    const params = useParams();
+    const lang = params.locale as string || 'en';
+    const [currentLang, setCurrentLang] = useState(lang);
+
     // Check authentication status on component mount
     useEffect(() => {
         const fetchAuthStatus = async () => {
@@ -42,6 +43,13 @@ export default function Navbar() {
         fetchAuthStatus();
     }, []);
 
+    // Update currentLang if params.locale changes
+    useEffect(() => {
+        if (params.locale) {
+            setCurrentLang(params.locale as string);
+        }
+    }, [params.locale]);
+
     const toggleTheme = () => {
         setTheme(theme === 'dark' ? 'light' : 'dark');
     };
@@ -51,26 +59,18 @@ export default function Navbar() {
     };
 
     const router = useRouter();
-    const params = useParams();
     const pathname = usePathname();
 
     const handleLangChange = (locale: string) => {
-
-        setCurrentLang(lang);
+        setCurrentLang(locale);
         setIsLangOpen(false);
-        // Add logic for actual language change (e.g., update i18n context)
-        const nextLocale = locale as Locale; 
-        console.log(`Changing language to: ${nextLocale}`);
+
+        console.log(`Changing language to: ${locale}`);
         startTransition(() => {
-            router.replace(
-                // @ts-expect-error -- TypeScript will validate that only known `params`
-                // are used in combination with a given `pathname`. Since the two will
-                // always match for the current route, we can skip runtime checks.
-                {  params, pathname },
-                { locale: nextLocale }
-            );
+            // Create new path by replacing the current locale segment
+            const newPathname = pathname?.replace(`/${params.locale}`, `/${locale}`) || `/${locale}`;
+            router.push(newPathname);
         });
-        console.log(`Language changed to: ${lang}`);
     };
 
     const handleLogout = async () => {
@@ -109,7 +109,7 @@ export default function Navbar() {
                     <div className="flex items-center gap-2.5">
 
                         {/* Language Switcher */}
-                        <LocaleSwitcher/>
+                        <LocaleSwitcher />
 
                         {!isLoggedIn ? (
                             <>
@@ -157,8 +157,8 @@ export default function Navbar() {
                                 onClick={toggleTheme}
                                 className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-sm text-sm font-semibold transition-colors focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-xs hover:bg-accent hover:text-accent-foreground size-9 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:hover:bg-gray-600"
                             >
-                                <Sun className="size-4 scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
-                                <Moon className="absolute size-4 scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
+                                <Moon className={`size-4 transition-all ${theme === 'dark' ? 'scale-0 rotate-90 hidden' : 'scale-100 ease-in'}`} />
+                                <Sun className={`size-4 transition-all ${theme === 'dark' ? 'scale-100 rotate-0 ease-in-out duration-300' : 'hidden scale-0 -rotate-90 ease-out'}`} />
                                 <span className="sr-only">Toggle theme</span>
                             </button>
                         </div>
