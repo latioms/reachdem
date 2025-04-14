@@ -83,10 +83,16 @@ export function LoginForm({
       if (result.success) {
         // Check auth status again to get the user
         const authCheck = await import("@/app/actions/chechAuth").then(mod => mod.default())
-        if (authCheck.isAuthenticated) {
+        if (authCheck.isAuthenticated && authCheck.user && 
+            'id' in authCheck.user && 
+            'email' in authCheck.user && 
+            'ip' in authCheck.user && 
+            'countryName' in authCheck.user) {
           setIsAuthenticated(true)
           setCurrentUser(authCheck.user)
-          router.push("/en") // Redirect to home or dashboard
+          router.push("/dashboard") // Redirect to home or dashboard
+        } else {
+          setGeneralError("Authentication failed. Please try again.")
         }
       } else {
         setGeneralError("Invalid email or password. Please try again.")

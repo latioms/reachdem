@@ -22,7 +22,6 @@ async function checkAuth() {
       isAuthenticated: true,
       user: {
         id: user.userId,
-        name: user.name,
         email: user.email,
         ip: user.ip,
         countryName: user.countryName,

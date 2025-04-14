@@ -1,6 +1,7 @@
 "use client"
 
 import { LucideIcon } from 'lucide-react'
+import { cn } from "@/lib/utils"
 
 import {
   SidebarGroup,
@@ -8,7 +9,6 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-
 } from "@/components/ui/sidebar"
 
 export function NavMain({
@@ -20,6 +20,7 @@ export function NavMain({
       title: string
       url: string
       icon: LucideIcon
+      active: boolean
     }[]
   }[]
 }) {
@@ -31,8 +32,17 @@ export function NavMain({
           <SidebarMenu>
             {group.items.map((item) => (
               <SidebarMenuItem key={item.title}>
-                <SidebarMenuButton asChild tooltip={item.title}>
-                  <a href={item.url}>
+                <SidebarMenuButton 
+                  asChild 
+                  tooltip={item.title}
+                  disabled={!item.active}
+                >
+                  <a 
+                    href={item.url}
+                    className={cn(
+                      !item.active && "pointer-events-none opacity-50"
+                    )}
+                  >
                     <item.icon />
                     <span>{item.title}</span>
                   </a>

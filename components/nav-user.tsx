@@ -46,9 +46,9 @@ export function NavUser() {
 
   // Construire l'objet user à partir des données réelles
   const user = {
-    name: currentUser.name || "",
-    email: currentUser.email || "",
-    avatar: '/user.png' // Si disponible dans votre système
+    name: currentUser.email.split('@')[0], // Using email username as display name
+    email: currentUser.email,
+    avatar: '/user.png'
   };
 
   return (

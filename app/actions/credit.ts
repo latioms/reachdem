@@ -1,9 +1,6 @@
-import { databases } from "@/lib/appwrite";
-
-
 
 export function getCredit(userId : string){
-    return data
+    return 'hello world'
 }
 
 export function updateCredit(){}

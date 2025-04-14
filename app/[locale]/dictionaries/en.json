@@ -8,14 +8,25 @@
     "dashboard":{
       "title": "Dashboard",
       "items": {
-        "home": "Home",
-        "orders": "Orders",
-        "categories": "Categories"
+        "home": "Home"
       }
     },
-    "user": {
-      "name": "Admin",
-      "email": "admin@lfp.com"
+    "SMS": {
+      "title": "SMS",
+      "items": {
+        "campaigns": "Campaigns",
+        "history": "History",
+        "projects": "Projects",
+        "billing": "billing"
+      }
+    },
+    "platform": {
+      "title": "Platform",
+      "items": {
+        "help": "Help",
+        "about": "About", 
+        "settings": "Settings"
+      }
     }
   }
 }

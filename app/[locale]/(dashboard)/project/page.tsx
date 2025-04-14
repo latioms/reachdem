@@ -1,127 +1,85 @@
-'use client'
+"use client"
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
-
-import {
-    Form,
-    FormField,
-    FormDescription,
-    FormControl, FormMessage,
-    FormLabel,
-    FormItem
-} from "@/components/ui/form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { projectSchema, ProjectInput } from "@/lib/validations/project";
-import { createProject } from "@/app/actions/createProject";
-
-
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogDescription, DialogTitle, DialogContent } from "@radix-ui/react-dialog";
-
-export function DialogForm(){
-    const router = useRouter();
-
-        // 1. Defining the form object
-        const form = useForm<ProjectInput>({
-            resolver: zodResolver(projectSchema),
-            defaultValues: {
-                sender_name: "",
-            },
-        });
-    
-        // 2. Defining the form submit function
-        async function onSubmit(values: ProjectInput) {
-           await createProject(values.sender_name).then((res: any) => {
-                if (res.error) {
-                    console.log(res.error);
-                    return;
-                }
-                router.push("/en/dashboard");
-            });
-        }
-
-    return (
-    <Dialog>
-        <DialogTitle>Creer un projet</DialogTitle>
-        <DialogDescription>Vous devez creer un projet pour demarrer</DialogDescription>
-        <DialogContent>
-        <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                <FormField
-                    control={form.control}
-                    name="sender_name"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Veillez entrez un nom de projet</FormLabel>
-                            <FormControl>
-                                <Input placeholder="ReachDem" {...field} />
-                            </FormControl>
-                            <FormDescription>
-                                Il sera utilisé comme CODE EXPEDITEUR.
-                            </FormDescription>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-
-                <Button type="submit">Créer un projet</Button>
-            </form>
-        </Form>
-        </DialogContent>
-    </Dialog>
-    )
-}
+import { useState, useEffect } from "react"
+import { getProjects } from "@/app/actions/getProjects"
+import type { Project } from "@/types/schema"
+import { ProjectForm } from "@/components/project/project-form"
+import { ProjectList } from "@/components/project/project-list"
+import { Button } from "@/components/ui/button"
+import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Loader2 } from "lucide-react"
 
 export default function ProjectPage() {
-    const router = useRouter();
+  const [loading, setLoading] = useState(true)
+  const [projects, setProjects] = useState<Project[]>([])
+  const [dialogOpen, setDialogOpen] = useState(false)
+  const [refreshTrigger, setRefreshTrigger] = useState(0)
 
-    // 1. Defining the form object
-    const form = useForm<ProjectInput>({
-        resolver: zodResolver(projectSchema),
-        defaultValues: {
-            sender_name: "",
-        },
-    });
-
-    // 2. Defining the form submit function
-    async function onSubmit(values: ProjectInput) {
-       await createProject(values.sender_name).then((res: any) => {
-            if (res.error) {
-                console.log(res.error);
-                return;
-            }
-            router.push("/en/dashboard");
-        });
+  useEffect(() => {
+    const fetchProjects = async () => {
+      setLoading(true)
+      try {
+        const result = await getProjects()
+        if (result.success) {
+          setProjects(result.projects)
+          // Ouvrir automatiquement le dialogue seulement s'il n'y a pas de projets
+          setDialogOpen(result.projects.length === 0)
+        } else {
+          console.error("Error fetching projects:", result.error)
+        }
+      } catch (error) {
+        console.error("Failed to fetch projects:", error)
+      } finally {
+        setLoading(false)
+      }
     }
 
+    fetchProjects()
+  }, [refreshTrigger])
+
+  const handleProjectCreated = async () => {
+    setRefreshTrigger((prev) => prev + 1) // Déclenche un nouveau fetchProjects
+    setDialogOpen(false) // Fermer la boîte de dialogue après la création
+  }
+
+  if (loading) {
     return (
-        <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                <FormField
-                    control={form.control}
-                    name="sender_name"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Veillez entrez un nom de projet</FormLabel>
-                            <FormControl>
-                                <Input placeholder="ReachDem" {...field} />
-                            </FormControl>
-                            <FormDescription>
-                                Il sera utilisé comme CODE EXPEDITEUR.
-                            </FormDescription>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
+      <div className="flex items-center justify-center h-screen">
+        <Loader2 className="h-8 w-8 animate-spin" />
+        <span className="ml-2">Chargement des projets...</span>
+      </div>
+    )
+  }
 
-                <Button type="submit">Créer un projet</Button>
-            </form>
-        </Form>
-    );
-       
+  // Afficher uniquement le Dialog OU la liste des projets, jamais les deux ensemble
+  return (
+    <div className="container mx-auto py-8">
+      {projects.length === 0 ? (
+        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+          <DialogContent>
+            <DialogTitle>Créer un projet</DialogTitle>
+            <DialogDescription>Vous devez créer un projet pour démarrer.</DialogDescription>
+            <ProjectForm onSuccess={handleProjectCreated} />
+          </DialogContent>
+        </Dialog>
+      ) : (
+        <>
+          <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+            <DialogTrigger asChild>
+              <Button variant="outline" className="mb-6">
+                Créer un projet
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogTitle>Créer un projet</DialogTitle>
+              <DialogDescription>Créez un nouveau projet pour gérer vos campagnes.</DialogDescription>
+              <ProjectForm onSuccess={handleProjectCreated} />
+            </DialogContent>
+          </Dialog>
+
+          <ProjectList projects={projects} />
+        </>
+      )}
+    </div>
+  )
 }
-
- ;

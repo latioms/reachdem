@@ -11,14 +11,25 @@
     "dashboard":{
       "title": "Tableau de bord",
       "items": {
-        "home": "Accueil",
-        "orders": "Commandes",
-        "categories": "Catégories"
+        "home": "Accueil"
       }
     },
-    "user": {
-      "name": "Admin",
-      "email": "admin@lfp.com"
+    "SMS": {
+      "title": "SMS",
+      "items": {
+        "campaigns": "Campagnes",
+        "history": "Historiques",
+        "projects": "Projets",
+        "billing": "Facturation"
+      }
+    },
+    "platform": {
+      "title": "Plateforme",
+      "items": {
+        "help": "Aide",
+        "about": "A propos", 
+        "settings": "Paramètres"
+      }
     }
   }
 }

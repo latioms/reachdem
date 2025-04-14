@@ -3,7 +3,6 @@ import checkAuth from '@/app/actions/chechAuth';
 
 interface User {
     id: string;
-    name: string;
     email: string;
     ip: string;
     countryName: string;

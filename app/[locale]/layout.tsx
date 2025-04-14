@@ -41,12 +41,17 @@ export default async function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <AuthWrapper>
             <Toaster richColors />
-            {!isAuthenticated && <NavBar />}
-            
-            {isAuthenticated &&
-              <Sidebar dictionary={dictionary}>{children}</Sidebar>  
-            }
-            <main className="container mx-auto p-4">{children}</main>
+            {!isAuthenticated && (
+              <>
+                <NavBar />
+                <main className="container mx-auto p-4">{children}</main>
+              </>
+            )}
+            {isAuthenticated && (
+              <Sidebar dictionary={dictionary}>
+                <main className="container mx-auto p-4">{children}</main>
+              </Sidebar>
+            )}
           </AuthWrapper>
         </ThemeProvider>
       </body>

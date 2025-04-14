@@ -25,7 +25,7 @@ export function AppSidebar({ dictionary, ...props }: AppSidebarProps) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <TeamSwitcher companyName="LFDP" />
+        <TeamSwitcher companyName="ReachDem" />
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={sidebarData.navMain} />
