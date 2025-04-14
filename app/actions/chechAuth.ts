@@ -16,10 +16,13 @@ async function checkAuth() {
     const token = sessionCookie?.value;
     const payload = await verifyToken(token!);
     const user = payload.user;
+
+    
     return {
       isAuthenticated: true,
       user: {
         id: user.userId,
+        name: user.name,
         email: user.email,
         ip: user.ip,
         countryName: user.countryName,
@@ -28,6 +31,7 @@ async function checkAuth() {
   } catch (error) {
     return {
       isAuthenticated: false,
+      user: null
     };
   }
 }

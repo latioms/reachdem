@@ -1,3 +1,5 @@
 export type SessionData = {
-    user: {userId: string; email: string, ip: string, countryName: string};
+    user: {
+      name: string; userId: string; email: string, ip: string, countryName: string
+};
 };

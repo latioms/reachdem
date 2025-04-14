@@ -1,9 +1,28 @@
 {
   "lang": "fr",
-  "lang_name": "Français",
-  "hello": "Bonjour",
-  "welcome": "Bienvenue dans notre application !",
   "LocaleSwitcher": {
     "label": "FR"
+  },
+
+  "sidebar": {
+    "dashboard": {
+      "title": "Tableau de bord",
+      "home": "Accueil",
+      "orders": "Commandes",
+      "categories": "Catégories"
+    },
+    "management": {
+      "title": "Gestion",
+      "customers": "Clients",
+      "products": "Produits",
+      "campaigns": "Campagnes",
+      "suppliers": "Fournisseurs"
+    },
+    "analytics": {
+      "title": "Analyses",
+      "stats": "Statistiques",
+      "logs": "Journal",
+      "reports": "Rapport"
+    }
   }
 }

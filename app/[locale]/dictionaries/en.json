@@ -1,9 +1,28 @@
 {
   "lang": "en",
-  "lang_name": "English",
-  "hello": "Hello",
-  "welcome": "Welcome to our application!",
   "LocaleSwitcher": {
     "label": "EN"
+  },
+
+  "sidebar": {
+    "dashboard": {
+      "title": "Dashboard",
+      "home": "Home",
+      "orders": "Orders",
+      "categories": "Categories"
+    },
+    "management": {
+      "title": "Management",
+      "customers": "Customers",
+      "products": "Products",
+      "campaigns": "Campaigns",
+      "suppliers": "Suppliers"
+    },
+    "analytics": {
+      "title": "Analytics",
+      "stats": "Statistics",
+      "logs": "Logs",
+      "reports": "Reports"
+    }
   }
 }

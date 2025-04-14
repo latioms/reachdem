@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import createSession from "@/app/actions/createSession"
 import { useAuth } from "@/context/authContext"
+import Link from "next/link"
 
 // Define schema for login form validation
 const loginSchema = z.object({
@@ -165,9 +166,9 @@ export function LoginForm({
             </div>
             <div className="mt-4 text-center text-sm">
               Don&apos;t have an account?{" "}
-              <a href="#" className="underline underline-offset-4">
+              <Link href={`register`}>
                 Sign up
-              </a>
+              </Link>
             </div>
           </form>
         </CardContent>
