@@ -13,11 +13,7 @@ import {
 
 export const getSidebarData = (dictionary: any) => {
   return {
-    user: {
-      name: dictionary.sidebar.user.name,
-      email: dictionary.sidebar.user.email,
-      avatar: "/avatars/admin.jpg",
-    },
+
     navMain: [
       {
         title: dictionary.sidebar.dashboard.title,

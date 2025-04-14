@@ -31,9 +31,7 @@ export function AppSidebar({ dictionary, ...props }: AppSidebarProps) {
         <NavMain items={sidebarData.navMain} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser
-        user={sidebarData.user}
-        />
+        <NavUser/>
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
