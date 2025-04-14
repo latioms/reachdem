@@ -4,25 +4,18 @@
     "label": "EN"
   },
 
-  "sidebar": {
-    "dashboard": {
+  "sidebar":{
+    "dashboard":{
       "title": "Dashboard",
-      "home": "Home",
-      "orders": "Orders",
-      "categories": "Categories"
+      "items": {
+        "home": "Home",
+        "orders": "Orders",
+        "categories": "Categories"
+      }
     },
-    "management": {
-      "title": "Management",
-      "customers": "Customers",
-      "products": "Products",
-      "campaigns": "Campaigns",
-      "suppliers": "Suppliers"
-    },
-    "analytics": {
-      "title": "Analytics",
-      "stats": "Statistics",
-      "logs": "Logs",
-      "reports": "Reports"
+    "user": {
+      "name": "Admin",
+      "email": "admin@lfp.com"
     }
   }
 }

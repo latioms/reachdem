@@ -12,9 +12,15 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar";
-import { data } from "@/components/sidebarData";
+import { data, getSidebarData } from "@/components/sidebarData";
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
+  dictionary?: any;
+}
+
+export function AppSidebar({ dictionary, ...props }: AppSidebarProps) {
+  // Use internationalized data if dictionary is provided, otherwise fallback to the original data
+  const sidebarData = dictionary ? getSidebarData(dictionary) : data;
 
   return (
     <Sidebar collapsible="icon" {...props}>
@@ -22,11 +28,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <TeamSwitcher companyName="LFDP" />
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
+        <NavMain items={sidebarData.navMain} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser
-        user={data.user}
+        user={sidebarData.user}
         />
       </SidebarFooter>
       <SidebarRail />

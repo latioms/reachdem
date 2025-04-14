@@ -5,5 +5,12 @@ const dictionaries = {
   fr: () => import('./dictionaries/fr.json').then((module) => module.default),
 }
 
-export const getDictionary = async (locale: 'en' | 'fr' ) =>
-  dictionaries[locale]()
+type Locale = keyof typeof dictionaries;
+
+const getDictionary = async (locale: string) => {
+  // Ensure the locale is valid, defaulting to 'en' if not
+  const safeLocale = (locale in dictionaries) ? locale as Locale : 'en';
+  return dictionaries[safeLocale]();
+}
+
+export { getDictionary }

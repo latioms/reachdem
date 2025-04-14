@@ -1,24 +1,32 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import checkAuth from '@/app/actions/chechAuth';
+
+interface User {
+    id: string;
+    name: string;
+    email: string;
+    ip: string;
+    countryName: string;
+} 
  
 const AuthContext = createContext({
     isAuthenticated: false,
     setIsAuthenticated: (value: boolean) => {},
-    currentUser: null,
-    setCurrentUser: (user: any) => {},
+    currentUser: undefined as User | undefined,
+    setCurrentUser: (user: User) => {},
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-    const [currentUser, setCurrentUser] = useState<any>(null);
+    const [currentUser, setCurrentUser] = useState<User>();
 
 
     useEffect(() => {
         const checkAuthentication = async () => {
             const { isAuthenticated, user } = await checkAuth();
             setIsAuthenticated(isAuthenticated);
-            if (isAuthenticated) {
-                setCurrentUser(user);
+            if (isAuthenticated && user) {
+                setCurrentUser(user as User);
             }
         };
 

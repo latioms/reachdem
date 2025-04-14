@@ -5,5 +5,20 @@
   "welcome": "Bienvenue dans notre application !",
   "LocaleSwitcher": {
     "label": "FR"
+  },
+  
+  "sidebar":{
+    "dashboard":{
+      "title": "Tableau de bord",
+      "items": {
+        "home": "Accueil",
+        "orders": "Commandes",
+        "categories": "Catégories"
+      }
+    },
+    "user": {
+      "name": "Admin",
+      "email": "admin@lfp.com"
+    }
   }
 }

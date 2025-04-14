@@ -6,6 +6,7 @@ import { ThemeProvider } from "next-themes";
 import "../globals.css";
 import checkAuth from "../actions/chechAuth";
 import { Sidebar } from "@/providers/SidebarProvider";
+import  {getDictionary}  from "./dictionaries";
 
 
 // fonts 
@@ -32,6 +33,7 @@ export default async function RootLayout({
 
   const {isAuthenticated} = await checkAuth()
   const { locale } = await params;
+  const dictionary = await getDictionary(locale);
 
   return (
     <html lang={locale} className={`${geistSans.variable} ${geistMono.variable}`}>
@@ -42,7 +44,7 @@ export default async function RootLayout({
             {!isAuthenticated && <NavBar />}
             
             {isAuthenticated &&
-              <Sidebar>{children}</Sidebar>  
+              <Sidebar dictionary={dictionary}>{children}</Sidebar>  
             }
             <main className="container mx-auto p-4">{children}</main>
           </AuthWrapper>

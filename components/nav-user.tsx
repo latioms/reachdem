@@ -26,20 +26,30 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { useRouter } from 'next/navigation';
+import { useAuth } from "@/context/authContext";
 
-
-export function NavUser({
-  user,
-}: {
-  user: {
-    name: string;
-    email: string;
-    avatar: string;
-  };
-}) {
+export function NavUser() {
   const { isMobile } = useSidebar();
   const router = useRouter();
+  const { currentUser } = useAuth();
 
+  // Extraire les initiales du nom pour l'avatar fallback
+  const getInitials = (name: string) => {
+    if (!name) return "U";
+    return name.split(' ').map(part => part[0]).join('').toUpperCase().substring(0, 2);
+  };
+
+  // Si l'utilisateur n'est pas connecté ou les données ne sont pas encore chargées
+  if (!currentUser) {
+    return null; // Ou un état de chargement si préféré
+  }
+
+  // Construire l'objet user à partir des données réelles
+  const user = {
+    name: currentUser.name || "",
+    email: currentUser.email || "",
+    avatar: '/user.png' // Si disponible dans votre système
+  };
 
   return (
     <SidebarMenu>
@@ -52,7 +62,7 @@ export function NavUser({
             >
               <Avatar className="h-8 w-8 rounded-lg">
                 <AvatarImage src={user.avatar} alt={user.name} />
-                <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                <AvatarFallback className="rounded-lg">{getInitials(user.email)}</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">{user.name}</span>
@@ -71,11 +81,14 @@ export function NavUser({
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
               <Avatar className="h-8 w-8 rounded-lg">
                 <AvatarImage src={user.avatar} alt={user.name} />
-                <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                <AvatarFallback className="rounded-lg">{getInitials(user.email)}</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">{user.name}</span>
                 <span className="truncate text-xs">{user.email}</span>
+                {currentUser.countryName && (
+                  <span className="truncate text-xs text-muted-foreground">{currentUser.countryName}</span>
+                )}
               </div>
               </div>
             </DropdownMenuLabel>

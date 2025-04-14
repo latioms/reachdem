@@ -1,5 +1,5 @@
 'use client'
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { AppSidebar } from "@/components/app-sidebar"
 import {
   Breadcrumb,
@@ -17,7 +17,13 @@ import {
 } from "@/components/ui/sidebar"
 import { usePathname } from "next/navigation"
 
-export const Sidebar = ({ children }: { children: React.ReactNode }) => {
+export const Sidebar = ({ 
+  children, 
+  dictionary
+}: { 
+  children: React.ReactNode, 
+  dictionary?: any 
+}) => {
   const pathname = usePathname();
   const isLoginPage = pathname === '/login';
 
@@ -51,7 +57,7 @@ export const Sidebar = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <SidebarProvider>
-      <AppSidebar />
+      <AppSidebar dictionary={dictionary} />
       <SidebarInset>
         <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
           <div className="flex items-center gap-2 px-4">

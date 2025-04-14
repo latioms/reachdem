@@ -11,6 +11,39 @@ import {
   Factory,
 } from "lucide-react";
 
+export const getSidebarData = (dictionary: any) => {
+  return {
+    user: {
+      name: dictionary.sidebar.user.name,
+      email: dictionary.sidebar.user.email,
+      avatar: "/avatars/admin.jpg",
+    },
+    navMain: [
+      {
+        title: dictionary.sidebar.dashboard.title,
+        items: [
+          { 
+            title: dictionary.sidebar.dashboard.items.home, 
+            url: "/home", 
+            icon: Home 
+          },
+          { 
+            title: dictionary.sidebar.dashboard.items.orders, 
+            url: "/orders", 
+            icon: ShoppingCart 
+          },
+          { 
+            title: dictionary.sidebar.dashboard.items.categories, 
+            url: "/categories", 
+            icon: FolderTree 
+          },
+        ],
+      },
+    ],
+  };
+};
+
+// Keep the original data for backwards compatibility during transition
 export const data = {
   user: {
     name: "Admin",
