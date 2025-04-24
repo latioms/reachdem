@@ -1,6 +1,6 @@
 'use server';
 import { databases } from "@/lib/appwrite";
-import checkAuth from "./chechAuth";
+import checkAuth from "../chechAuth";
 import { Project } from "@/types/schema";
 import { Query } from "appwrite";
 
