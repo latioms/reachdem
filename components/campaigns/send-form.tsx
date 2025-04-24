@@ -15,6 +15,8 @@ import { Textarea } from '@/components/ui/textarea'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Paperclip, Clock } from 'lucide-react'
+import { useState } from 'react'
+import { TextTooltip } from '@/components/text-tooltip'
 
 const formSchema = z.object({
   message: z.string().min(1, 'Le message est requis'),
@@ -38,13 +40,47 @@ export default function SMSForm() {
     },
   })
 
-  const onSubmit = (data: FormValues) => {
-    console.log('Envoi des messages avec:', data)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [success, setSuccess] = useState(false)
+
+  const onSubmit = async (data: FormValues) => {
+    setLoading(true)
+    setError(null)
+    setSuccess(false)
+    try {
+      const phones = data.phones.split(',').map(p => p.trim()).filter(Boolean)
+      // Appel API pour chaque numéro
+      const results = await Promise.all(
+        phones.map(phone =>
+          fetch('/api/send-sms', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              sender: 'ReachDem',
+              phone,
+              message: data.message,
+            }),
+          }).then(res => res.json())
+        )
+      )
+      // Vérifie si une erreur est survenue
+      if (results.some(r => r.error)) {
+        setError(`Une ou plusieurs erreurs lors de l\'envoi.`)
+      } else {
+        setSuccess(true)
+        form.reset()
+      }
+    } catch (e) {
+      setError('Erreur lors de l\'envoi.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-xl mx-auto p-6 space-y-6 bg-white rounded-xl shadow">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-xl mx-auto p-6 space-y-6  rounded-xl shadow">
         <FormField
           control={form.control}
           name="message"
@@ -67,19 +103,26 @@ export default function SMSForm() {
               <FormLabel>Numéros de téléphone (séparés par des virgules)</FormLabel>
               <FormControl>
                 <div className="relative">
-                  <Input placeholder="+2376XXXXXXX, +2376YYYYYYY" {...field} className="pl-8" />
-                  <Paperclip className="absolute left-2 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <Textarea placeholder="+2376XXXXXXX, +2376YYYYYYY" {...field} className="pl-4" />
+                  <TextTooltip
+                    text="Importer à partir d'un fichier Excel/CSV"
+                    button={
+                      <Paperclip className="absolute left-2 bottom-2 -rotate-45 h-4 w-4 text-muted-foreground cursor-pointer" onClick={() => alert("Paperclip clicked")} />
+                    }
+                  />
                 </div>
               </FormControl>
-              <p className="text-xs text-muted-foreground">Importer via csv ou fichiers Excel</p>
               <FormMessage />
             </FormItem>
           )}
         />
 
-        <Button type="submit" className="w-full bg-black text-white">
-          Envoyer les messages
+        <Button type="submit" className="w-full" disabled={loading}>
+          {loading ? 'Envoi en cours...' : 'Envoyer les messages'}
         </Button>
+
+        {error && <div className="text-destructive text-center">{error}</div>}
+        {success && <div className="text-secondary text-center">Messages envoyés avec succès !</div>}
 
         <div className="flex justify-center pt-2 text-muted-foreground">
           <Clock className="w-4 h-4 mr-1" />

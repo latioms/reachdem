@@ -8,7 +8,6 @@ import checkAuth from "../actions/chechAuth";
 import { Sidebar } from "@/providers/SidebarProvider";
 import  {getDictionary}  from "./dictionaries";
 
-
 // fonts 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,6 +17,8 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
+
+
 export async function generateStaticParams() {
   return [{ locale: "en" }, { locale: "fr" }];
 }

@@ -15,7 +15,7 @@ export async function sendSMS(sender: string, message: string, phone: string) {
           message: message,
           phone_str: phone,
           sender_name: sender,
-        }),
+        }),  
       });
     
       if (!response.ok) {
