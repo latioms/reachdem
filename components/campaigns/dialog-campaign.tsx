@@ -28,7 +28,7 @@ export function DialogCampaign({ children }: { children: React.ReactNode }) {
         <>
             <Dialog open={open} onOpenChange={setOpen}>
                 <DialogTrigger asChild>{children}</DialogTrigger>
-                <DialogContent>
+                <DialogContent className="max-w-2xl w-full">
                     <DialogHeader>
                         <DialogTitle>Nouvelle campagne SMS</DialogTitle>
                     </DialogHeader>
