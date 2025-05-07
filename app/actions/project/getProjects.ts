@@ -1,7 +1,6 @@
 'use server';
 import { databases } from "@/lib/appwrite";
 import checkAuth from "../chechAuth";
-import { Project } from "@/types/schema";
 import { Query } from "appwrite";
 
 export async function getProjects() {
@@ -29,6 +28,7 @@ export async function getProjects() {
             sender_name: doc.sender_name,
             account_id: doc.owner,
             sms_credits: doc.sms_credits,
+            active: doc.active,
         }));
 
         return {
