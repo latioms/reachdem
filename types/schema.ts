@@ -3,6 +3,7 @@ export type Project = {
     id: string;
     sender_name: string;
     account_id: string;
+    sms_credits: number;
 }
 
 export type Contact = {

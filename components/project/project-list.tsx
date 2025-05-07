@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation"
 import type { Project } from "@/types/schema"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { Label } from "../ui/label"
 
 export function ProjectList({ projects }: { projects: Project[] }) {
   const router = useRouter()
@@ -19,7 +20,14 @@ export function ProjectList({ projects }: { projects: Project[] }) {
           <Card key={project.id} className="hover:bg-muted/50 transition-colors cursor-pointer">
             <CardHeader>
               <CardTitle>{project.sender_name}</CardTitle>
-              <CardDescription>Code expéditeur</CardDescription>
+              <CardDescription className="flex items-center justify-between">
+                <span>
+                  Code expéditeur
+                </span>
+                <Label className="rounded-full bg-foreground p-1 text-muted">
+                  {project.sms_credits}
+                </Label>
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <p>ID: {project.id}</p>

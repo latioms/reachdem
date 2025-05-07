@@ -122,7 +122,7 @@ export default function SMSForm() {
         </Button>
 
         {error && <div className="text-destructive text-center">{error}</div>}
-        {success && <div className="text-secondary text-center">Messages envoyés avec succès !</div>}
+        {success && <div className="text-primary text-center">Messages envoyés avec succès !</div>}
 
         <div className="flex justify-center pt-2 text-muted-foreground">
           <Clock className="w-4 h-4 mr-1" />
