@@ -1,9 +1,9 @@
-
 export type Project = {
     id: string;
     sender_name: string;
     account_id: string;
     sms_credits: number;
+    active: "pending" | "enabled" | "disabled";
 }
 
 export type Contact = {

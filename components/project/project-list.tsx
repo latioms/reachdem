@@ -24,7 +24,7 @@ export function ProjectList({ projects }: { projects: Project[] }) {
                 <span>
                   Code expéditeur
                 </span>
-                <Label className="rounded-full bg-foreground p-1 text-muted">
+                <Label className={`rounded-full ${project.sms_credits <= 10 ? `bg-destructive` : 'bg-foreground'}  p-1 text-muted`}>
                   {project.sms_credits}
                 </Label>
               </CardDescription>
