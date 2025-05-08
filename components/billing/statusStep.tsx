@@ -5,7 +5,8 @@ import { CheckCircle } from "lucide-react"
 import { useEffect } from "react"
 import { useAuth } from "@/context/authContext"
 import { increaseSMSCredit } from "@/app/actions/project/credit"
-import { sendEmailReceipt, sendPaymentSMS } from "@/lib/notifications"
+import { sendEmailReceipt } from "@/lib/notifications"
+import { sendSMS } from "@/lib/sms"
 
 interface StatusStepProps {
   reference?: string
@@ -70,7 +71,11 @@ export function StatusStep({
       }
       
       if (phone && amount) {
-        await sendPaymentSMS(phone, reference!, amount)
+        await sendSMS(
+          'ReachDem',
+          `Votre paiement de ${amount} XAF a été reçu avec succès. Merci!`,
+          phone
+        )
       }
     } catch (error) {
       console.error("Error handling payment success:", error)

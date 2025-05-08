@@ -29,34 +29,3 @@ export async function sendEmailReceipt(email: string, reference: string, amount:
     return { error: 'Failed to send email receipt' }
   }
 }
-
-export async function sendPaymentSMS(phone: string, reference: string, amount: number) {
-  try {
-    // Check if we have the SMS API configured
-    if (!process.env.SMS_API_URL || !process.env.SMS_API_KEY) {
-      console.warn('SMS API configuration missing')
-      return { success: true } // Still return success to not block the flow
-    }
-    
-    const response = await fetch(process.env.SMS_API_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${process.env.SMS_API_KEY}`
-      },
-      body: JSON.stringify({
-        to: phone,
-        message: `ReachDem: Paiement reçu. Réf: ${reference}. Montant: ${amount} XAF. Merci de votre confiance !`
-      })
-    })
-
-    if (!response.ok) {
-      throw new Error('SMS API request failed')
-    }
-
-    return { success: true }
-  } catch (error) {
-    console.error('Error sending payment SMS:', error)
-    return { error: 'Failed to send payment SMS' }
-  }
-}
