@@ -1,5 +1,5 @@
 'use server';
-import { account, databases } from "@/lib/appwrite";
+import { databases } from "@/lib/appwrite";
 import checkAuth from "../chechAuth";
 import { ID } from "appwrite";
 import { revalidatePath } from "next/cache";
