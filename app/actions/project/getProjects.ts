@@ -26,7 +26,7 @@ export async function getProjects() {
         const projects = response.documents.map(doc => ({
             id: doc.id,
             sender_name: doc.sender_name,
-            account_id: doc.owner,
+            owner: doc.owner,
             sms_credits: doc.sms_credits,
             active: doc.active,
         }));

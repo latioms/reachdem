@@ -1,7 +1,7 @@
 export type Project = {
     id: string;
     sender_name: string;
-    account_id: string;
+    owner: string;  // Changed from account_id to match the database structure
     sms_credits: number;
     active: "pending" | "enabled" | "disabled";
 }

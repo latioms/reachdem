@@ -6,11 +6,10 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { initPayment } from "@/app/actions/payment"
 
 const formSchema = z.object({
   phone: z.string()
-    .regex(/^\d{8,}$/, "Le numéro doit être valide"),
+    .regex(/^\d{9}$/, "Le numéro doit contenir 9 chiffres"),
   smsCount: z.coerce.number()
     .min(8, "Vous devez recharger au minimum 8 SMS")
 })
@@ -18,7 +17,7 @@ const formSchema = z.object({
 export type FormStepValues = z.infer<typeof formSchema>
 
 interface FormStepProps {
-  onSubmit: (data: FormStepValues) => void
+  onSubmit: (values: FormStepValues) => Promise<void>
   loading?: boolean
 }
 
@@ -27,14 +26,13 @@ export function FormStep({ onSubmit, loading = false }: FormStepProps) {
     resolver: zodResolver(formSchema),
     defaultValues: {
       phone: "",
-      smsCount: 100 // Valeur par défaut comme dans l'image
+      smsCount: 100
     }
   })
 
-
   // Calculer le montant total (19 XAF par SMS)
   const smsCount = form.watch("smsCount") || 0
-  const totalAmount = smsCount * 19
+  const totalAmount = smsCount * 17
 
   return (
     <div className="space-y-6">
@@ -45,7 +43,7 @@ export function FormStep({ onSubmit, loading = false }: FormStepProps) {
             name="phone"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-sm text-muted-foreground">Numero OM | MOMO</FormLabel>
+                <FormLabel className="text-sm text-muted-foreground">OM | MOMO</FormLabel>
                 <FormControl>
                   <Input placeholder="691875974" {...field} />
                 </FormControl>
@@ -80,13 +78,17 @@ export function FormStep({ onSubmit, loading = false }: FormStepProps) {
             </div>
           </div>
 
-          <Button type="submit" onClick={() => initPayment} className="w-full bg-secondary-foreground" disabled={loading}>
+          <Button 
+            type="submit" 
+            className="w-full bg-secondary-foreground"
+            disabled={loading}
+          >
             {loading ? "Traitement en cours..." : "Recharger"}
           </Button>
         </form>
       </Form>
 
-      <div className="flex items-center justify-center gap-4 pt-4">
+      <div className="flex items-center justify-center gap-2 pt-4">
         <div className="flex items-center gap-2">
           <div className="h-8 w-8 rounded-full bg-amber-600/60 flex items-center justify-center">1</div>
           <div className="h-[2px] w-24 bg-muted-foreground" />

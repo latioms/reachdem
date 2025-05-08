@@ -66,15 +66,15 @@ export default function CreditsManagementTable() {
                           ? 'bg-green-50 text-green-700 ring-green-600/20'
                           : 'bg-red-50 text-red-700 ring-red-600/20'
                       }`}>
-                        {project.active }
+                        {project.active}
                       </span>
                     </td>
                     <td className="p-4 text-left align-middle">
                       <Dialog>
                         <DialogTrigger asChild>
-                           <Button variant='outline' disabled={project.active !== 'enabled'}>Recharger</Button>
+                          <Button variant='outline' disabled={project.active !== 'enabled'}>Recharger</Button>
                         </DialogTrigger>
-                        <RechargeModal />
+                        <RechargeModal projectId={project.id} />
                       </Dialog>
                     </td>
                   </tr>

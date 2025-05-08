@@ -1,24 +1,41 @@
 "use client"
 
-import { X } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import { usePaymentStore } from "@/store/payment-store"
 import { CheckCircle } from "lucide-react"
 import { useEffect } from "react"
+import { useAuth } from "@/context/authContext"
+import { increaseSMSCredit } from "@/app/actions/project/credit"
+import { sendEmailReceipt, sendPaymentSMS } from "@/lib/notifications"
 
 interface StatusStepProps {
   reference?: string
   amount?: number
   phone?: string
   onClose?: () => void
+  projectId: string
+  smsCount: number
 }
 
-export function StatusStep({ reference, amount, phone, onClose }: StatusStepProps) {
+export function StatusStep({ 
+  reference, 
+  amount, 
+  phone, 
+  onClose,
+  projectId,
+  smsCount 
+}: StatusStepProps) {
   const { status, setStatus } = usePaymentStore()
+  const { currentUser } = useAuth()
   const isCompleted = status === "complete"
 
   useEffect(() => {
-    if (!reference || isCompleted) return
+    if (!reference || !currentUser) return
+
+    if (isCompleted) {
+      // When payment is completed, increase credits and send notifications
+      handlePaymentSuccess()
+      return
+    }
 
     const checkStatus = async () => {
       try {
@@ -26,29 +43,39 @@ export function StatusStep({ reference, amount, phone, onClose }: StatusStepProp
         const data = await response.json()
         
         if (response.ok) {
-          if (data.transaction.status === "complete" ) {
+          if (data.transaction.status === "complete") {
             setStatus("complete")
-          } else if (data.transaction.status === "failed" ) {
+          } else if (data.transaction.status === "failed") {
             setStatus("failed")
           }
-          // Autres statuts restent en "processing" ou "pending"
         }
       } catch (error) {
         console.error("Erreur lors de la vérification du statut:", error)
       }
     }
 
-    // Premier check immédiat
     checkStatus()
-
-    // Mettre en place le polling toutes les 3 secondes
     const intervalId = setInterval(checkStatus, 3000)
+    return () => clearInterval(intervalId)
+  }, [reference, isCompleted, setStatus, currentUser, projectId, smsCount, amount, phone])
 
-    // Cleanup à la destruction du composant
-    return () => {
-      clearInterval(intervalId)
+  const handlePaymentSuccess = async () => {
+    try {
+      // Increase SMS credits
+      await increaseSMSCredit(projectId, smsCount)
+
+      // Send notifications
+      if (currentUser?.email && amount) {
+        await sendEmailReceipt(currentUser.email, reference!, amount)
+      }
+      
+      if (phone && amount) {
+        await sendPaymentSMS(phone, reference!, amount)
+      }
+    } catch (error) {
+      console.error("Error handling payment success:", error)
     }
-  }, [reference, isCompleted, setStatus])
+  }
 
   return (
     <div className="space-y-6">
@@ -57,16 +84,20 @@ export function StatusStep({ reference, amount, phone, onClose }: StatusStepProp
           {isCompleted ? (
             <CheckCircle className="h-16 w-16 text-green-500 mx-auto" />
           ) : (
-            <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-primary mx-auto" />
+            <div className="relative">
+              <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-primary mx-auto" />
+            </div>
           )}
         </div>
-        <h3 className="text-lg font-semibold">
+
+        <p className="text-lg font-semibold">
           {isCompleted 
             ? "Paiement effectué avec succès" 
-            : status === "failed"
-            ? "Le paiement a échoué"
-            : "Veuillez confirmer le paiement sur votre téléphone"}
-        </h3>
+            : status === "failed" 
+              ? "Le paiement a échoué" 
+              : "Veuillez confirmer le paiement sur votre téléphone"
+          }
+        </p>
       </div>
 
       <div className="rounded-lg bg-muted/30 p-4 space-y-3">
@@ -74,10 +105,12 @@ export function StatusStep({ reference, amount, phone, onClose }: StatusStepProp
           <span className="text-muted-foreground">Référence:</span>
           <span className="font-medium">{reference}</span>
         </div>
+
         <div className="flex justify-between items-center">
           <span className="text-muted-foreground">Montant:</span>
           <span className="font-medium">{amount} XAF</span>
         </div>
+
         <div className="flex justify-between items-center">
           <span className="text-muted-foreground">Téléphone:</span>
           <span className="font-medium">{phone}</span>
@@ -88,7 +121,9 @@ export function StatusStep({ reference, amount, phone, onClose }: StatusStepProp
         <div className="flex items-center gap-2">
           <div className="h-8 w-8 rounded-full bg-green-500/55 border border-muted-foreground text-muted-foreground flex items-center justify-center">1</div>
           <div className="h-[2px] w-24 bg-muted-foreground" />
-          <div className={`h-8 w-8 rounded-full ${isCompleted ? 'bg-green-500/55' : 'bg-yellow-600/60'} flex items-center justify-center`}>2</div>
+          <div className={`h-8 w-8 rounded-full ${isCompleted ? 'bg-green-500/55' : 'bg-yellow-600/60'} flex items-center justify-center`}>
+            2
+          </div>
         </div>
       </div>
     </div>
