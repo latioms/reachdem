@@ -125,7 +125,7 @@ function Page() {
             </div>
           </div>
           <img
-            src="/images/globe.svg"
+            src="/globe.svg"
             alt="placeholder"
             className="hidden h-full max-h-screen object-cover lg:block"
           />
