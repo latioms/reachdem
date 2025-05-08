@@ -30,9 +30,9 @@ export function FormStep({ onSubmit, loading = false }: FormStepProps) {
     }
   })
 
-  // Calculer le montant total (19 XAF par SMS)
+  // Calculer le montant total (18 XAF par SMS)
   const smsCount = form.watch("smsCount") || 0
-  const totalAmount = smsCount * 17
+  const totalAmount = smsCount * 18
 
   return (
     <div className="space-y-6">

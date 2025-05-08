@@ -48,7 +48,7 @@ export function RechargeModal({ projectId }: RechargeModalProps) {
       return
     }
 
-    const amount = data.smsCount * 19
+    const amount = data.smsCount * 18
     const payerPhone = data.phone
 
     try {
