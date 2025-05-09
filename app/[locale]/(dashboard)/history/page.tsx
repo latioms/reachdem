@@ -1,7 +1,11 @@
 import React from 'react'
+import { MessagesHistoryTable } from '@/components/history/messages-history-table'
 
 export default function page() {
   return (
-    <div>page</div>
+    <section className='py-15'>
+      <h1 className='text-2xl font-semibold mb-5'>Historique des messages</h1>
+      <MessagesHistoryTable />
+    </section>
   )
 }
