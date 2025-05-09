@@ -1,14 +1,14 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { 
-  Table, 
-  TableBody, 
-  TableCaption, 
-  TableCell, 
-  TableHead, 
-  TableHeader, 
-  TableRow 
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -18,13 +18,14 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { getTransactions } from '@/app/actions/transactions/getTransaction';
 import { formatDistanceToNow, format } from 'date-fns';
 import { fr } from 'date-fns/locale';
-import { ArrowUpDown, Search, Calendar, RefreshCw } from 'lucide-react';
+import { ArrowUpDown, Search, Calendar, RefreshCw, CreditCard, CopyIcon } from 'lucide-react';
+import { Label } from '../ui/label';
 
 interface Transaction {
   $id: string;
   amount: number;
   status: 'pending' | 'completed' | 'failed';
-  created: string;
+  $createdAt: string;
   updated: string;
   payment_method: string;
   description?: string;
@@ -39,8 +40,8 @@ export default function BillingHistoryTable({ projectId }: { projectId?: string 
   const [filteredTransactions, setFilteredTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [sortConfig, setSortConfig] = useState<{ key: keyof Transaction; direction: 'asc' | 'desc' }>({ 
-    key: 'created', direction: 'desc'
+  const [sortConfig, setSortConfig] = useState<{ key: keyof Transaction; direction: 'asc' | 'desc' }>({
+    key: '$createdAt', direction: 'desc'
   });
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
@@ -51,7 +52,7 @@ export default function BillingHistoryTable({ projectId }: { projectId?: string 
       try {
         setLoading(true);
         const result = await getTransactions(projectId);
-        
+
         if (result.error) {
           setError(result.error);
         } else {
@@ -70,16 +71,16 @@ export default function BillingHistoryTable({ projectId }: { projectId?: string 
   // Filter and sort transactions when dependencies change
   useEffect(() => {
     let result = [...transactions];
-    
+
     // Apply status filter
     if (statusFilter !== 'all') {
       result = result.filter(transaction => transaction.status === statusFilter);
     }
-    
+
     // Apply search filter
     if (searchTerm.trim()) {
       const searchLower = searchTerm.toLowerCase();
-      result = result.filter(transaction => 
+      result = result.filter(transaction =>
         transaction.payment_method?.toLowerCase().includes(searchLower) ||
         transaction.description?.toLowerCase().includes(searchLower) ||
         transaction.project_name?.toLowerCase().includes(searchLower) ||
@@ -87,14 +88,14 @@ export default function BillingHistoryTable({ projectId }: { projectId?: string 
         transaction.amount.toString().includes(searchLower)
       );
     }
-    
+
     // Apply sorting
     result.sort((a, b) => {
       if (sortConfig.key === 'amount') {
-        return sortConfig.direction === 'asc' 
+        return sortConfig.direction === 'asc'
           ? a.amount - b.amount
           : b.amount - a.amount;
-      } else if (sortConfig.key === 'created' || sortConfig.key === 'updated') {
+      } else if (sortConfig.key === '$createdAt' || sortConfig.key === 'updated') {
         return sortConfig.direction === 'asc'
           ? new Date(a[sortConfig.key]).getTime() - new Date(b[sortConfig.key]).getTime()
           : new Date(b[sortConfig.key]).getTime() - new Date(a[sortConfig.key]).getTime();
@@ -106,7 +107,7 @@ export default function BillingHistoryTable({ projectId }: { projectId?: string 
           : bValue.toString().localeCompare(aValue.toString());
       }
     });
-    
+
     setFilteredTransactions(result);
   }, [transactions, searchTerm, statusFilter, sortConfig]);
 
@@ -122,8 +123,8 @@ export default function BillingHistoryTable({ projectId }: { projectId?: string 
   };
   const getStatusBadge = (status: string) => {
     switch (status) {
-      case 'completed':
-        return <Badge variant="default" className="bg-green-500">Complété</Badge>;
+      case 'success':
+          return <Badge variant="outline" className="text-green-400/80">{status}</Badge>;
       case 'pending':
         return <Badge variant="secondary" className="bg-yellow-500 text-black">En attente</Badge>;
       case 'failed':
@@ -145,10 +146,10 @@ export default function BillingHistoryTable({ projectId }: { projectId?: string 
       return dateString;
     }
   };
-  
+
   const formatAmount = (amount: number) => {
-    return new Intl.NumberFormat('fr-FR', { 
-      style: 'currency', 
+    return new Intl.NumberFormat('fr-FR', {
+      style: 'currency',
       currency: 'XAF',
       maximumFractionDigits: 0
     }).format(amount);
@@ -239,11 +240,11 @@ export default function BillingHistoryTable({ projectId }: { projectId?: string 
           </Select>
         </div>
 
-        <div className="rounded-md border">
+        <div className="rounded-md">
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="w-[180px] cursor-pointer" onClick={() => handleSort('created')}>
+                <TableHead className="w-[180px] cursor-pointer" onClick={() => handleSort('$createdAt')}>
                   <div className="flex items-center space-x-1">
                     <span>Date</span>
                     <ArrowUpDown className="h-4 w-4" />
@@ -256,7 +257,6 @@ export default function BillingHistoryTable({ projectId }: { projectId?: string 
                   </div>
                 </TableHead>
                 <TableHead>Méthode de paiement</TableHead>
-                <TableHead>Description</TableHead>
                 {!projectId && <TableHead>Projet</TableHead>}
                 <TableHead className="cursor-pointer" onClick={() => handleSort('status')}>
                   <div className="flex items-center space-x-1">
@@ -278,9 +278,9 @@ export default function BillingHistoryTable({ projectId }: { projectId?: string 
                   <TableRow key={transaction.$id} className="group">
                     <TableCell className="font-medium">
                       <div className="flex flex-col">
-                        <span>{formatDate(transaction.created)}</span>
+                        <span>{formatDate(transaction?.$createdAt)}</span>
                         <span className="text-xs text-muted-foreground hidden group-hover:block">
-                          {formatDate(transaction.created, false)}
+                          {formatDate(transaction.$createdAt, false)}
                         </span>
                       </div>
                     </TableCell>
@@ -292,19 +292,28 @@ export default function BillingHistoryTable({ projectId }: { projectId?: string 
                         )}
                       </div>
                     </TableCell>
-                    <TableCell>{transaction.payment_method || 'N/A'}</TableCell>
-                    <TableCell>{transaction.description || 'Recharge de crédit'}</TableCell>
-                    {!projectId && (
-                      <TableCell>{transaction.project_name || 'Général'}</TableCell>
-                    )}
-                    <TableCell>{getStatusBadge(transaction.status)}</TableCell>
+                    <TableCell><span className='flex items-center gap-2'><CreditCard className='h-5 w-5' />{transaction?.payment_method || 'Mobile Payment'}</span></TableCell>
+                    <TableCell>
+                      <div className="flex items-center gap-2">
+                        <Label className='px-6 py-2 bg-background rounded-md flex items-center gap-1 group cursor-pointer' 
+                          onClick={() => {
+                            if (transaction.project_id) {
+                              navigator.clipboard.writeText(transaction.project_id);
+                              // Optionally add a toast notification here
+                            }
+                          }}>
+                          {transaction.project_id || 'Général'}
+                          <CopyIcon className="relative h-4 w-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+                        </Label>
+                      </div>
+                    </TableCell>                    <TableCell>{getStatusBadge(transaction.status)}</TableCell>
                   </TableRow>
                 ))
               )}
             </TableBody>
           </Table>
         </div>
-        
+
         <div className="text-xs text-muted-foreground mt-4 text-right">
           Total: {filteredTransactions.length} transaction{filteredTransactions.length !== 1 ? 's' : ''}
         </div>

@@ -24,12 +24,15 @@ export async function createTransaction(params: CreateTransactionParams) {
       return { error: 'Utilisateur non authentifié.' };
     }
 
+    const transactionId = ID.unique()
     const now = new Date().toISOString();
+
     const transaction = await databases.createDocument(
       DATABASE_ID,
       COLLECTION_ID,
-      ID.unique(),
+      transactionId,
       {
+        id: transactionId,
         project_id: params.project_id,
         credits:     params.credits,
         amount:      params.amount,
