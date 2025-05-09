@@ -133,10 +133,9 @@ export function MessagesHistoryTable() {
     <div>
       <Card className="mb-8 rounded-t-sm">
         <CardHeader>
-          <div className="flex items-center justify-between">
+          <div className="flex items-center text-center justify-between">
             <div>
-              <CardTitle>Messages envoyés</CardTitle>
-              <CardDescription>Historique de tous vos messages</CardDescription>
+              <CardDescription>Historique de vos messages</CardDescription>
             </div>            <div className="flex gap-2">
               {/* Status filter */}
               <select 

@@ -7,6 +7,8 @@ import { useAuth } from "@/context/authContext"
 import { increaseSMSCredit } from "@/app/actions/project/credit"
 import { sendEmailReceipt } from "@/lib/notifications"
 import { sendSMS } from "@/lib/sms"
+import { createTransaction } from "@/app/actions/transactions/createTransaction"
+import { updateTransaction } from "@/app/actions/transactions/updateTransaction"
 
 interface StatusStepProps {
   reference?: string
@@ -24,8 +26,7 @@ export function StatusStep({
   onClose,
   projectId,
   smsCount 
-}: StatusStepProps) {
-  const { status, setStatus } = usePaymentStore()
+}: StatusStepProps) {  const { status, setStatus, transactionId } = usePaymentStore()
   const { currentUser } = useAuth()
   const isCompleted = status === "complete"
 
@@ -42,12 +43,18 @@ export function StatusStep({
       try {
         const response = await fetch(`/api/notchpay/status?reference=${reference}`)
         const data = await response.json()
-        
-        if (response.ok) {
+          if (response.ok) {
           if (data.transaction.status === "complete") {
             setStatus("complete")
-          } else if (data.transaction.status === "failed") {
+          } else if (data.transaction.status === "failed" || data.transaction.status === "canceled") {
             setStatus("failed")
+            // Mettre à jour le statut de la transaction en cas d'échec
+            if (transactionId) {
+              updateTransaction({
+                id: transactionId,
+                status: 'failed'
+              });
+            }
           }
         }
       } catch (error) {
@@ -59,9 +66,16 @@ export function StatusStep({
     const intervalId = setInterval(checkStatus, 3000)
     return () => clearInterval(intervalId)
   }, [reference, isCompleted, setStatus, currentUser, projectId, smsCount, amount, phone])
-
   const handlePaymentSuccess = async () => {
     try {
+      // Mettre à jour le statut de la transaction si l'ID est disponible
+      if (transactionId) {
+        await updateTransaction({
+          id: transactionId,
+          status: 'success'
+        });
+      }
+      
       // Increase SMS credits
       await increaseSMSCredit(projectId, smsCount)
 

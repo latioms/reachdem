@@ -1,20 +1,19 @@
 "use client"
 
 import { useState } from "react"
-import { useRouter } from "next/navigation"
 import { DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { FormStep, type FormStepValues } from "./formStep"
 import { StatusStep } from "./statusStep"
 import { initPayment } from "@/app/actions/payment"
 import { useAuth } from "@/context/authContext"
 import { usePaymentStore } from "@/store/payment-store"
+import { createTransaction } from "@/app/actions/transactions/createTransaction"
 
 interface RechargeModalProps {
   projectId: string;
 }
 
 export function RechargeModal({ projectId }: RechargeModalProps) {
-  const router = useRouter()
   const { currentUser } = useAuth()
   const { 
     setReference, 
@@ -34,7 +33,6 @@ export function RechargeModal({ projectId }: RechargeModalProps) {
     smsCount?: number;
   }>({})
   const [error, setError] = useState<string | null>(null)
-
   async function handleSubmit(data: FormStepValues) {
     setLoading(true)
     setError(null)
@@ -61,7 +59,22 @@ export function RechargeModal({ projectId }: RechargeModalProps) {
       const paymentReference = initData.transaction.reference
 
       console.log("Payment initialized:", initData)
-
+      
+      // Créer une transaction dans la base de données
+      const transactionResult = await createTransaction({
+        project_id: projectId,
+        credits: data.smsCount,
+        amount: amount,
+        status: 'pending'
+      })
+      
+      if (!transactionResult.success || !transactionResult.transaction) {
+        throw new Error(transactionResult.error || "Échec de création de la transaction")
+      }
+      
+      // Stocker l'ID de la transaction
+      setTransactionId(transactionResult.transaction.$id)
+      
       setReference(paymentReference)
       storeAmount(amount)
       storePhone(payerPhone)

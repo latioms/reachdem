@@ -8,7 +8,7 @@ import { revalidatePath } from 'next/cache';
 const DATABASE_ID       = process.env.NEXT_PUBLIC_APPWRITE_REACHDEM_DATABASE_ID!;
 const COLLECTION_ID     = process.env.NEXT_PUBLIC_APPWRITE_TRANSACTIONS_COLLECTION_ID!;
 
-export type TransactionStatus = 'pending' | 'completed' | 'failed'; // ajustez à vos valeurs
+export type TransactionStatus = 'success' | 'pending' | 'failed'; // ajustez à vos valeurs
 
 export interface CreateTransactionParams {
   project_id: string;
@@ -24,12 +24,15 @@ export async function createTransaction(params: CreateTransactionParams) {
       return { error: 'Utilisateur non authentifié.' };
     }
 
+    const transactionId = ID.unique()
     const now = new Date().toISOString();
+
     const transaction = await databases.createDocument(
       DATABASE_ID,
       COLLECTION_ID,
-      ID.unique(),
+      transactionId,
       {
+        id: transactionId,
         project_id: params.project_id,
         credits:     params.credits,
         amount:      params.amount,
