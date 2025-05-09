@@ -209,7 +209,7 @@ export default function BillingHistoryTable({ projectId }: { projectId?: string 
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle>Historique des transactions</CardTitle>
         <Button variant="outline" size="sm" onClick={handleRefresh}>
-          <RefreshCw className="mr-2 h-4 w-4" />
+          <RefreshCw className="mr-1 h-4 w-4" />
           Actualiser
         </Button>
       </CardHeader>
@@ -224,23 +224,9 @@ export default function BillingHistoryTable({ projectId }: { projectId?: string 
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
-          <Select
-            value={statusFilter}
-            onValueChange={(value) => setStatusFilter(value)}
-          >
-            <SelectTrigger className="w-full md:w-40">
-              <SelectValue placeholder="Tous les statuts" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">Tous les statuts</SelectItem>
-              <SelectItem value="success">Complété</SelectItem>
-              <SelectItem value="pending">En attente</SelectItem>
-              <SelectItem value="failed">Échoué</SelectItem>
-            </SelectContent>
-          </Select>
         </div>
 
-        <div className="rounded-md">
+        <div className="rounded-md mt-12">
           <Table>
             <TableHeader>
               <TableRow >
@@ -257,7 +243,7 @@ export default function BillingHistoryTable({ projectId }: { projectId?: string 
                   </div>
                 </TableHead>
                 <TableHead>Méthode de paiement</TableHead>
-                {!projectId && <TableHead>Projet</TableHead>}
+                <TableHead>Projet</TableHead>
                 <TableHead className="cursor-pointer" onClick={() => handleSort('status')}>
                   <div className="flex items-center space-x-1">
                     <span>Statut</span>
@@ -269,7 +255,7 @@ export default function BillingHistoryTable({ projectId }: { projectId?: string 
             <TableBody>
               {filteredTransactions.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={projectId ? 5 : 6} className="text-center py-6 text-muted-foreground">
+                  <TableCell colSpan={5} className="text-center py-6 text-muted-foreground">
                     Aucune transaction trouvée
                   </TableCell>
                 </TableRow>
