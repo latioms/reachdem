@@ -8,7 +8,11 @@ import { RechargeModal } from "./RechargeModal"
 import { getProjects } from '@/app/actions/project/getProjects'
 import { Project } from '@/types/schema'
 
-export default function CreditsManagementTable() {
+interface CreditsManagementTableProps {
+  dictionary: any;
+}
+
+export default function CreditsManagementTable({ dictionary }: CreditsManagementTableProps) {
   const [projects, setProjects] = useState<Project[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -26,19 +30,19 @@ export default function CreditsManagementTable() {
   }, [])
 
   if (loading) {
-    return <div>Loading...</div>
+    return <div>{dictionary.table.loading}</div>
   }
 
   return (
     <div>
       <div className="flex justify-between items-center mb-2">
-        <h2 className="text-xl font-semibold">Pay as you Go</h2>
+        <h2 className="text-xl font-semibold">{dictionary.payAsYouGo}</h2>
       </div>
       <Card className="mb-8 rounded-t-sm">
         <CardHeader>
           <div className="flex items-center">
             <div>
-              <CardDescription>Recharger vos crédits SMS</CardDescription>
+              <CardDescription>{dictionary.rechargeCredits}</CardDescription>
             </div>
           </div>
         </CardHeader>
@@ -47,11 +51,11 @@ export default function CreditsManagementTable() {
             <table className="w-full caption-bottom text-sm">
               <thead className="[&_tr]:border-b">
                 <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">#</th>
-                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">EXP-CODE</th>
-                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">SMS Credits</th>
-                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Active</th>
-                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Actions</th>
+                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">{dictionary.table.index}</th>
+                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">{dictionary.table.expCode}</th>
+                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">{dictionary.table.smsCredits}</th>
+                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">{dictionary.table.active}</th>
+                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">{dictionary.table.actions}</th>
                 </tr>
               </thead>
               <tbody className="[&_tr:last-child]:border-0">
@@ -66,15 +70,15 @@ export default function CreditsManagementTable() {
                           ? 'bg-green-50 text-green-700 ring-green-600/20'
                           : 'bg-red-50 text-red-700 ring-red-600/20'
                       }`}>
-                        {project.active}
+                        {project.active === 'enabled' ? dictionary.status.enabled : dictionary.status.disabled}
                       </span>
                     </td>
                     <td className="p-4 text-left align-middle">
                       <Dialog>
                         <DialogTrigger asChild>
-                          <Button variant='outline' disabled={project.active !== 'enabled'}>Recharger</Button>
+                          <Button variant='outline' disabled={project.active !== 'enabled'}>{dictionary.table.recharge}</Button>
                         </DialogTrigger>
-                        <RechargeModal projectId={project.id} />
+                        <RechargeModal projectId={project.id} dictionary={dictionary} />
                       </Dialog>
                     </td>
                   </tr>
