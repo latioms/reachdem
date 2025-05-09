@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { useRouter } from "next/navigation"
 import { DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { FormStep, type FormStepValues } from "./formStep"
 import { StatusStep } from "./statusStep"
@@ -14,7 +13,6 @@ interface RechargeModalProps {
 }
 
 export function RechargeModal({ projectId }: RechargeModalProps) {
-  const router = useRouter()
   const { currentUser } = useAuth()
   const { 
     setReference, 

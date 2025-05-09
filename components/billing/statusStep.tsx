@@ -7,6 +7,7 @@ import { useAuth } from "@/context/authContext"
 import { increaseSMSCredit } from "@/app/actions/project/credit"
 import { sendEmailReceipt } from "@/lib/notifications"
 import { sendSMS } from "@/lib/sms"
+import { createTransaction } from "@/app/actions/transactions/createTransaction"
 
 interface StatusStepProps {
   reference?: string
@@ -76,6 +77,8 @@ export function StatusStep({
           `Votre paiement de ${amount} XAF a été reçu avec succès. Merci!`,
           phone
         )
+
+       
       }
     } catch (error) {
       console.error("Error handling payment success:", error)
