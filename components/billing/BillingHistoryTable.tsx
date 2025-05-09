@@ -233,7 +233,7 @@ export default function BillingHistoryTable({ projectId }: { projectId?: string 
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">Tous les statuts</SelectItem>
-              <SelectItem value="completed">Complété</SelectItem>
+              <SelectItem value="success">Complété</SelectItem>
               <SelectItem value="pending">En attente</SelectItem>
               <SelectItem value="failed">Échoué</SelectItem>
             </SelectContent>
@@ -243,7 +243,7 @@ export default function BillingHistoryTable({ projectId }: { projectId?: string 
         <div className="rounded-md">
           <Table>
             <TableHeader>
-              <TableRow>
+              <TableRow >
                 <TableHead className="w-[180px] cursor-pointer" onClick={() => handleSort('$createdAt')}>
                   <div className="flex items-center space-x-1">
                     <span>Date</span>
@@ -294,7 +294,7 @@ export default function BillingHistoryTable({ projectId }: { projectId?: string 
                     </TableCell>
                     <TableCell><span className='flex items-center gap-2'><CreditCard className='h-5 w-5' />{transaction?.payment_method || 'Mobile Payment'}</span></TableCell>
                     <TableCell>
-                      <div className="flex items-center gap-2">
+                      <div className="flex gap-2">
                         <Label className='px-6 py-2 bg-background rounded-md flex items-center gap-1 group cursor-pointer' 
                           onClick={() => {
                             if (transaction.project_id) {
