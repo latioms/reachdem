@@ -28,5 +28,66 @@
         "settings": "Settings"
       }
     }
+  },  "campaigns": {
+    "title": "SMS Campaigns",
+    "sendNow": "Send Now",
+    "new": "New SMS campaign",
+    "form": {
+      "project": "Project",
+      "selectProject": "Select a project",
+      "message": "Message",
+      "messagePlaceholder": "Enter your message here...",
+      "charactersCount": "characters",
+      "phones": "Phone numbers (separated by commas)",
+      "phonesPlaceholder": "+2376XXXXXXX, +2376YYYYYYY",
+      "importFromFile": "Import from Excel/CSV file",
+      "submit": "Send messages",
+      "sending": "Sending...",
+      "projectDisabled": "This project is disabled. Contact customer service for more information."
+    },
+    "toast": {
+      "senderNotFound": "Sender name not found for this project",
+      "insufficientCredits": "Insufficient SMS credits. You need {count} credit(s), but you have {available} credit(s) left.",
+      "sending": "Sending messages...",
+      "success": "Messages sent successfully!",
+      "error": "An error occurred while sending"
+    },
+    "validation": {
+      "messageRequired": "Message is required",
+      "messageMaxLength": "Message must not exceed 160 characters",
+      "phonesRequired": "Please enter at least one number",
+      "phonesInvalid": "One or more numbers are invalid",
+      "projectRequired": "Please select a project"
+    }
+  },
+  "history": {
+    "title": "History",
+    "timeFormat": "enUS",
+    "table": {
+      "description": "Message history",
+      "columns": {
+        "id": "ID",
+        "message": "Message",
+        "recipient": "Recipient",
+        "status": "Status",
+        "date": "Date"
+      },
+      "filters": {
+        "allStatuses": "All statuses",
+        "allRecipients": "All recipients"
+      },
+      "noMessages": "No messages found",
+      "loading": "Loading...",
+      "pagination": {
+        "showing": "Showing {start} to {end} of {total} messages",
+        "previous": "Previous",
+        "next": "Next"
+      }
+    },
+    "status": {
+      "SUCCESS": "SUCCESS",
+      "PENDING": "PENDING",
+      "FAILED": "FAILED"
+    }
   }
 }

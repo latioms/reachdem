@@ -31,5 +31,66 @@
         "settings": "Paramètres"
       }
     }
+  },  "campaigns": {
+    "title": "Campagnes SMS",
+    "sendNow": "Envoyer Maintenant",
+    "new": "Nouvelle campagne SMS",
+    "form": {
+      "project": "Projet",
+      "selectProject": "Sélectionnez un projet",
+      "message": "Message",
+      "messagePlaceholder": "Entrez votre message ici...",
+      "charactersCount": "caractères",
+      "phones": "Numéros de téléphone (séparés par des virgules)",
+      "phonesPlaceholder": "+2376XXXXXXX, +2376YYYYYYY",
+      "importFromFile": "Importer à partir d'un fichier Excel/CSV",
+      "submit": "Envoyer les messages",
+      "sending": "Envoi en cours...",
+      "projectDisabled": "Ce projet est désactivé. Contactez le service client pour en savoir plus."
+    },
+    "toast": {
+      "senderNotFound": "Nom d'expéditeur non trouvé pour ce projet",
+      "insufficientCredits": "Crédits SMS insuffisants. Il vous faut {count} crédit(s), mais il vous reste {available} crédit(s).",
+      "sending": "Envoi des messages en cours...",
+      "success": "Messages envoyés avec succès !",
+      "error": "Une erreur est survenue lors de l'envoi"
+    },
+    "validation": {
+      "messageRequired": "Le message est requis",
+      "messageMaxLength": "Le message ne doit pas dépasser 160 caractères",
+      "phonesRequired": "Veuillez entrer au moins un numéro",
+      "phonesInvalid": "Un ou plusieurs numéros sont invalides",
+      "projectRequired": "Veuillez sélectionner un projet"
+    }
+  },
+  "history": {
+    "title": "Historique",
+    "timeformat":"fr",
+    "table": {
+      "description": "Historique de vos messages",
+      "columns": {
+        "id": "ID",
+        "message": "Message",
+        "recipient": "Destinataire",
+        "status": "Statut",
+        "date": "Date"
+      },
+      "filters": {
+        "allStatuses": "Tous les statuts",
+        "allRecipients": "Tous les destinataires"
+      },
+      "noMessages": "Aucun message trouvé",
+      "loading": "Chargement...",
+      "pagination": {
+        "showing": "Affichage de {start} à {end} sur {total} messages",
+        "previous": "Précédent",
+        "next": "Suivant"
+      }
+    },
+    "status": {
+      "SUCCESS": "SUCCÈS",
+      "PENDING": "EN ATTENTE",
+      "FAILED": "ÉCHEC"
+    }
   }
 }
