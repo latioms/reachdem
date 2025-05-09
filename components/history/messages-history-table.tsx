@@ -35,6 +35,7 @@ export function MessagesHistoryTable({ dictionary }: MessagesHistoryTableProps) 
   // Get unique statuses and receivers for filtering
   const uniqueStatuses = [...new Set(messages.map(message => message.status))]
   const uniqueReceivers = [...new Set(messages.map(message => message.receiver))]
+  
   // Get unique dates for filtering
   const uniqueDates = [...new Set(messages.map(message =>
     new Date(message.$createdAt).toISOString().split('T')[0]
@@ -81,24 +82,13 @@ export function MessagesHistoryTable({ dictionary }: MessagesHistoryTableProps) 
   const currentMessages = filteredMessages.slice(indexOfFirstMessage, indexOfLastMessage);
   const totalPages = Math.ceil(filteredMessages.length / messagesPerPage);  // Format date
 
-  const formatDate = (dateString: string) => {
-    try {
-      const date = parseISO(dateString);
-      // Use 'fr' locale for French, ideally this should come from the dictionary locale
-      const locale = dictionary?.lang === 'en' ? undefined : fr;
-      return format(date, dictionary?.lang === 'en' ? 'MMM dd, yyyy HH:mm' : 'dd MMMM yyyy à HH:mm', { locale });
-    } catch (error) {
-      console.error("Error formatting date:", error);
-      return dateString;
-    }
-  };
   // Format date for filter options
   const formatDateForFilter = (dateString: string) => {
     try {
       const date = parseISO(dateString);
       // Use 'fr' locale for French, or enUS for English with formatDistanceToNow
       let lang = fr 
-      
+
       if (dictionary?.timeFormat === 'enUS') {
         lang = enUS
       } else if (dictionary?.lang === 'fr') {
@@ -111,18 +101,6 @@ export function MessagesHistoryTable({ dictionary }: MessagesHistoryTableProps) 
     }
   };
 
-  // Get relative time (like "il y a 2 heures")
-  const getRelativeTime = (dateString: string) => {
-    try {
-      const date = parseISO(dateString);
-      // Use 'fr' locale for French, ideally this should come from the dictionary locale
-      const locale = dictionary?.lang === 'en' ? undefined : fr;
-      return formatRelative(date, new Date(), { locale });
-    } catch (error) {
-      console.error("Error getting relative time:", error);
-      return dateString;
-    }
-  };// Reset pagination when filters change
   useEffect(() => {
     setCurrentPage(1);
   }, [statusFilter, receiverFilter]);
