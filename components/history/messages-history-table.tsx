@@ -5,7 +5,7 @@ import { getMessagesByUserId } from '@/app/actions/messages/getMessagesByUserId'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { useAuth } from '@/context/authContext'
-import { format, formatRelative, formatDistanceToNow, parseISO } from 'date-fns'
+import {  formatDistanceToNow, parseISO } from 'date-fns'
 import { fr, enUS } from 'date-fns/locale'
 
 interface Message {
@@ -35,7 +35,7 @@ export function MessagesHistoryTable({ dictionary }: MessagesHistoryTableProps) 
   // Get unique statuses and receivers for filtering
   const uniqueStatuses = [...new Set(messages.map(message => message.status))]
   const uniqueReceivers = [...new Set(messages.map(message => message.receiver))]
-  
+
   // Get unique dates for filtering
   const uniqueDates = [...new Set(messages.map(message =>
     new Date(message.$createdAt).toISOString().split('T')[0]
