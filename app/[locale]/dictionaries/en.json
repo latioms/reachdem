@@ -1,0 +1,32 @@
+{
+  "lang": "en",
+  "LocaleSwitcher": {
+    "label": "EN"
+  },
+
+  "sidebar":{
+    "dashboard":{
+      "title": "Dashboard",
+      "items": {
+        "home": "Home"
+      }
+    },
+    "SMS": {
+      "title": "SMS",
+      "items": {
+        "campaigns": "Campaigns",
+        "history": "History",
+        "projects": "Projects",
+        "billing": "Billing"
+      }
+    },
+    "platform": {
+      "title": "Platform",
+      "items": {
+        "help": "Help",
+        "about": "About", 
+        "settings": "Settings"
+      }
+    }
+  }
+}

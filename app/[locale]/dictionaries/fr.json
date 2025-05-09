@@ -1,0 +1,35 @@
+{
+  "lang": "fr",
+  "lang_name": "Français",
+  "hello": "Bonjour",
+  "welcome": "Bienvenue dans notre application !",
+  "LocaleSwitcher": {
+    "label": "FR"
+  },
+  
+  "sidebar":{
+    "dashboard":{
+      "title": "Tableau de bord",
+      "items": {
+        "home": "Accueil"
+      }
+    },
+    "SMS": {
+      "title": "SMS",
+      "items": {
+        "campaigns": "Campagnes",
+        "history": "Historiques",
+        "projects": "Projets",
+        "billing": "Facturation"
+      }
+    },
+    "platform": {
+      "title": "Plateforme",
+      "items": {
+        "help": "Aide",
+        "about": "A propos", 
+        "settings": "Paramètres"
+      }
+    }
+  }
+}

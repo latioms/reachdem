@@ -1,36 +1,27 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+ReachDem
 
-## Getting Started
+ReachDem (anciennement CMPAIGN) est une application d’envoi de messages personnalisés et de campagnes de Messages numériques (SMS et Mails)
 
-First, run the development server:
+ReachDem dispose de plusieurs fonctionnalités majeurs très intéressantes, entre autre : 
+La planification d’envoi de messages (Campagnes programmées)
+Les campagnes directes ! Envoi de message Simultanées direct
+Les services API SMS et Mail (Messages as a Services)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Fonctionnalités:
+L’utilisateur après avoir (i.) créé un compte arrive sur (ii.) une page de création de projet au cas ou il en pas. 10 crédits SMS lui sont pré-fournis mais il a la possibilité d’en recharger davantage s’il le veut. S’il veut effectuer cette recharge il doit se rendre sur la partie Billing ou il (iii.) effectue une recharge en entrant le nombre de crédits qu’il veut recharger et en sélectionnant un moyen de paiement parmi les différents paiements, des (sys) crédits lui sont donc ajoutés en retour en fonction du montant et de la quantité de crédits qu’il a pris. 
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+ Une fois qu’il a maintenant des crédits à disposition, il peut profiter pleinement de l’application.
+Campagnes (Directes et Planifiés)
+La campagne directe se passe comme suit : 
+L’utilisateur clique sur la page Campagnes directs, une fois la page apparaît il clique sur un bouton bien visible “Envoyer Maintenant” ou “Send now” (version traduite)  
+Un boite de Dialog apparaît maintenant sur l'écran avec 3 champs :
+ 
+– Sender_name : une sélection des différents sender_name pré-enregistrés qui correspondent au différents noms de projets (Validés par un administrateur du site) 
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+	– Un champ pour insérer les contacts, l’utilisateur pourra soit : 
+Sélectionner des contacts parmi la liste des contacts déjà préenregistrés 
+Soit entrer les contact lui même (de manière manuelle)
+Soit alors Uploader une fiche excel avec des documents sur un bouton 
+“Dynamic Import” ou l’IA se chargera de sélectionner automatiquement les différents contacts depuis une fiche excel ou un fichier csv
+ 
+Et en plus elle pourra rendre les autres champs dynamiques du fichiers excels réutilisables. e.g:  si dans le fichier excel yavait des des colonnes “phone numbers” et “name”,  On pourra plus tard réutiliser le name en faisant un glisser déposer dans le champ du message de telle sorte qu’on pourra avoir un style du genre  “Bonjour {{ name }}, nous …” avec un preview pour le message qui affichera avec les valeurs d’un champ e.g Preview : “Bonjour Stéphane, nous…” On utilisera Gemini ou OpenAI pour faire ca je crois que Gemin 2.0 flash-lite peut très bien faire l’affaire.
