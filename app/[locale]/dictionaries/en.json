@@ -88,6 +88,23 @@
       "PENDING": "PENDING",
       "FAILED": "FAILED"
     }
+  },  "projects": {
+    "title": "Your projects",
+    "createProject": "Create a project",
+    "createProjectModalTitle": "Create a project",
+    "createProjectModalDesc": "You need to create a project to get started.",
+    "createProjectForCampaigns": "Create a new project to manage your campaigns.",
+    "loading": "Loading projects...",
+    "details": "View details",
+    "form": {
+      "projectName": "Please enter a project name",
+      "projectNamePlaceholder": "ReachDem",
+      "projectNameDescription": "It will be used as SENDER CODE.",
+      "createButtonLabel": "Create a project"
+    },
+    "card": {
+      "senderCode": "Sender code"
+    }
   },
   "billing": {
     "title": "Billing",

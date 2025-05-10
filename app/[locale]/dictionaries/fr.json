@@ -91,7 +91,25 @@
       "PENDING": "EN ATTENTE",
       "FAILED": "ÉCHEC"
     }
-  },  "billing": {
+  },  "projects": {
+    "title": "Vos projets",
+    "createProject": "Créer un projet",
+    "createProjectModalTitle": "Créer un projet",
+    "createProjectModalDesc": "Vous devez créer un projet pour démarrer.",
+    "createProjectForCampaigns": "Créez un nouveau projet pour gérer vos campagnes.",
+    "loading": "Chargement des projets...",
+    "details": "Voir les détails",
+    "form": {
+      "projectName": "Veuillez entrer un nom de projet",
+      "projectNamePlaceholder": "ReachDem",
+      "projectNameDescription": "Il sera utilisé comme CODE EXPEDITEUR.",
+      "createButtonLabel": "Créer un projet"
+    },
+    "card": {
+      "senderCode": "Code expéditeur"
+    }
+  },
+  "billing": {
     "title": "Facturation",
     "timeFormat": "fr",
     "payAsYouGo": "Paiement à l'usage",

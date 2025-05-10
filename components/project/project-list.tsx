@@ -6,13 +6,18 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Button } from "@/components/ui/button"
 import { Label } from "../ui/label"
 
-export function ProjectList({ projects }: { projects: Project[] }) {
-  const router = useRouter()
+interface ProjectListProps {
+  projects: Project[];
+  dictionary?: any;
+}
 
+export function ProjectList({ projects, dictionary }: ProjectListProps) {
+  const router = useRouter()
+  const t = dictionary?.projects || {}
   return (
     <div className="space-y-5 h-screen">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-semibold">Vos projets</h2>
+        <h2 className="text-2xl font-semibold">{t.title || "Vos projets"}</h2>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -22,7 +27,7 @@ export function ProjectList({ projects }: { projects: Project[] }) {
               <CardTitle>{project.sender_name}</CardTitle>
               <CardDescription className="flex items-center justify-between">
                 <span>
-                  Code expéditeur
+                  {t.card?.senderCode || "Code expéditeur"}
                 </span>
                 <Label className={`rounded-full ${project.sms_credits <= 10 ? `bg-destructive` : 'bg-foreground'}  p-1 text-muted`}>
                   {project.sms_credits}
@@ -34,7 +39,7 @@ export function ProjectList({ projects }: { projects: Project[] }) {
             </CardContent>
             <CardFooter>
               <Button variant="outline" onClick={() => router.push(`/dashboard?project=${project.id}`)}>
-                Voir les détails
+                {t.details || "Voir les détails"}
               </Button>
             </CardFooter>
           </Card>
