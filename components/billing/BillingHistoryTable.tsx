@@ -35,7 +35,7 @@ interface Transaction {
   user_id?: string;
 }
 
-export default function BillingHistoryTable({ projectId }: { projectId?: string }) {
+export default function BillingHistoryTable({ projectId, dictionary }: { projectId?: string, dictionary: any }) {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [filteredTransactions, setFilteredTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(true);
@@ -121,30 +121,57 @@ export default function BillingHistoryTable({ projectId }: { projectId?: string 
   const handleRefresh = () => {
     setRefreshTrigger(prev => prev + 1);
   };
-  const getStatusBadge = (status: string) => {
-    switch (status) {
-      case 'success':
-          return <Badge variant="outline" className="text-green-400/80">{status}</Badge>;
-      case 'pending':
-        return <Badge variant="secondary" className="bg-yellow-500 text-black">En attente</Badge>;
-      case 'failed':
-        return <Badge variant="destructive">Échoué</Badge>;
-      default:
-        return <Badge variant="outline">{status}</Badge>;
-    }
+  // Fonction pour déterminer la locale date-fns à utiliser
+  const getDateLocale = () => {
+    return dictionary.timeFormat === 'fr' ? fr : undefined;
   };
 
-  const formatDate = (dateString: string, showRelative = true) => {
-    try {
-      const date = new Date(dateString);
-      if (showRelative) {
-        return formatDistanceToNow(date, { addSuffix: true, locale: fr });
-      } else {
-        return format(date, 'PPP', { locale: fr });
-      }
-    } catch (error) {
-      return dateString;
+  // Mise à jour de la fonction formatDate pour utiliser la locale du dictionnaire
+  const formatDate = (date: string, relative = true) => {
+    if (!date) return '';
+    
+    const dateObj = new Date(date);
+    
+    if (relative) {
+      return formatDistanceToNow(dateObj, { 
+        addSuffix: true,
+        locale: getDateLocale()
+      });
     }
+    
+    return format(dateObj, 'PPp', { 
+      locale: getDateLocale()
+    });
+  };
+
+  // Fonction pour obtenir le badge de statut avec les traductions
+  const getStatusBadge = (status: string) => {
+    let badgeClass = '';
+    let statusText = '';
+    
+    switch (status) {
+      case 'pending':
+        badgeClass = 'bg-yellow-100 text-yellow-700 border-yellow-200';
+        statusText = dictionary.status.pending;
+        break;
+      case 'completed':
+        badgeClass = 'bg-green-100 text-green-700 border-green-200';
+        statusText = dictionary.status.completed;
+        break;
+      case 'failed':
+        badgeClass = 'bg-red-100 text-red-700 border-red-200';
+        statusText = dictionary.status.failed;
+        break;
+      default:
+        badgeClass = 'bg-gray-100 text-gray-700 border-gray-200';
+        statusText = status;
+    }
+    
+    return (
+      <Badge variant="outline" className={`${badgeClass}`}>
+        {statusText}
+      </Badge>
+    );
   };
 
   const formatAmount = (amount: number) => {
@@ -158,12 +185,12 @@ export default function BillingHistoryTable({ projectId }: { projectId?: string 
     return (
       <Card>
         <CardHeader>
-          <CardTitle>Historique des transactions</CardTitle>
+          <CardTitle>{dictionary.history.title}</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="flex justify-center items-center py-8">
             <RefreshCw className="mr-2 h-5 w-5 animate-spin" />
-            <span>Chargement des transactions...</span>
+            <span>{dictionary.history.loading}</span>
           </div>
         </CardContent>
       </Card>
@@ -174,14 +201,13 @@ export default function BillingHistoryTable({ projectId }: { projectId?: string 
     return (
       <Card>
         <CardHeader>
-          <CardTitle>Historique des transactions</CardTitle>
-        </CardHeader>
-        <CardContent>
+          <CardTitle>{dictionary.history.title}</CardTitle>
+        </CardHeader>        <CardContent>
           <div className="text-red-500 py-4 flex flex-col items-center">
             <div className="mb-4">{error}</div>
             <Button variant="outline" onClick={handleRefresh}>
               <RefreshCw className="mr-2 h-4 w-4" />
-              Réessayer
+              {dictionary.history.refresh}
             </Button>
           </div>
         </CardContent>
@@ -193,11 +219,11 @@ export default function BillingHistoryTable({ projectId }: { projectId?: string 
     return (
       <Card>
         <CardHeader>
-          <CardTitle>Historique des transactions</CardTitle>
+          <CardTitle>{dictionary.history.title}</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="text-center py-6 text-muted-foreground">
-            Aucune transaction trouvée
+            {dictionary.history.noTransactions}
           </div>
         </CardContent>
       </Card>
@@ -207,10 +233,10 @@ export default function BillingHistoryTable({ projectId }: { projectId?: string 
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle>Historique des transactions</CardTitle>
+        <CardTitle>{dictionary.history.title}</CardTitle>
         <Button variant="outline" size="sm" onClick={handleRefresh}>
           <RefreshCw className="mr-1 h-4 w-4" />
-          Actualiser
+          {dictionary.history.refresh}
         </Button>
       </CardHeader>
       <CardContent>
@@ -218,7 +244,7 @@ export default function BillingHistoryTable({ projectId }: { projectId?: string 
           <div className="relative w-full md:w-64">
             <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
             <Input
-              placeholder="Rechercher..."
+              placeholder={dictionary.history.filters.search}
               className="pl-8"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -232,21 +258,21 @@ export default function BillingHistoryTable({ projectId }: { projectId?: string 
               <TableRow >
                 <TableHead className="w-[180px] cursor-pointer" onClick={() => handleSort('$createdAt')}>
                   <div className="flex items-center space-x-1">
-                    <span>Date</span>
+                    <span>{dictionary.history.columns.date}</span>
                     <ArrowUpDown className="h-4 w-4" />
                   </div>
                 </TableHead>
                 <TableHead className="cursor-pointer" onClick={() => handleSort('amount')}>
                   <div className="flex items-center space-x-1">
-                    <span>Montant</span>
+                    <span>{dictionary.history.columns.amount}</span>
                     <ArrowUpDown className="h-4 w-4" />
                   </div>
                 </TableHead>
-                <TableHead>Méthode de paiement</TableHead>
-                <TableHead>Projet</TableHead>
+                <TableHead>{dictionary.history.columns.paymentMethod}</TableHead>
+                <TableHead>{dictionary.history.columns.description}</TableHead>
                 <TableHead className="cursor-pointer" onClick={() => handleSort('status')}>
                   <div className="flex items-center space-x-1">
-                    <span>Statut</span>
+                    <span>{dictionary.history.columns.status}</span>
                     <ArrowUpDown className="h-4 w-4" />
                   </div>
                 </TableHead>
@@ -256,7 +282,7 @@ export default function BillingHistoryTable({ projectId }: { projectId?: string 
               {filteredTransactions.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={5} className="text-center py-6 text-muted-foreground">
-                    Aucune transaction trouvée
+                    {dictionary.history.noTransactions}
                   </TableCell>
                 </TableRow>
               ) : (

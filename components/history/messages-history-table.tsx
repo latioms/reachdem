@@ -5,8 +5,8 @@ import { getMessagesByUserId } from '@/app/actions/messages/getMessagesByUserId'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { useAuth } from '@/context/authContext'
-import { format, formatRelative, formatDistance, parseISO } from 'date-fns'
-import { fr } from 'date-fns/locale'
+import {  formatDistanceToNow, parseISO } from 'date-fns'
+import { fr, enUS } from 'date-fns/locale'
 
 interface Message {
   $id: string;
@@ -18,7 +18,11 @@ interface Message {
   $createdAt: string;
 }
 
-export function MessagesHistoryTable() {
+interface MessagesHistoryTableProps {
+  dictionary?: any;
+}
+
+export function MessagesHistoryTable({ dictionary }: MessagesHistoryTableProps) {
   const [messages, setMessages] = useState<Message[]>([])
   const [loading, setLoading] = useState(true)
   const [currentPage, setCurrentPage] = useState(1)
@@ -27,11 +31,13 @@ export function MessagesHistoryTable() {
   const [receiverFilter, setReceiverFilter] = useState<string | null>(null)
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc')
   const { currentUser } = useAuth();
-    // Get unique statuses and receivers for filtering
+
+  // Get unique statuses and receivers for filtering
   const uniqueStatuses = [...new Set(messages.map(message => message.status))]
   const uniqueReceivers = [...new Set(messages.map(message => message.receiver))]
-    // Get unique dates for filtering
-  const uniqueDates = [...new Set(messages.map(message => 
+
+  // Get unique dates for filtering
+  const uniqueDates = [...new Set(messages.map(message =>
     new Date(message.$createdAt).toISOString().split('T')[0]
   ))].sort((a, b) => b.localeCompare(a)); // Sort dates in descending order
 
@@ -39,7 +45,7 @@ export function MessagesHistoryTable() {
     const fetchMessages = async () => {
       try {
         console.log("current account: ", currentUser);
-        
+
         if (currentUser) {
           const response = await getMessagesByUserId(currentUser.id);
           if (response.success && response.messages) {
@@ -61,7 +67,7 @@ export function MessagesHistoryTable() {
       const messageDate = new Date(message.$createdAt).toISOString().split('T')[0];
       return (
         (statusFilter === null || message.status === statusFilter) &&
-        (receiverFilter === null || message.receiver === receiverFilter) 
+        (receiverFilter === null || message.receiver === receiverFilter)
       );
     })
     .sort((a, b) => {
@@ -74,39 +80,27 @@ export function MessagesHistoryTable() {
   const indexOfLastMessage = currentPage * messagesPerPage;
   const indexOfFirstMessage = indexOfLastMessage - messagesPerPage;
   const currentMessages = filteredMessages.slice(indexOfFirstMessage, indexOfLastMessage);
-  const totalPages = Math.ceil(filteredMessages.length / messagesPerPage);
-  // Format date
-  const formatDate = (dateString: string) => {
-    try {
-      const date = parseISO(dateString);
-      return format(date, 'dd MMMM yyyy à HH:mm', { locale: fr });
-    } catch (error) {
-      console.error("Error formatting date:", error);
-      return dateString;
-    }
-  };
-  
+  const totalPages = Math.ceil(filteredMessages.length / messagesPerPage);  // Format date
+
   // Format date for filter options
   const formatDateForFilter = (dateString: string) => {
     try {
       const date = parseISO(dateString);
-      return format(date, 'dd MMMM yyyy', { locale: fr });
+      // Use 'fr' locale for French, or enUS for English with formatDistanceToNow
+      let lang = fr 
+
+      if (dictionary?.timeFormat === 'enUS') {
+        lang = enUS
+      } else if (dictionary?.lang === 'fr') {
+        lang = fr
+      }
+      return formatDistanceToNow(date, { addSuffix: true, locale: lang });
     } catch (error) {
       console.error("Error formatting date for filter:", error);
       return dateString;
     }
   };
-  
-  // Get relative time (like "il y a 2 heures")
-  const getRelativeTime = (dateString: string) => {
-    try {
-      const date = parseISO(dateString);
-      return formatRelative(date, new Date(), { locale: fr });
-    } catch (error) {
-      console.error("Error getting relative time:", error);
-      return dateString;
-    }
-  };  // Reset pagination when filters change
+
   useEffect(() => {
     setCurrentPage(1);
   }, [statusFilter, receiverFilter]);
@@ -124,9 +118,8 @@ export function MessagesHistoryTable() {
         return 'bg-blue-50 text-blue-700 ring-blue-600/20';
     }
   };
-
   if (loading) {
-    return <div>Loading...</div>
+    return <div>{dictionary?.table.loading || "Loading..."}</div>
   }
 
   return (
@@ -135,27 +128,27 @@ export function MessagesHistoryTable() {
         <CardHeader>
           <div className="flex items-center text-center justify-between">
             <div>
-              <CardDescription>Historique de vos messages</CardDescription>
+              <CardDescription>{dictionary?.table.description || "Historique de vos messages"}</CardDescription>
             </div>            <div className="flex gap-2">
               {/* Status filter */}
-              <select 
+              <select
                 className="px-2 py-1 border rounded-md text-sm"
                 onChange={(e) => setStatusFilter(e.target.value === 'all' ? null : e.target.value)}
                 value={statusFilter || 'all'}
               >
-                <option value="all" className='text-white bg-accent' >Tous les statuts</option>
+                <option value="all" className='text-white bg-accent' >{dictionary?.table.filters.allStatuses || "Tous les statuts"}</option>
                 {uniqueStatuses.map(status => (
                   <option className='text-white bg-accent' key={status} value={status}>{status}</option>
                 ))}
               </select>
-              
+
               {/* Receiver filter */}
-              <select 
+              <select
                 className="px-2 py-1 border rounded-md text-sm"
                 onChange={(e) => setReceiverFilter(e.target.value === 'all' ? null : e.target.value)}
                 value={receiverFilter || 'all'}
               >
-                <option className='text-white bg-accent' value="all">Tous les destinataires</option>
+                <option className='text-white bg-accent' value="all">{dictionary?.table.filters.allRecipients || "Tous les destinataires"}</option>
                 {uniqueReceivers.map(receiver => (
                   <option className='text-white bg-accent' key={receiver} value={receiver}>{receiver}</option>
                 ))}
@@ -166,61 +159,61 @@ export function MessagesHistoryTable() {
           </div>
         </CardHeader>
         <CardContent>
-          <div className="relative w-full overflow-auto">
-            <table className="w-full caption-bottom text-sm">
-              <thead className="[&_tr]:border-b">
-                <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">#</th>
-                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">ID</th>
-                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Message</th>
-                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Destinataire</th>
-                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Statut</th>
-                  <th 
-                    className="h-12 px-4 text-left align-middle font-medium text-muted-foreground cursor-pointer hover:text-gray-900 flex items-center"
-                    onClick={() => setSortDirection(prev => prev === 'asc' ? 'desc' : 'asc')}
-                  >
-                    Date
-                    <span className="ml-1">
-                      {sortDirection === 'asc' ? '↑' : '↓'}
-                    </span>
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="[&_tr:last-child]:border-0">
-                {currentMessages.length > 0 ? (
-                  currentMessages.map((message, index) => (
-                    <tr key={message.$id} className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                      <td className="p-4 text-left align-middle">{indexOfFirstMessage + index + 1}</td>
-                      <td className="p-4 text-left align-middle">{message.message_id.substring(0, 8)}...</td>
-                      <td className="p-4 text-left align-middle max-w-[200px] truncate" title={message.content}>{message.content}</td>
-                      <td className="p-4 text-left align-middle">{message.receiver}</td>
-                      <td className="p-4 text-left align-middle">
-                        <span className={`inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset ${getStatusColor(message.status)}`}>
-                          {message.status}
-                        </span>
-                      </td>
-                      <td className="p-4 text-left align-middle">{formatDate(message.$createdAt)}</td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan={6} className="p-4 text-center">Aucun message trouvé</td>
+          <div className="relative w-full overflow-auto">            <table className="w-full caption-bottom text-sm">
+            <thead className="[&_tr]:border-b">
+              <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">#</th>
+                <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">{dictionary?.table.columns.id || "ID"}</th>
+                <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">{dictionary?.table.columns.message || "Message"}</th>
+                <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">{dictionary?.table.columns.recipient || "Destinataire"}</th>
+                <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">{dictionary?.table.columns.status || "Statut"}</th>
+                <th
+                  className="h-12 px-4 text-left align-middle font-medium text-muted-foreground cursor-pointer hover:text-gray-900 flex items-center"
+                  onClick={() => setSortDirection(prev => prev === 'asc' ? 'desc' : 'asc')}
+                >
+                  {dictionary?.table.columns.date || "Date"}
+                  <span className="ml-1">
+                    {sortDirection === 'asc' ? '↑' : '↓'}
+                  </span>
+                </th>
+              </tr>
+            </thead>
+            <tbody className="[&_tr:last-child]:border-0">
+              {currentMessages.length > 0 ? (
+                currentMessages.map((message, index) => (
+                  <tr key={message.$id} className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                    <td className="p-4 text-left align-middle">{indexOfFirstMessage + index + 1}</td>
+                    <td className="p-4 text-left align-middle">{message.message_id.substring(0, 8)}...</td>
+                    <td className="p-4 text-left align-middle max-w-[200px] truncate" title={message.content}>{message.content}</td>
+                    <td className="p-4 text-left align-middle">{message.receiver}</td>
+                    <td className="p-4 text-left align-middle">
+                      <span className={`inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset ${getStatusColor(message.status)}`}>
+                        {dictionary?.status[message.status] || message.status}
+                      </span>
+                    </td>
+                    <td className="p-4 text-left align-middle">{formatDateForFilter(message.$createdAt)}</td>
                   </tr>
-                )}
-              </tbody>
-            </table>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={6} className="p-4 text-center">{dictionary?.table.noMessages || "Aucun message trouvé"}</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
           </div>
-          
           {/* Pagination */}
           {filteredMessages.length > messagesPerPage && (
             <div className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6 mt-4">
               <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
                 <div>
                   <p className="text-sm text-gray-700">
-                    Affichage de <span className="font-medium">{indexOfFirstMessage + 1}</span> à{' '}
-                    <span className="font-medium">
-                      {Math.min(indexOfLastMessage, filteredMessages.length)}
-                    </span>{' '}
-                    sur <span className="font-medium">{filteredMessages.length}</span> messages
+                    {dictionary?.table.pagination.showing
+                      ? dictionary.table.pagination.showing
+                        .replace('{start}', String(indexOfFirstMessage + 1))
+                        .replace('{end}', String(Math.min(indexOfLastMessage, filteredMessages.length)))
+                        .replace('{total}', String(filteredMessages.length))
+                      : `Affichage de ${indexOfFirstMessage + 1} à ${Math.min(indexOfLastMessage, filteredMessages.length)} sur ${filteredMessages.length} messages`
+                    }
                   </p>
                 </div>
                 <div>
@@ -231,7 +224,7 @@ export function MessagesHistoryTable() {
                       disabled={currentPage === 1}
                       className="mr-2"
                     >
-                      Précédent
+                      {dictionary?.table.pagination.previous || "Précédent"}
                     </Button>
                     {[...Array(totalPages)].map((_, index) => {
                       // Show only 5 page numbers
@@ -255,14 +248,13 @@ export function MessagesHistoryTable() {
                         return <span key={index} className="mx-1 flex items-center">...</span>;
                       }
                       return null;
-                    })}
-                    <Button
+                    })}                    <Button
                       variant="outline"
                       onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                       disabled={currentPage === totalPages}
                       className="ml-2"
                     >
-                      Suivant
+                      {dictionary?.table.pagination.next || "Suivant"}
                     </Button>
                   </nav>
                 </div>

@@ -31,5 +31,156 @@
         "settings": "Paramètres"
       }
     }
+  },  "campaigns": {
+    "title": "Campagnes SMS",
+    "sendNow": "Envoyer Maintenant",
+    "new": "Nouvelle campagne SMS",
+    "form": {
+      "project": "Projet",
+      "selectProject": "Sélectionnez un projet",
+      "message": "Message",
+      "messagePlaceholder": "Entrez votre message ici...",
+      "charactersCount": "caractères",
+      "phones": "Numéros de téléphone (séparés par des virgules)",
+      "phonesPlaceholder": "+2376XXXXXXX, +2376YYYYYYY",
+      "importFromFile": "Importer à partir d'un fichier Excel/CSV",
+      "submit": "Envoyer les messages",
+      "sending": "Envoi en cours...",
+      "projectDisabled": "Ce projet est désactivé. Contactez le service client pour en savoir plus."
+    },
+    "toast": {
+      "senderNotFound": "Nom d'expéditeur non trouvé pour ce projet",
+      "insufficientCredits": "Crédits SMS insuffisants. Il vous faut {count} crédit(s), mais il vous reste {available} crédit(s).",
+      "sending": "Envoi des messages en cours...",
+      "success": "Messages envoyés avec succès !",
+      "error": "Une erreur est survenue lors de l'envoi"
+    },
+    "validation": {
+      "messageRequired": "Le message est requis",
+      "messageMaxLength": "Le message ne doit pas dépasser 160 caractères",
+      "phonesRequired": "Veuillez entrer au moins un numéro",
+      "phonesInvalid": "Un ou plusieurs numéros sont invalides",
+      "projectRequired": "Veuillez sélectionner un projet"
+    }
+  },  "history": {
+    "title": "Historique",
+    "timeformat":"fr",
+    "table": {
+      "description": "Historique de vos messages",
+      "columns": {
+        "id": "ID",
+        "message": "Message",
+        "recipient": "Destinataire",
+        "status": "Statut",
+        "date": "Date"
+      },
+      "filters": {
+        "allStatuses": "Tous les statuts",
+        "allRecipients": "Tous les destinataires"
+      },
+      "noMessages": "Aucun message trouvé",
+      "loading": "Chargement...",
+      "pagination": {
+        "showing": "Affichage de {start} à {end} sur {total} messages",
+        "previous": "Précédent",
+        "next": "Suivant"
+      }
+    },
+    "status": {
+      "SUCCESS": "SUCCÈS",
+      "PENDING": "EN ATTENTE",
+      "FAILED": "ÉCHEC"
+    }
+  },  "projects": {
+    "title": "Vos projets",
+    "createProject": "Créer un projet",
+    "createProjectModalTitle": "Créer un projet",
+    "createProjectModalDesc": "Vous devez créer un projet pour démarrer.",
+    "createProjectForCampaigns": "Créez un nouveau projet pour gérer vos campagnes.",
+    "loading": "Chargement des projets...",
+    "details": "Voir les détails",
+    "form": {
+      "projectName": "Veuillez entrer un nom de projet",
+      "projectNamePlaceholder": "ReachDem",
+      "projectNameDescription": "Il sera utilisé comme CODE EXPEDITEUR.",
+      "createButtonLabel": "Créer un projet"
+    },
+    "card": {
+      "senderCode": "Code expéditeur"
+    }
+  },
+  "billing": {
+    "title": "Facturation",
+    "timeFormat": "fr",
+    "payAsYouGo": "Paiement à l'usage",
+    "rechargeCredits": "Recharger vos crédits SMS",
+    "table": {
+      "index": "#",
+      "expCode": "EXP-CODE",
+      "smsCredits": "Crédits SMS",
+      "active": "Actif",
+      "actions": "Actions",
+      "loading": "Chargement...",
+      "recharge": "Recharger"
+    },
+    "history": {
+      "title": "Historique des transactions",
+      "columns": {
+        "id": "ID",
+        "date": "Date",
+        "amount": "Montant",
+        "status": "Statut",
+        "paymentMethod": "Moyen de paiement",
+        "description": "Description",
+        "credits": "Crédits"
+      },
+      "filters": {
+        "all": "Tous les statuts",
+        "pending": "En attente",
+        "completed": "Complété",
+        "failed": "Échoué",
+        "search": "Rechercher..."
+      },
+      "refresh": "Actualiser",
+      "noTransactions": "Aucune transaction trouvée",
+      "loading": "Chargement des transactions..."
+    },
+    "rechargeModal": {
+      "title": "Recharger des crédits SMS",
+      "description": "Ajoutez des crédits SMS à votre compte",
+      "form": {
+        "phone": "OM | MOMO",
+        "phonePlaceholder": "691875974",
+        "smsCount": "Nombre de SMS",
+        "totalAmount": "Montant total",
+        "currency": "XAF",
+        "submit": "Payer maintenant",
+        "processing": "Traitement en cours...",
+        "phoneValidation": "Le numéro doit contenir 9 chiffres",
+        "smsCountMin": "Vous devez recharger au minimum 8 SMS"
+      },
+      "status": {
+        "processing": "Traitement du paiement...",
+        "waitingConfirmation": "Confirmation du paiement en cours, veuillez valider sur votre téléphone et gardez l'onglet ouvert.",
+        "completed": "Paiement effectué avec succès !",
+        "completedDescription": "Votre paiement a été traité avec succès",
+        "failed": "Le paiement a échoué",
+        "failedDescription": "Une erreur est survenue lors du traitement du paiement",
+        "reference": "Référence",
+        "amount": "Montant",
+        "phone": "Téléphone",
+        "close": "Fermer",
+        "retry": "Réessayer"
+      },
+      "errors": {
+        "userEmail": "Impossible de récupérer l'email de l'utilisateur. Veuillez vous reconnecter."
+      }
+    },
+    "status": {
+      "pending": "EN ATTENTE",
+      "completed": "COMPLÉTÉ",
+      "failed": "ÉCHOUÉ",      "enabled": "ACTIVÉ",
+      "disabled": "DÉSACTIVÉ"
+    }
   }
 }

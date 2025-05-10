@@ -13,8 +13,14 @@ import { createProject } from "@/app/actions/project/createProject"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 
-export function ProjectForm({ onSuccess }: { onSuccess?: () => void }): React.JSX.Element {
+interface ProjectFormProps {
+  onSuccess?: () => void;
+  dictionary?: any;
+}
+
+export function ProjectForm({ onSuccess, dictionary }: ProjectFormProps): React.JSX.Element {
   const router = useRouter()
+  const t = dictionary?.projects || {}
 
   const form = useForm<ProjectInput>({
     resolver: zodResolver(projectSchema),
@@ -41,22 +47,21 @@ export function ProjectForm({ onSuccess }: { onSuccess?: () => void }): React.JS
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        <FormField
-          control={form.control}
+        <FormField          control={form.control}
           name="sender_name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Veuillez entrer un nom de projet</FormLabel>
+              <FormLabel>{t.form?.projectName || "Veuillez entrer un nom de projet"}</FormLabel>
               <FormControl>
-                <Input placeholder="ReachDem" {...field} />
+                <Input placeholder={t.form?.projectNamePlaceholder || "ReachDem"} {...field} />
               </FormControl>
-              <FormDescription>Il sera utilisé comme CODE EXPEDITEUR.</FormDescription>
+              <FormDescription>{t.form?.projectNameDescription || "Il sera utilisé comme CODE EXPEDITEUR."}</FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
 
-        <Button type="submit">Créer un projet</Button>
+        <Button type="submit">{t.form?.createButtonLabel || "Créer un projet"}</Button>
       </form>
     </Form>
   )

@@ -26,25 +26,60 @@ import { decreaseSMSCredit } from '@/app/actions/project/credit'
 import { toast } from 'sonner'
 import { Label } from '../ui/label'
 
-const formSchema = z.object({
-  message: z.string().min(1, 'Le message est requis').max(160, 'Le message ne doit pas dépasser 160 caractères'),
-  phones: z
-    .string()
-    .min(1, 'Veuillez entrer au moins un numéro')
-    .refine(
-      (val) => val.split(',').every(p => /^\+?[0-9\s-]+$/.test(p.trim())),
-      { message: 'Un ou plusieurs numéros sont invalides' }
-    ),
-  projectId: z.string().min(1, 'Veuillez sélectionner un projet')
-})
+interface SendFormProps {
+  dictionary?: any;
+}
 
-type FormValues = z.infer<typeof formSchema>
+export default function SMSForm({ dictionary }: SendFormProps) {
+  // Use dictionary with fallback texts
+  const t = dictionary || {
+    form: {
+      project: "Projet",
+      selectProject: "Sélectionnez un projet",
+      message: "Message",
+      messagePlaceholder: "Entrez votre message ici...",
+      charactersCount: "caractères",
+      phones: "Numéros de téléphone (séparés par des virgules)",
+      phonesPlaceholder: "+2376XXXXXXX, +2376YYYYYYY",
+      importFromFile: "Importer à partir d'un fichier Excel/CSV",
+      submit: "Envoyer les messages",
+      sending: "Envoi en cours...",
+      projectDisabled: "Ce projet est désactivé. Contactez le service client pour en savoir plus."
+    },
+    toast: {
+      senderNotFound: "Nom d'expéditeur non trouvé pour ce projet",
+      insufficientCredits: "Crédits SMS insuffisants. Il vous faut {count} crédit(s), mais il vous reste {available} crédit(s).",
+      sending: "Envoi des messages en cours...",
+      success: "Messages envoyés avec succès !",
+      error: "Une erreur est survenue lors de l'envoi"
+    },
+    validation: {
+      messageRequired: "Le message est requis",
+      messageMaxLength: "Le message ne doit pas dépasser 160 caractères",
+      phonesRequired: "Veuillez entrer au moins un numéro",
+      phonesInvalid: "Un ou plusieurs numéros sont invalides",
+      projectRequired: "Veuillez sélectionner un projet"
+    }
+  };
 
-export default function SMSForm() {
+  const formSchema = z.object({
+    message: z.string()
+      .min(1, t.validation.messageRequired)
+      .max(160, t.validation.messageMaxLength),
+    phones: z
+      .string()
+      .min(1, t.validation.phonesRequired)
+      .refine(
+        (val) => val.split(',').every(p => /^\+?[0-9\s-]+$/.test(p.trim())),
+        { message: t.validation.phonesInvalid }
+      ),
+    projectId: z.string().min(1, t.validation.projectRequired)
+  });
+
   const { currentUser } = useAuth()
   const { data: projects, isLoading: projectsLoading } = useUserProjects(currentUser?.id)
 
-  const form = useForm<FormValues>({
+  const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       message: '',
@@ -76,21 +111,22 @@ export default function SMSForm() {
     form.setValue('message', value.slice(0, 160));
   }
 
-  const onSubmit = async (data: FormValues) => {
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
     const phones = data.phones.split(',').map(p => p.trim()).filter(Boolean)
     const selectedProject = projects?.find(p => p.id === data.projectId)
 
     if (!selectedProject?.sender_name) {
-      toast.error('Nom d\'expéditeur non trouvé pour ce projet')
+      toast.error(t.toast.senderNotFound)
       return
     }
 
     // Vérifier si le projet a suffisamment de crédits
     if (!selectedProject.sms_credits || selectedProject.sms_credits < phones.length) {
-      toast.error(
-        `Crédits SMS insuffisants. Il vous faut ${phones.length} crédit${phones.length > 1 ? 's' : ''}, 
-        mais il vous reste ${selectedProject.sms_credits || 0} crédit${selectedProject.sms_credits !== 1 ? 's' : ''}.`
-      )
+      const creditsMessage = t.toast.insufficientCredits
+        .replace('{count}', String(phones.length))
+        .replace('{available}', String(selectedProject.sms_credits || 0));
+      
+      toast.error(creditsMessage)
       return
     }
 
@@ -104,12 +140,12 @@ export default function SMSForm() {
         })
       ),
       {
-        loading: 'Envoi des messages en cours...',
+        loading: t.toast.sending,
         success: (results) => {
           form.reset()
-          return 'Messages envoyés avec succès !'
+          return t.toast.success
         },
-        error: 'Une erreur est survenue lors de l\'envoi'
+        error: t.toast.error
       }
     )
   }
@@ -125,11 +161,11 @@ export default function SMSForm() {
           name="projectId"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Projet</FormLabel>
+              <FormLabel>{t.form.project}</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Sélectionnez un projet" />
+                    <SelectValue placeholder={t.form.selectProject} />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
@@ -150,11 +186,11 @@ export default function SMSForm() {
           name="message"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Message</FormLabel>
+              <FormLabel>{t.form.message}</FormLabel>
               <FormControl>
                 <div className="space-y-2">
                   <Textarea 
-                    placeholder="Entrez votre message ici..." 
+                    placeholder={t.form.messagePlaceholder} 
                     onChange={handleMessageChange}
                     value={field.value}
                   />
@@ -171,7 +207,7 @@ export default function SMSForm() {
                       />
                     </div>
                     <span className="whitespace-nowrap">
-                      {field.value.length}/160 caractères
+                      {field.value.length}/160 {t.form.charactersCount}
                     </span>
                   </div>
                 </div>
@@ -186,12 +222,12 @@ export default function SMSForm() {
           name="phones"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Numéros de téléphone (séparés par des virgules)</FormLabel>
+              <FormLabel>{t.form.phones}</FormLabel>
               <FormControl>
                 <div className="relative">
-                  <Textarea placeholder="+2376XXXXXXX, +2376YYYYYYY" {...field} className="pl-4" />
+                  <Textarea placeholder={t.form.phonesPlaceholder} {...field} className="pl-4" />
                   {/* <TextTooltip
-                    text="Importer à partir d'un fichier Excel/CSV"
+                    text={t.form.importFromFile}
                     button={
                       <Paperclip className="absolute left-2 bottom-2 -rotate-45 h-4 w-4 text-muted-foreground cursor-pointer" onClick={() => alert("Paperclip clicked")} />
                     }
@@ -204,17 +240,17 @@ export default function SMSForm() {
         />
 
         <Button type="submit" className="w-full" disabled={loading || selectedProject?.active !== 'enabled'}>
-          {loading ? 'Envoi en cours...' : 'Envoyer les messages'}
+          {loading ? t.form.sending : t.form.submit}
         </Button>
 
         {selectedProject && selectedProject?.active !== 'enabled' && 
           <div className="text-destructive text-center text-sm">
-            Ce projet est désactivé. Contactez le service client pour en savoir plus.
+            {t.form.projectDisabled}
           </div>
         }
 
         {error && <div className="text-destructive text-center">{error}</div>}
-        {success && <div className="text-primary text-center">Messages envoyés avec succès !</div>}
+        {success && <div className="text-primary text-center">{t.toast.success}</div>}
       </form>
     </Form>
   )

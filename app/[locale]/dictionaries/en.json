@@ -28,5 +28,157 @@
         "settings": "Settings"
       }
     }
+  },  "campaigns": {
+    "title": "SMS Campaigns",
+    "sendNow": "Send Now",
+    "new": "New SMS campaign",
+    "form": {
+      "project": "Project",
+      "selectProject": "Select a project",
+      "message": "Message",
+      "messagePlaceholder": "Enter your message here...",
+      "charactersCount": "characters",
+      "phones": "Phone numbers (separated by commas)",
+      "phonesPlaceholder": "+2376XXXXXXX, +2376YYYYYYY",
+      "importFromFile": "Import from Excel/CSV file",
+      "submit": "Send messages",
+      "sending": "Sending...",
+      "projectDisabled": "This project is disabled. Contact customer service for more information."
+    },
+    "toast": {
+      "senderNotFound": "Sender name not found for this project",
+      "insufficientCredits": "Insufficient SMS credits. You need {count} credit(s), but you have {available} credit(s) left.",
+      "sending": "Sending messages...",
+      "success": "Messages sent successfully!",
+      "error": "An error occurred while sending"
+    },
+    "validation": {
+      "messageRequired": "Message is required",
+      "messageMaxLength": "Message must not exceed 160 characters",
+      "phonesRequired": "Please enter at least one number",
+      "phonesInvalid": "One or more numbers are invalid",
+      "projectRequired": "Please select a project"
+    }
+  },  "history": {
+    "title": "History",
+    "timeFormat": "enUS",
+    "table": {
+      "description": "Message history",
+      "columns": {
+        "id": "ID",
+        "message": "Message",
+        "recipient": "Recipient",
+        "status": "Status",
+        "date": "Date"
+      },
+      "filters": {
+        "allStatuses": "All statuses",
+        "allRecipients": "All recipients"
+      },
+      "noMessages": "No messages found",
+      "loading": "Loading...",
+      "pagination": {
+        "showing": "Showing {start} to {end} of {total} messages",
+        "previous": "Previous",
+        "next": "Next"
+      }
+    },
+    "status": {
+      "SUCCESS": "SUCCESS",
+      "PENDING": "PENDING",
+      "FAILED": "FAILED"
+    }
+  },  "projects": {
+    "title": "Your projects",
+    "createProject": "Create a project",
+    "createProjectModalTitle": "Create a project",
+    "createProjectModalDesc": "You need to create a project to get started.",
+    "createProjectForCampaigns": "Create a new project to manage your campaigns.",
+    "loading": "Loading projects...",
+    "details": "View details",
+    "form": {
+      "projectName": "Please enter a project name",
+      "projectNamePlaceholder": "ReachDem",
+      "projectNameDescription": "It will be used as SENDER CODE.",
+      "createButtonLabel": "Create a project"
+    },
+    "card": {
+      "senderCode": "Sender code"
+    }
+  },
+  "billing": {
+    "title": "Billing",
+    "timeFormat": "enUS",
+    "payAsYouGo": "Pay as you Go",
+    "rechargeCredits": "Recharge your SMS credits",
+    "table": {
+      "index": "#",
+      "expCode": "EXP-CODE",
+      "smsCredits": "SMS Credits",
+      "active": "Active",
+      "actions": "Actions",
+      "loading": "Loading...",
+      "recharge": "Recharge"
+    },
+    "history": {
+      "title": "Transaction History",
+      "columns": {
+        "id": "ID",
+        "date": "Date",
+        "amount": "Amount",
+        "status": "Status",
+        "paymentMethod": "Payment Method",
+        "description": "Description",
+        "credits": "Credits"
+      },
+      "filters": {
+        "all": "All statuses",
+        "pending": "Pending",
+        "completed": "Completed",
+        "failed": "Failed",
+        "search": "Search..."
+      },
+      "refresh": "Refresh",
+      "noTransactions": "No transactions found",
+      "loading": "Loading transactions..."
+    },
+    "rechargeModal": {
+      "title": "Recharge SMS Credits",
+      "description": "Add SMS credits to your account",
+      "form": {
+        "phone": "OM | MOMO",
+        "phonePlaceholder": "691875974",
+        "smsCount": "Number of SMS",
+        "totalAmount": "Total amount",
+        "currency": "XAF",
+        "submit": "Pay now",
+        "processing": "Processing...",
+        "phoneValidation": "The number must contain 9 digits",
+        "smsCountMin": "You must recharge a minimum of 8 SMS"
+      },
+      "status": {
+        "processing": "Processing payment...",
+        "waitingConfirmation": "Waiting for confirmation...",
+        "completed": "Payment confirmed!",
+        "completedDescription": "Your payment has been processed successfully",
+        "failed": "Payment failed",
+        "failedDescription": "An error occurred while processing the payment",
+        "reference": "Reference",
+        "amount": "Amount",
+        "phone": "Phone",
+        "close": "Close",
+        "retry": "Retry"
+      },
+      "errors": {
+        "userEmail": "Unable to retrieve user email. Please log in again."
+      }
+    },
+    "status": {
+      "pending": "PENDING",
+      "completed": "COMPLETED",
+      "failed": "FAILED",
+      "enabled": "ENABLED",
+      "disabled": "DISABLED"
+    }
   }
 }

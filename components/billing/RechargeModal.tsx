@@ -11,9 +11,10 @@ import { createTransaction } from "@/app/actions/transactions/createTransaction"
 
 interface RechargeModalProps {
   projectId: string;
+  dictionary: any;
 }
 
-export function RechargeModal({ projectId }: RechargeModalProps) {
+export function RechargeModal({ projectId, dictionary }: RechargeModalProps) {
   const { currentUser } = useAuth()
   const { 
     setReference, 
@@ -39,7 +40,7 @@ export function RechargeModal({ projectId }: RechargeModalProps) {
     storeError(null)
 
     if (!currentUser?.email) {
-      const msg = "Impossible de récupérer l\\'email de l\\'utilisateur. Veuillez vous reconnecter."
+      const msg = dictionary.rechargeModal.errors.userEmail
       setError(msg)
       storeError(msg)
       setLoading(false)
@@ -133,13 +134,13 @@ export function RechargeModal({ projectId }: RechargeModalProps) {
   return (
     <DialogContent>
       <DialogHeader>
-        <DialogTitle>Recharger vos crédits</DialogTitle>
+        <DialogTitle>{dictionary.rechargeModal.title}</DialogTitle>
         <DialogDescription>
           {currentStep === "form"
-            ? "Entrez votre numéro de téléphone et le nombre de SMS à recharger."
+            ? dictionary.rechargeModal.description
             : transactionData.reference 
-            ? "Confirmation du paiement en cours, Veuillez valider sur votre téléphone et gardez l'onglet ouvert."
-            : "Chargement..."}
+            ? dictionary.rechargeModal.status.waitingConfirmation
+            : dictionary.rechargeModal.status.processing}
           {error && currentStep === "form" && (
             <p className="text-red-500 text-sm mt-2">{error}</p>
           )}
@@ -147,7 +148,7 @@ export function RechargeModal({ projectId }: RechargeModalProps) {
       </DialogHeader>
 
       {currentStep === "form" ? (
-        <FormStep onSubmit={handleSubmit} loading={loading} />
+        <FormStep onSubmit={handleSubmit} loading={loading} dictionary={dictionary} />
       ) : (
         <StatusStep 
           reference={transactionData.reference} 
@@ -155,6 +156,7 @@ export function RechargeModal({ projectId }: RechargeModalProps) {
           phone={transactionData.phone}
           projectId={projectId}
           smsCount={transactionData.smsCount!}
+          dictionary={dictionary}
         />
       )}
     </DialogContent>

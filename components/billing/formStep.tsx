@@ -19,9 +19,10 @@ export type FormStepValues = z.infer<typeof formSchema>
 interface FormStepProps {
   onSubmit: (values: FormStepValues) => Promise<void>
   loading?: boolean
+  dictionary: any
 }
 
-export function FormStep({ onSubmit, loading = false }: FormStepProps) {
+export function FormStep({ onSubmit, loading = false, dictionary }: FormStepProps) {
   const form = useForm<FormStepValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -43,9 +44,9 @@ export function FormStep({ onSubmit, loading = false }: FormStepProps) {
             name="phone"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-sm text-muted-foreground">OM | MOMO</FormLabel>
+                <FormLabel className="text-sm text-muted-foreground">{dictionary.rechargeModal.form.phone}</FormLabel>
                 <FormControl>
-                  <Input placeholder="691875974" {...field} />
+                  <Input placeholder={dictionary.rechargeModal.form.phonePlaceholder} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -57,7 +58,7 @@ export function FormStep({ onSubmit, loading = false }: FormStepProps) {
             name="smsCount"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-sm text-muted-foreground">Nombre de SMS</FormLabel>
+                <FormLabel className="text-sm text-muted-foreground">{dictionary.rechargeModal.form.smsCount}</FormLabel>
                 <FormControl>
                   <Input 
                     type="number" 
@@ -73,7 +74,7 @@ export function FormStep({ onSubmit, loading = false }: FormStepProps) {
 
           <div className="py-2">
             <div className="rounded-lg bg-muted/30 p-4">
-              <p className="text-center text-2xl font-semibold">{totalAmount} XAF</p>
+              <p className="text-center text-2xl font-semibold">{totalAmount} {dictionary.rechargeModal.form.currency}</p>
               <p className="text-center text-xs text-muted-foreground">TTC (Taxe 3.5%): {(totalAmount * 1.035).toFixed(1)}</p>
             </div>
           </div>
@@ -83,7 +84,7 @@ export function FormStep({ onSubmit, loading = false }: FormStepProps) {
             className="w-full bg-secondary-foreground"
             disabled={loading}
           >
-            {loading ? "Traitement en cours..." : "Recharger"}
+            {loading ? dictionary.rechargeModal.form.processing : dictionary.rechargeModal.form.submit}
           </Button>
         </form>
       </Form>

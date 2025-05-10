@@ -14,8 +14,12 @@ import SendForm  from "./send-form"
 // Constante pour la limite de caractères SMS
 const SMS_CHARACTER_LIMIT = 160
 
+interface DialogCampaignProps {
+    children: React.ReactNode;
+    dictionary?: any;
+}
 
-export function DialogCampaign({ children }: { children: React.ReactNode }) {
+export function DialogCampaign({ children, dictionary }: DialogCampaignProps) {
     const [open, setOpen] = useState(false)
     const [message, setMessage] = useState("")
     const [characterCount, setCharacterCount] = useState(0)
@@ -30,12 +34,11 @@ export function DialogCampaign({ children }: { children: React.ReactNode }) {
                 <DialogTrigger asChild>{children}</DialogTrigger>
                 <DialogContent className="max-w-2xl w-full">
                     <DialogHeader>
-                        <DialogTitle>Nouvelle campagne SMS</DialogTitle>
+                        <DialogTitle>{dictionary?.new || "Nouvelle campagne SMS"}</DialogTitle>
                     </DialogHeader>
-                    <SendForm />
+                    <SendForm dictionary={dictionary} />
                 </DialogContent>
             </Dialog>
         </>
     )
-
 }

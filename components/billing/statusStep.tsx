@@ -17,6 +17,7 @@ interface StatusStepProps {
   onClose?: () => void
   projectId: string
   smsCount: number
+  dictionary: any
 }
 
 export function StatusStep({ 
@@ -25,7 +26,8 @@ export function StatusStep({
   phone, 
   onClose,
   projectId,
-  smsCount 
+  smsCount,
+  dictionary
 }: StatusStepProps) {  const { status, setStatus, transactionId } = usePaymentStore()
   const { currentUser } = useAuth()
   const isCompleted = status === "complete"
@@ -111,27 +113,27 @@ export function StatusStep({
 
         <p className="text-lg font-semibold">
           {isCompleted 
-            ? "Paiement effectué avec succès" 
+            ? dictionary.rechargeModal.status.completed 
             : status === "failed" 
-              ? "Le paiement a échoué" 
-              : "Veuillez confirmer le paiement sur votre téléphone"
+              ? dictionary.rechargeModal.status.failed 
+              : dictionary.rechargeModal.status.waitingConfirmation
           }
         </p>
       </div>
 
       <div className="rounded-lg bg-muted/30 p-4 space-y-3">
         <div className="flex justify-between items-center">
-          <span className="text-muted-foreground">Référence:</span>
+          <span className="text-muted-foreground">{dictionary.rechargeModal.status.reference}:</span>
           <span className="font-medium">{reference}</span>
         </div>
 
         <div className="flex justify-between items-center">
-          <span className="text-muted-foreground">Montant:</span>
-          <span className="font-medium">{amount} XAF</span>
+          <span className="text-muted-foreground">{dictionary.rechargeModal.status.amount}:</span>
+          <span className="font-medium">{amount} {dictionary.rechargeModal.form.currency}</span>
         </div>
 
         <div className="flex justify-between items-center">
-          <span className="text-muted-foreground">Téléphone:</span>
+          <span className="text-muted-foreground">{dictionary.rechargeModal.status.phone}:</span>
           <span className="font-medium">{phone}</span>
         </div>
       </div>
