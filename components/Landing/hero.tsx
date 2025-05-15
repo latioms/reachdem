@@ -3,12 +3,26 @@
 import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, CheckCircle, MessageSquare, User } from "lucide-react"
+import { IntroDisclosure } from "@/components/ui/intro-disclosure"
+import { steps } from "@/constants/steps"
 
 export default function Hero() {
+	const [showGuide, setShowGuide] = useState(false)
+
+	useEffect(() => {
+		// Vérifier si c'est la première visite
+		const hasVisited = localStorage.getItem("has_visited_before")
+		if (!hasVisited) {
+			// Si c'est la première visite, montrer le guide et marquer comme visité
+			setShowGuide(true)
+			localStorage.setItem("has_visited_before", "true")
+		}
+	}, [])
+
 	return (
 		<div className="min-h-screen bg-background">
 			<div className="container mx-auto px-4 lg:px-24 py-16 md:py-24 lg:py-20">
-				<div className="grid gap-8 lg:grid-cols-2 lg:gap-12 items-center">
+				<div className="grid gap-8 lg:grid-cols-2 lg:gap-10 items-center">
 					{/* Contenu textuel */}
 					<div className="space-y-6">
 						<div className="inline-flex items-center rounded-full border border-border bg-card px-3 py-1 text-sm">
@@ -23,11 +37,11 @@ export default function Hero() {
 							Maximisez l&apos;impact de vos communications en touchant tous vos clients grâce aux <span className="text-primary">SMS</span>.
 						</p>
 						<div className="flex flex-col sm:flex-row gap-4">
-							<Button size="lg"  className="bg-primary hover:bg-primary/90 text-primary-foreground">
+							<Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">
 								<a href="/register">Commencer gratuitement</a>
 								<ArrowRight className="ml-2 h-4 w-4" />
 							</Button>
-							<Button size="lg" variant="outline">
+							<Button size="lg" variant="outline" onClick={() => setShowGuide(true)}>
 								Voir la démo
 							</Button>
 						</div>
@@ -44,11 +58,26 @@ export default function Hero() {
 					</div>
 
 					{/* Animation de messages */}
-					<div className="relative">
+					<div className="relative flex justify-center">
 						<PhoneMockup />
 					</div>
 				</div>
 			</div>
+
+			{/* Guide interactif */}
+			<IntroDisclosure
+				steps={steps}
+				open={showGuide}
+				setOpen={setShowGuide}
+				featureId="main-tour"
+				showProgressBar={true}
+				onComplete={() => {
+					console.log("Tour completed")
+				}}
+				onSkip={() => {
+					console.log("Tour skipped")
+				}}
+			/>
 		</div>
 	)
 }

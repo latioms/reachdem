@@ -8,18 +8,17 @@ import {
 
  const About = () => {
   return (
-    <section className="py-32">
+    <section className="py-20 px-4 lg:px-24">
       {/* Hero Section */}
       <section className="relative container max-w-5xl py-10 md:py-12 lg:py-15">
         <div className="">
           <h1 className="text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl">
-            A different
+            ReachDem: Révolutionner
             <br />
-            kind of bank.
+            la communication par SMS.
           </h1>
           <p className="mt-4 max-w-2xl text-2xl text-muted-foreground md:text-3xl">
-            We&apos;re on a mission to transform financial services by
-            harnessing vast amounts of untapped financial data.
+            Conçu par Latioms.co pour simplifier et démocratiser l&apos;envoi de SMS professionnels au Cameroun et bientôt en Afrique centrale.
           </p>
         </div>
         {/* Background decoration */}
@@ -37,35 +36,35 @@ import {
       {/* Stats Section */}
       <section className="container max-w-5xl border-y py-5">
         <h2 className="font-mono text-sm font-semibold tracking-widest text-accent-foreground">
-          By the numbers
+          Latioms.co en chiffres
         </h2>
         <div className="mt-6 grid grid-cols-2 gap-8 md:grid-cols-4">
           <div>
             <h3 className="text-4xl font-medium tracking-tight md:text-5xl lg:text-6xl">
-              $150M
+              +113
             </h3>
-            <p className="mt-1 font-medium text-muted-foreground">Raised</p>
+            <p className="mt-1 font-medium text-muted-foreground">Personnes formés</p>
           </div>
           <div>
             <h3 className="text-4xl font-medium tracking-tight md:text-5xl lg:text-6xl">
-              20K
+              +100
             </h3>
-            <p className="mt-1 font-medium text-muted-foreground">Companies</p>
+            <p className="mt-1 font-medium text-muted-foreground">Projets réalisés</p>
           </div>
           <div>
             <h3 className="text-4xl font-medium tracking-tight md:text-5xl lg:text-6xl">
-              1.3B
+              +50M
             </h3>
             <p className="mt-1 font-medium text-muted-foreground">
-              Monthly transactions
+              Chiffre d&apos;affaires (FCFA)
             </p>
           </div>
           <div>
             <h3 className="text-4xl font-medium tracking-tight md:text-5xl lg:text-6xl">
-              1.5K
+              N°1
             </h3>
             <p className="mt-1 font-medium text-muted-foreground">
-              Connections per minute
+              Innovation SMS en Afrique Centrale
             </p>
           </div>
         </div>
@@ -75,23 +74,14 @@ import {
       <section className="container max-w-5xl py-10 md:py-12 lg:py-15">
         <div className="max-w-2xl space-y-5 md:space-y-8 lg:space-y-10">
           <p className="text-lg">
-            Financial services have changed, are changing, and will continue to
-            change — for the better. Now is the time for finance to be
-            developer-first and API-driven. But in order to do this — it needs a
-            new foundation.
+            ReachDem est né d&apos;une vision claire : rendre la communication par SMS accessible, efficace et puissante pour toutes les entreprises. Latioms.co, fort de son expérience dans la création de solutions SaaS innovantes, a identifié un besoin crucial pour un outil de campagne SMS moderne et adapté aux réalités du marché local.
           </p>
 
           <h2 className="text-2xl font-medium tracking-tight md:text-3xl">
-            We were always told that banks can&apos;t be platforms.
+            Notre mission : démocratiser l&apos;accès à des outils de communication performants.
           </h2>
           <p className="text-lg">
-            Everyone tried fixing the problem by layering APIs on legacy
-            systems, creating abstractions and inefficiencies. We have spent
-            years building and scaling companies like Plaid, Stripe, and Affirm,
-            confronting these limitations firsthand. The current solutions
-            aren&apos;t good enough. We believe that banking infrastructure must
-            be reimagined as an API platform. But we had to start from ground
-            zero.
+            Nous croyons que chaque entreprise, quelle que soit sa taille, mérite des outils capables de propulser sa croissance. ReachDem incarne cet engagement, en offrant une plateforme intuitive et robuste, conçue pour simplifier la gestion de campagnes SMS et maximiser leur impact.
           </p>
         </div>
       </section>
@@ -108,7 +98,7 @@ import {
               <div className="relative h-[330px] lg:h-[440px] xl:h-[600px]">
                 <img
                   src="https://shadcnblocks.com/images/block/placeholder-1.svg"
-                  alt="Charter team member working"
+                  alt="Équipe ReachDem en action"
                   className="object-cover"
                 />
               </div>
@@ -117,7 +107,7 @@ import {
               <div className="relative h-[330px] lg:h-[440px] xl:h-[600px]">
                 <img
                   src="https://shadcnblocks.com/images/block/placeholder-1.svg"
-                  alt="Modern workspace setup"
+                  alt="Interface utilisateur ReachDem"
                   className="object-cover"
                 />
               </div>
@@ -126,7 +116,7 @@ import {
               <div className="relative h-[330px] lg:h-[440px] xl:h-[600px]">
                 <img
                   src="https://shadcnblocks.com/images/block/placeholder-1.svg"
-                  alt="Team collaboration"
+                  alt="Collaboration chez Latioms.co"
                   className="object-cover"
                 />
               </div>
@@ -135,50 +125,37 @@ import {
         </Carousel>
       </section>
 
-      {/* CoreAPI Section */}
+      {/* CoreAPI Section (Renamed to Latioms.co Expertise) */}
       <section className="container">
         <div className="mr-0 ml-auto max-w-2xl space-y-5 md:space-y-8 lg:space-y-10">
           <p className="text-lg">
-            We started building CoreAPI in 2019 and launched in 2022. Every
-            endpoint has been designed from the ground up — with no technical
-            debt or legacy systems. We are purpose-built to power financial
-            innovation for the next hundred years.
+            Latioms.co, la société mère de ReachDem, est spécialisée dans la création de projets informatiques sur mesure, notamment des solutions SaaS, et dans la formation de talents dans le domaine de l&apos;informatique. Notre expertise nous permet de développer des outils performants et adaptés aux besoins spécifiques de nos utilisateurs.
           </p>
 
           <h2 className="text-2xl font-medium tracking-tight md:text-3xl">
-            We are a bit of a unique company — not your standard tech or fintech
-            company.
+            Une approche centrée sur l&apos;innovation et la formation.
           </h2>
 
           <p className="text-lg">
-            We are 100% founder and team-owned, profitable, and we keep our team
-            lean. Over time, this page will become more polished, but for now,
-            we&apos;re focused on delivering for developers.
+            Avec une solide expérience dans la réalisation de projets d&apos;envergure et la formation de plus d&apos;une centaine de professionnels, Latioms.co s&apos;engage à fournir des solutions qui font la différence. ReachDem est le fruit de cette passion pour l&apos;innovation et de notre volonté de contribuer au développement numérique.
           </p>
         </div>
       </section>
 
-      {/* Founding Team Section */}
+      {/* Founding Team Section (Focus on Latioms.co) */}
       <section className="container py-10 md:py-12 lg:py-15">
         <div className="grid gap-5 md:grid-cols-2 md:gap-10 lg:gap-16">
           <div className="order-2 md:order-1">
             <h2 className="text-4xl font-semibold tracking-tight md:text-4xl">
-              The founding team
+              Fondé par Latioms.co
             </h2>
             <p className="mt-5 text-lg md:mt-6">
-              We started building CoreAPI in 2019 and launched in 2022. Every
-              endpoint has been designed from the ground up — with no technical
-              debt or legacy systems. We are purpose-built to power financial
-              innovation for the next hundred years. We are 100% founder and
-              team-owned, profitable, and we keep our team lean. Over time, this
-              page will become more polished, but for now, we&apos;re focused on
-              delivering for developers. If you&apos;re interested in building
-              the future of financial APIs, check out our open roles below.
+              ReachDem est un projet ambitieux porté par Latioms.co. Notre expertise dans la création de SaaS et la formation en informatique nous a permis de concevoir une plateforme SMS robuste et intuitive. Nous sommes dédiés à l&apos;innovation continue pour offrir les meilleurs outils de communication à nos clients au Cameroun et au-delà. Notre objectif est de simplifier vos campagnes SMS et de maximiser votre portée.
             </p>
           </div>
           <img
             src="https://shadcnblocks.com/images/block/placeholder-1.svg"
-            alt="Founding team collaboration"
+            alt="L'équipe Latioms.co"
             width={480}
             height={400}
             className="order-1 object-cover md:order-2"
