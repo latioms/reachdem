@@ -45,7 +45,7 @@ export default async function RootLayout({
             {!isAuthenticated && (
               <>
                 <NavBar />
-                <main className="container mx-auto p-4">{children}</main>
+                <main>{children}</main>
               </>
             )}
             {isAuthenticated && (
