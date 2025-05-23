@@ -15,7 +15,7 @@ import {
           <h1 className="text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl">
             ReachDem: Révolutionner
             <br />
-            la communication par SMS.
+            la communication des entreprises.
           </h1>
           <p className="mt-4 max-w-2xl text-2xl text-muted-foreground md:text-3xl">
             Conçu par Latioms.co pour simplifier et démocratiser l&apos;envoi de SMS professionnels au Cameroun et bientôt en Afrique centrale.
