@@ -8,7 +8,7 @@ import {
 
  const About = () => {
   return (
-    <section className="py-20 px-4 lg:px-24">
+    <section className="py-20z px-4 lg:px-24">
       {/* Hero Section */}
       <section className="relative container max-w-5xl py-10 md:py-12 lg:py-15">
         <div className="">
@@ -97,27 +97,27 @@ import {
             <CarouselItem className="basis-[80%] lg:basis-1/3 xl:basis-[40%]">
               <div className="relative h-[330px] lg:h-[440px] xl:h-[600px]">
                 <img
-                  src="https://shadcnblocks.com/images/block/placeholder-1.svg"
-                  alt="Équipe ReachDem en action"
-                  className="object-cover"
+                  src="/images/homme-phone.jpg"
+                  alt="Main tenant un téléphone"
+                  className="aspect square w-full h-full object-cover"
                 />
               </div>
             </CarouselItem>
             <CarouselItem className="basis-[80%] lg:basis-1/3 xl:basis-[40%]">
               <div className="relative h-[330px] lg:h-[440px] xl:h-[600px]">
                 <img
-                  src="https://shadcnblocks.com/images/block/placeholder-1.svg"
-                  alt="Interface utilisateur ReachDem"
-                  className="object-cover"
+                  src="/images/pommette-noire-entreprise.jpg" 
+                  alt="Femme souriante travaillant sur ordinateur portable"
+                  className="w-full h-full object-cover"
                 />
               </div>
             </CarouselItem>
             <CarouselItem className="basis-[80%] lg:basis-1/3 xl:basis-[40%]">
               <div className="relative h-[330px] lg:h-[440px] xl:h-[600px]">
                 <img
-                  src="https://shadcnblocks.com/images/block/placeholder-1.svg"
-                  alt="Collaboration chez Latioms.co"
-                  className="object-cover"
+                  src="/images/woman-phone-student.jpg"
+                  alt="Femme souriante regardant son téléphone"
+                  className="w-full h-full object-cover"
                 />
               </div>
             </CarouselItem>
@@ -154,11 +154,11 @@ import {
             </p>
           </div>
           <img
-            src="https://shadcnblocks.com/images/block/placeholder-1.svg"
-            alt="L'équipe Latioms.co"
+            src="/images/LATIOMS.CO.svg"
+            alt="Latioms.co"
             width={480}
             height={400}
-            className="order-1 object-cover md:order-2"
+            className="order-1 shadow-xl object-cover md:order-2"
           />
         </div>
       </section>
