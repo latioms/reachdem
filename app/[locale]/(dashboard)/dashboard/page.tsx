@@ -98,7 +98,7 @@ export default async function Page() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <MessageSquare className="h-5 w-5" />
-              {t.history?.table?.title || "Messages History"}
+              {t.history?.table?.description || "Messages History"}
             </CardTitle>
             <CardDescription>
               Consultez l'historique de vos envois SMS récents
