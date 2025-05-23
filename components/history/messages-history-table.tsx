@@ -5,7 +5,7 @@ import { getMessagesByUserId } from '@/app/actions/messages/getMessagesByUserId'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { useAuth } from '@/context/authContext'
-import {  formatDistanceToNow, parseISO } from 'date-fns'
+import { formatDistanceToNow, parseISO } from 'date-fns'
 import { fr, enUS } from 'date-fns/locale'
 
 interface Message {
@@ -87,7 +87,7 @@ export function MessagesHistoryTable({ dictionary }: MessagesHistoryTableProps) 
     try {
       const date = parseISO(dateString);
       // Use 'fr' locale for French, or enUS for English with formatDistanceToNow
-      let lang = fr 
+      let lang = fr
 
       if (dictionary?.timeFormat === 'enUS') {
         lang = enUS
@@ -159,47 +159,49 @@ export function MessagesHistoryTable({ dictionary }: MessagesHistoryTableProps) 
           </div>
         </CardHeader>
         <CardContent>
-          <div className="relative w-full overflow-auto">            <table className="w-full caption-bottom text-sm">
-            <thead className="[&_tr]:border-b">
-              <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">#</th>
-                <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">{dictionary?.table.columns.id || "ID"}</th>
-                <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">{dictionary?.table.columns.message || "Message"}</th>
-                <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">{dictionary?.table.columns.recipient || "Destinataire"}</th>
-                <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">{dictionary?.table.columns.status || "Statut"}</th>
-                <th
-                  className="h-12 px-4 text-left align-middle font-medium text-muted-foreground cursor-pointer hover:text-gray-900 flex items-center"
-                  onClick={() => setSortDirection(prev => prev === 'asc' ? 'desc' : 'asc')}
-                >
-                  {dictionary?.table.columns.date || "Date"}
-                  <span className="ml-1">
-                    {sortDirection === 'asc' ? '↑' : '↓'}
-                  </span>
-                </th>
-              </tr>
-            </thead>
-            <tbody className="[&_tr:last-child]:border-0">
-              {currentMessages.length > 0 ? (
-                currentMessages.map((message, index) => (
-                  <tr key={message.$id} className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                    <td className="p-4 text-left align-middle">{indexOfFirstMessage + index + 1}</td>
-                    <td className="p-4 text-left align-middle">{message.message_id.substring(0, 8)}...</td>
-                    <td className="p-4 text-left align-middle max-w-[200px] truncate" title={message.content}>{message.content}</td>
-                    <td className="p-4 text-left align-middle">{message.receiver}</td>
-                    <td className="p-4 text-left align-middle">
-                      <span className={`inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset ${getStatusColor(message.status)}`}>
-                        {dictionary?.status[message.status] || message.status}
-                      </span>
-                    </td>
-                    <td className="p-4 text-left align-middle">{formatDateForFilter(message.$createdAt)}</td>
-                  </tr>
-                ))
-              ) : (
+          <div className="relative w-full overflow-auto">
+            <table className="w-full caption-bottom text-sm">
+              <thead className="[&_tr]:border-b">
                 <tr>
-                  <td colSpan={6} className="p-4 text-center">{dictionary?.table.noMessages || "Aucun message trouvé"}</td>
+                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">#</th>
+                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">{dictionary?.table.columns.id || "ID"}</th>
+                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">{dictionary?.table.columns.message || "Message"}</th>
+                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">{dictionary?.table.columns.recipient || "Destinataire"}</th>
+                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">{dictionary?.table.columns.status || "Statut"}</th>
+                  <th
+                    className="h-12 px-4 text-left align-middle font-medium text-muted-foreground cursor-pointer hover:text-gray-900 flex items-center"
+                    onClick={() => setSortDirection(prev => prev === 'asc' ? 'desc' : 'asc')}
+                  >
+                    {dictionary?.table.columns.date || "Date"}
+                    <span className="ml-1">
+                      {sortDirection === 'asc' ? '↑' : '↓'}
+                    </span>
+                  </th>
                 </tr>
-              )}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="[&_tr:last-child]:border-0">
+                {currentMessages.length > 0 ? (
+                  currentMessages.map((message, index) => (
+                    <tr key={message.$id} className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                      <td className="p-4 text-left align-middle">{indexOfFirstMessage + index + 1}</td>
+                      <td className="p-4 text-left align-middle">{message.message_id.substring(0, 8)}...</td>
+                      <td className="p-4 text-left align-middle max-w-[200px] truncate" title={message.content}>{message.content}</td>
+                      <td className="p-4 text-left align-middle">{message.receiver}</td>
+                      <td className="p-4 text-left align-middle">
+                        <span className={`inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset ${getStatusColor(message.status)}`}>
+                          {dictionary?.status[message.status] || message.status}
+                        </span>
+                      </td>
+                      <td className="p-4 text-left align-middle">{formatDateForFilter(message.$createdAt)}</td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan={6} className="p-4 text-center">{dictionary?.table.noMessages || "Aucun message trouvé"}</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
           </div>
           {/* Pagination */}
           {filteredMessages.length > messagesPerPage && (
