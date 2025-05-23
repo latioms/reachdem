@@ -64,7 +64,7 @@ export function ProjectList({ projects, dictionary }: ProjectListProps) {
                 displayUrl={generateDisplayURL(project)}
                 trigger={
                   <Button variant="outline" size="sm" className="shrink-0">
-                    <MessageCircle className="h-4 w-4" />
+                    Activer <MessageCircle className="h-4 w-4" />
                   </Button>
                 }
                 title="Contact WhatsApp"
