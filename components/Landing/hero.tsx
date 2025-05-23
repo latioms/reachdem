@@ -6,7 +6,11 @@ import { ArrowRight, CheckCircle, MessageSquare, User } from "lucide-react"
 import { IntroDisclosure } from "@/components/ui/intro-disclosure"
 import { steps } from "@/constants/steps"
 
-export default function Hero() {
+interface HeroProps {
+  dictionary?: any;
+}
+
+export default function Hero({dictionary}: HeroProps) {
 	const [showGuide, setShowGuide] = useState(false)
 
 	useEffect(() => {
@@ -27,32 +31,33 @@ export default function Hero() {
 					<div className="space-y-6">
 						<div className="inline-flex items-center rounded-full border border-border bg-card px-3 py-1 text-sm">
 							<span className="flex h-2 w-2 rounded-full animate-pulse bg-emerald-500 mr-2"></span>
-							<span>Nouveau: API SMS Avancée</span>
+						<span>{dictionary.newFeature}</span>
 						</div>
 						<h1 className="text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl md:text-6xl text-foreground">
-							Atteignez-les partout,<br />
-							<span className="text-primary">N&apos;importe quand.</span>
+							{dictionary.title}<br />
+							<span className="text-primary">{dictionary.titleSpan}</span>
 						</h1>
 						<p className="text-xl text-foreground/80 max-w-lg">
-							Maximisez l&apos;impact de vos communications en touchant tous vos clients grâce aux <span className="text-primary">SMS</span>.
+							{dictionary.subtitle}
 						</p>
 						<div className="flex flex-col sm:flex-row gap-4">
 							<Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">
-								<a href="/register">Commencer gratuitement</a>
+								<a href="/register">{dictionary.startButton}</a>
 								<ArrowRight className="ml-2 h-4 w-4" />
 							</Button>
 							<Button size="lg" variant="outline" onClick={() => setShowGuide(true)}>
-								Voir la démo
+								{dictionary.starTour}
+								<MessageSquare className="ml-2 h-4 w-4" />
 							</Button>
 						</div>
 						<div className="flex items-center gap-4 text-sm text-muted-foreground">
 							<div className="flex items-center">
 								<CheckCircle className="mr-1 h-4 w-4 text-primary" />
-								Essai gratuit de 30 jours.
+								{dictionary.trial}	
 							</div>
 							<div className="flex items-center">
 								<CheckCircle className="mr-1 h-4 w-4 text-primary" />
-								Sans carte bancaire
+								{dictionary.noCard}
 							</div>
 						</div>
 					</div>

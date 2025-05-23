@@ -77,6 +77,9 @@ importers:
       jose:
         specifier: ^6.0.10
         version: 6.0.10
+      lottie-react:
+        specifier: ^2.4.1
+        version: 2.4.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       lucide-react:
         specifier: ^0.485.0
         version: 0.485.0(react@19.0.0)
@@ -1465,6 +1468,15 @@ packages:
   lightningcss@1.29.2:
     resolution: {integrity: sha512-6b6gd/RUXKaw5keVdSEtqFVdzWnU5jMxTUjA2bVcMNPLwSQ08Sv/UodBVtETLCn7k4S1Ibxwh7k68IwLZPgKaA==}
     engines: {node: '>= 12.0.0'}
+
+  lottie-react@2.4.1:
+    resolution: {integrity: sha512-LQrH7jlkigIIv++wIyrOYFLHSKQpEY4zehPicL9bQsrt1rnoKRYCYgpCUe5maqylNtacy58/sQDZTkwMcTRxZw==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+
+  lottie-web@5.12.2:
+    resolution: {integrity: sha512-uvhvYPC8kGPjXT3MyKMrL3JitEAmDMp30lVkuq/590Mw9ok6pWcFCwXJveo0t5uqYw1UREQHofD+jVpdjBv8wg==}
 
   lucide-react@0.485.0:
     resolution: {integrity: sha512-NvyQJ0LKyyCxL23nPKESlr/jmz8r7fJO1bkuptSNYSy0s8VVj4ojhX0YAgmE1e0ewfxUZjIlZpvH+otfTnla8Q==}
@@ -2982,6 +2994,14 @@ snapshots:
       lightningcss-linux-x64-musl: 1.29.2
       lightningcss-win32-arm64-msvc: 1.29.2
       lightningcss-win32-x64-msvc: 1.29.2
+
+  lottie-react@2.4.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
+    dependencies:
+      lottie-web: 5.12.2
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
+
+  lottie-web@5.12.2: {}
 
   lucide-react@0.485.0(react@19.0.0):
     dependencies:

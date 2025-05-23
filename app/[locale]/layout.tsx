@@ -44,7 +44,7 @@ export default async function RootLayout({
             <Toaster richColors />
             {!isAuthenticated && (
               <>
-                <NavBar />
+                <NavBar dictionary={dictionary.landing.nav} />
                 <main>{children}</main>
               </>
             )}

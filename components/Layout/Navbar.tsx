@@ -9,14 +9,22 @@ import LocaleSwitcher from '../ui/LocaleSwitcher';
 import { usePathname, useRouter } from 'next/navigation';
 
 // Define navigation links
-const navLinks = [
-    { href: '/about', label: 'About us' },
-    { href: '/pricing', label: 'Pricing' },
-    { href: '/faq', label: 'FAQ' },
-    { href: '/contact', label: 'Contact' },
-];
 
-export default function Navbar() {
+
+interface NavbarProps {
+    dictionary?: any; // Optional dictionary prop for localization
+}
+
+export default function Navbar(dictionary: NavbarProps) {
+
+    const navLinks = [
+        { href: '/about', label: dictionary?.dictionary?.about! },
+        { href: '/pricing', label: dictionary?.dictionary?.pricing! },
+        { href: '/faq', label: dictionary?.dictionary?.faq! },
+        { href: '/contact', label: dictionary?.dictionary?.contact! },
+    ];
+
+
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isLangOpen, setIsLangOpen] = useState(false);
     const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
@@ -123,7 +131,7 @@ export default function Navbar() {
                                 {/* Login Button */}
                                 <Link href="/login" className="transition-opacity duration-300 opacity-100">
                                     <button className="inline-flex items-center justify-center whitespace-nowrap rounded-sm text-sm font-semibold transition-colors focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-xs hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:hover:bg-gray-600">
-                                        Start for Free
+                                        {dictionary?.dictionary?.start!}
                                     </button>
                                 </Link>
                             </>
