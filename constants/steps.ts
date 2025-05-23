@@ -21,7 +21,7 @@ export const steps: Step[] = [
     full_description: "Bienvenue sur ReachDem, votre solution pour atteindre vos clients partout, n'importe quand via SMS.",
     media: {
       type: "image",
-      src: "/placeholder.svg",
+      src: "/images/reachdem.jpg",
       alt: "ReachDem welcome",
     },
   },
@@ -35,7 +35,7 @@ export const steps: Step[] = [
     },
     media: {
       type: "image",
-      src: "/placeholder.svg",
+      src: "/images/Step3.png",
       alt: "SMS dashboard",
     },
   },
@@ -45,7 +45,7 @@ export const steps: Step[] = [
     full_description: "Créez des projets pour organiser vos campagnes SMS et suivre vos communications avec différents groupes de clients.",
     media: {
       type: "image",
-      src: "/placeholder.svg",
+      src: "/images/Step1",
       alt: "Project management",
     },
   },
@@ -55,7 +55,7 @@ export const steps: Step[] = [
     full_description: "Accédez à des statistiques détaillées sur vos campagnes SMS : taux de livraison, meilleurs moments d'envoi, et plus encore.",
     media: {
       type: "image",
-      src: "/placeholder.svg",
+      src: "/images/Step2.png",
       alt: "Analytics dashboard",
     },
   },
