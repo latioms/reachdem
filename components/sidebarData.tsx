@@ -69,12 +69,12 @@ export const getSidebarData = (dictionary: any) => {
             icon: Info,
             active: true
           },
-          {
-            title: dictionary.sidebar.platform.items.settings,
-            url: "/settings",
-            icon: Settings,
-            active: true
-          }
+          // {
+          //   title: dictionary.sidebar.platform.items.settings,
+          //   url: "/settings",
+          //   icon: Settings,
+          //   active: true
+          // }
         ]
       }
     ],

@@ -9,7 +9,7 @@ export default async function BillingPage() {
 
   return (
     <section className="mx-auto py-8 space-y-8">
-        <h1 className='text-2xl font-semibold m-5'>{t.billing.title}</h1>
+        {/* <h1 className='text-2xl font-semibold'>{t.billing.title}</h1> */}
         <CreditsManagementTable dictionary={t.billing} />
         <BillingHistoryTable dictionary={t.billing} />
     </section>

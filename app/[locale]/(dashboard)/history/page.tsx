@@ -9,7 +9,7 @@ export default async function HistoryPage() {
 
   return (
     <section className='py-15'>
-      <h1 className='text-2xl font-semibold m-5'>{t.history.title}</h1>
+      <h1 className='text-2xl font-semibold'>{t.history.title}</h1>
       <MessagesHistoryTable dictionary={t.history} />
     </section>
   )
