@@ -77,7 +77,12 @@ export function ProjectClientPage({ dictionary }: ProjectClientPageProps) {
             <DialogContent>
               <DialogTitle>{dictionary.projects.createProjectModalTitle}</DialogTitle>
               <DialogDescription>{dictionary.projects.createProjectForCampaigns}</DialogDescription>
-              <ProjectForm onSuccess={handleProjectCreated} dictionary={dictionary} />
+              {projects.length < 3 &&
+                <ProjectForm onSuccess={handleProjectCreated} dictionary={dictionary} />
+              } 
+              {projects.length >= 3 &&
+                <p className="text-red-500">{dictionary.projects.createProjectLimit}</p>
+              }
             </DialogContent>
           </Dialog>
 

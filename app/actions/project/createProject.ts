@@ -28,6 +28,7 @@ export async function createProject(sender_name: string,) {
                 owner: owner,
                 sender_name: sender_name,
                 sms_credits: 25,
+                
             }
         );
 

@@ -17,7 +17,7 @@
     },
     "hero": {
       "newFeature": "Coming Soon: Advanced SMS API",
-      "title": "Reach them everywhere,",  
+      "title": "Reach them everywhere,",
       "titleSpan": "Anytime.",
       "subtitle": "Maximize your communications impact by reaching all your customers through",
       "subtitleSpan": "SMS",
@@ -30,9 +30,8 @@
       "title": "Supported from the start by the best partners."
     }
   },
-
-  "sidebar":{
-    "dashboard":{
+  "sidebar": {
+    "dashboard": {
       "title": "Dashboard",
       "items": {
         "home": "Home"
@@ -51,11 +50,12 @@
       "title": "Platform",
       "items": {
         "help": "Help",
-        "about": "About", 
+        "about": "About",
         "settings": "Settings"
       }
     }
-  },  "campaigns": {
+  },
+  "campaigns": {
     "title": "SMS Campaigns",
     "sendNow": "Send Now",
     "new": "New SMS campaign",
@@ -86,7 +86,8 @@
       "phonesInvalid": "One or more numbers are invalid",
       "projectRequired": "Please select a project"
     }
-  },  "history": {
+  },
+  "history": {
     "title": "History",
     "timeFormat": "enUS",
     "table": {
@@ -115,8 +116,10 @@
       "PENDING": "PENDING",
       "FAILED": "FAILED"
     }
-  },  "projects": {
+  },
+  "projects": {
     "title": "Your projects",
+    "createProjectLimit": "You can create up to 3 projects.",
     "createProject": "Create a project",
     "createProjectModalTitle": "Create a project",
     "createProjectModalDesc": "You need to create a project to get started.",

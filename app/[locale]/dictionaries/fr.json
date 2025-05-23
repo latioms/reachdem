@@ -123,6 +123,7 @@
   "projects": {
     "title": "Vos projets",
     "createProject": "Créer un projet",
+    "createProjectLimit": "Vous pouvez créer jusqu'à 3 projets.",
     "createProjectModalTitle": "Créer un projet",
     "createProjectModalDesc": "Vous devez créer un projet pour démarrer.",
     "createProjectForCampaigns": "Créez un nouveau projet pour gérer vos campagnes.",
