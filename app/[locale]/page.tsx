@@ -28,13 +28,13 @@ export async function generateMetadata(
     openGraph: {
       title,
       description,
-      images: ['/reachdem.png', ...previousImages],
+      images: ['/images/reachdem.png', ...previousImages],
       locale: lang,
     },
     twitter: {
       title,
       description,
-      images: ['/reachdem.png'],
+      images: ['/images/reachdem.png'],
       card: 'summary_large_image',
     },
     alternates: {
