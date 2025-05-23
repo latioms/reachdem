@@ -3,6 +3,33 @@
   "LocaleSwitcher": {
     "label": "EN"
   },
+  "landing": {
+    "nav": {
+      "about": "About us",
+      "pricing": "Pricing",
+      "faq": "FAQ",
+      "contact": "Contact",
+      "start": "Start for Free",
+      "login": "Log in",
+      "signup": "Sign up",
+      "logout": "Logout",
+      "dashboard": "Dashboard"
+    },
+    "hero": {
+      "newFeature": "New: Advanced SMS API",
+      "title": "Reach them everywhere,",  
+      "titleSpan": "Anytime.",
+      "subtitle": "Maximize your communications impact by reaching all your customers through",
+      "subtitleSpan": "SMS",
+      "startButton": "Get started for free",
+      "starTour": "See our tour",
+      "trial": "30-day free trial.",
+      "noCard": "No credit card required"
+    },
+    "logos": {
+      "title": "Supported from the start by the best partners."
+    }
+  },
 
   "sidebar":{
     "dashboard":{

@@ -22,13 +22,16 @@ const LOGOS = [
 		height: "h-7"
 	},
 ];
+interface LogosProps {
+	dictionary?: any;
+}
 
-export default function Logos() {
+export default function Logos({ dictionary }: LogosProps) {
 	return (
 		<div className="mx-auto flex w-full flex-col items-center bg-muted">
 			<div className="my-6 flex flex-col items-center gap-4 ">
 				<p className="text-center text-sm text-muted-foreground">
-					Soutenu depuis le debut par les meilleurs partenaires.
+					{dictionary?.title}
 				</p>
 				<div className="flex flex-wrap items-center justify-center gap-15 opacity-80">
 					{LOGOS.map((logo, index) => (

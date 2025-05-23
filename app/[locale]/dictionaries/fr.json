@@ -6,9 +6,35 @@
   "LocaleSwitcher": {
     "label": "FR"
   },
-  
-  "sidebar":{
-    "dashboard":{
+  "landing": {
+    "nav": {
+      "about": "À propos",
+      "pricing": "Tarifs",
+      "faq": "FAQ",
+      "contact": "Contact",
+      "start": "Démarrer gratuitement",
+      "login": "Connexion",
+      "signup": "S'inscrire",
+      "logout": "Déconnexion",
+      "dashboard": "Tableau de bord"
+    },
+    "hero": {
+      "newFeature": "Nouveau : API SMS Avancée",
+      "title": "Atteignez-les partout,",
+      "titleSpan": "N'importe quand.",
+      "subtitle": "Maximisez l'impact de vos communications en touchant tous vos clients grâce aux",
+      "subtitleSpan": "SMS",
+      "startButton": "Commencer gratuitement",
+      "starTour": "Voir la démo",
+      "trial": "Essai gratuit de 30 jours.",
+      "noCard": "Sans carte bancaire"
+    },
+    "logos": {
+      "title": "Soutenu depuis le début par les meilleurs partenaires."
+    }
+  },
+  "sidebar": {
+    "dashboard": {
       "title": "Tableau de bord",
       "items": {
         "home": "Accueil"
@@ -27,11 +53,12 @@
       "title": "Plateforme",
       "items": {
         "help": "Aide",
-        "about": "A propos", 
+        "about": "A propos",
         "settings": "Paramètres"
       }
     }
-  },  "campaigns": {
+  },
+  "campaigns": {
     "title": "Campagnes SMS",
     "sendNow": "Envoyer Maintenant",
     "new": "Nouvelle campagne SMS",
@@ -62,9 +89,10 @@
       "phonesInvalid": "Un ou plusieurs numéros sont invalides",
       "projectRequired": "Veuillez sélectionner un projet"
     }
-  },  "history": {
+  },
+  "history": {
     "title": "Historique",
-    "timeformat":"fr",
+    "timeformat": "fr",
     "table": {
       "description": "Historique de vos messages",
       "columns": {
@@ -91,7 +119,8 @@
       "PENDING": "EN ATTENTE",
       "FAILED": "ÉCHEC"
     }
-  },  "projects": {
+  },
+  "projects": {
     "title": "Vos projets",
     "createProject": "Créer un projet",
     "createProjectModalTitle": "Créer un projet",
@@ -179,7 +208,8 @@
     "status": {
       "pending": "EN ATTENTE",
       "completed": "COMPLÉTÉ",
-      "failed": "ÉCHOUÉ",      "enabled": "ACTIVÉ",
+      "failed": "ÉCHOUÉ",
+      "enabled": "ACTIVÉ",
       "disabled": "DÉSACTIVÉ"
     }
   }
