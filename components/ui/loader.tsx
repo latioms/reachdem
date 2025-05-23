@@ -19,7 +19,7 @@ export default function Loader({ className = '', size = 'md' }: LoaderProps) {
     <div className={`flex items-center justify-center min-h-[100px] ${className}`}>
       <div className={sizeClasses[size]}>
         <DotLottieReact
-          src="images/reachdem-loader.lottie"
+          src="/images/reachdem-loader.lottie"
           autoplay
         />
       </div>
