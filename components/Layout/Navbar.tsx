@@ -91,7 +91,7 @@ export default function Navbar(dictionary: NavbarProps) {
 
     return (
         <header className="relative z-50">
-            <div className="max-w-9xl container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-9xl mx-auto px-4 sm:px-6 lg:px-24">
                 <div className="flex items-center justify-between py-3">
                     {/* Logo */}
                     <Link href="/" className="flex font-extrabold text-lg items-center gap-2">

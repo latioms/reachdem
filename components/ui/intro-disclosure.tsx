@@ -3,12 +3,14 @@
 import * as React from "react"
 import Image from "next/image"
 import { AnimatePresence, motion, useAnimation } from "framer-motion"
-import { CheckIcon, ExternalLinkIcon } from "lucide-react"
+import { CheckIcon, ExternalLinkIcon, X } from "lucide-react"
 
 import { cn } from "@/lib/utils"
+import { useIsMobile } from "@/hooks/use-mobile"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet"
 import { Progress } from "@/components/ui/progress"
 
 function useFeatureVisibility(featureId: string) {
@@ -169,6 +171,7 @@ function StepContent({
   onStepSelect,
   direction,
   stepRef,
+  isMobile = false,
 }: {
   steps: Step[]
   currentStep: number
@@ -179,7 +182,8 @@ function StepContent({
   completedSteps: number[]
   onStepSelect: (index: number) => void
   direction: 1 | -1
-  stepRef: React.RefObject<HTMLButtonElement> 
+  stepRef: React.RefObject<HTMLButtonElement>
+  isMobile?: boolean
 }) {
   const [skipNextTime, setSkipNextTime] = React.useState(false)
 
@@ -188,7 +192,7 @@ function StepContent({
 
     if (action.href) {
       return (
-        <Button asChild className="w-full " size="sm" variant="link">
+        <Button asChild className="w-full" size="sm" variant="link">
           <a href={action.href} target="_blank" rel="noopener noreferrer">
             <span className="flex items-center gap-2">
               {action.label}
@@ -203,6 +207,163 @@ function StepContent({
       <Button className="w-full rounded-full" size="sm" variant="secondary" onClick={action.onClick}>
         {action.label}
       </Button>
+    )
+  }
+  if (isMobile) {
+    return (
+      <div className="flex h-full flex-col">
+        {/* Mobile Header with current step info */}
+        <div className="border-b p-4">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm text-muted-foreground">
+              Step {currentStep + 1} of {steps.length}
+            </span>
+            <Progress value={((currentStep + 1) / steps.length) * 100} className="h-1 w-20" />
+          </div>
+          <h3 className="text-lg font-semibold">{steps[currentStep]?.title}</h3>
+        </div>
+
+        {/* Mobile Step Preview with swipe support */}
+        <div className="flex-1 overflow-hidden">
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div
+              key={currentStep}
+              {...slideInOut(direction)}
+              className="relative h-full min-h-[200px]"
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.2}
+              onDragEnd={(_, info) => {
+                const threshold = 50
+                if (info.offset.x > threshold && currentStep > 0) {
+                  onPrevious()
+                } else if (info.offset.x < -threshold && currentStep < steps.length - 1) {
+                  onNext()
+                }
+              }}
+              whileDrag={{ scale: 0.95 }}
+            >
+              {steps[currentStep]?.media ? (
+                <div className="relative h-full min-h-[200px] bg-black rounded-lg m-4">
+                  <motion.div 
+                    initial={{ opacity: 0, y: 20 }} 
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2, duration: 0.3 }}
+                    className="h-full w-full"
+                  >
+                    {steps[currentStep].media.type === "image" ? (
+                      <Image
+                        src={steps[currentStep].media.src || "/placeholder.svg"}
+                        alt={steps[currentStep].media.alt || ""}
+                        fill
+                        className="object-cover rounded-lg"
+                      />
+                    ) : (
+                      <video 
+                        src={steps[currentStep].media.src} 
+                        controls 
+                        className="h-full w-full object-cover rounded-lg" 
+                      />
+                    )}
+                  </motion.div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent rounded-lg" />
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3, duration: 0.3 }}
+                    className="absolute bottom-0 left-0 right-0 p-4"
+                  >
+                    <p className="text-white text-sm">{steps[currentStep].full_description}</p>
+                  </motion.div>
+                </div>
+              ) : (
+                <div className="flex h-full items-center justify-center p-6">
+                  <motion.div 
+                    initial={{ opacity: 0, y: 20 }} 
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2, duration: 0.3 }}
+                    className="text-center"
+                  >
+                    <p className="text-muted-foreground">{steps[currentStep]?.full_description}</p>
+                  </motion.div>
+                </div>
+              )}
+
+              {/* Swipe indicator */}
+              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-xs text-muted-foreground opacity-50">
+                Swipe to navigate
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* Mobile Action Button */}
+        {steps[currentStep]?.action && (
+          <div className="p-4 border-t">
+            {renderActionButton(steps[currentStep]?.action)}
+          </div>
+        )}
+
+        {/* Mobile Navigation */}
+        <div className="p-4 border-t bg-muted/30">
+          <div className="flex items-center justify-between mb-4">
+            <Button variant="ghost" onClick={onSkip} className="text-muted-foreground">
+              Skip all
+            </Button>
+            <div className="flex gap-2">
+              {currentStep > 0 && (
+                <Button onClick={onPrevious} size="sm" variant="outline">
+                  Previous
+                </Button>
+              )}
+              <Button
+                onClick={() => {
+                  if (skipNextTime) {
+                    hideFeature()
+                  }
+                  onNext()
+                }}
+                size="sm"
+                ref={stepRef}
+              >
+                {currentStep === steps.length - 1 ? "Done" : "Next"}
+              </Button>
+            </div>
+          </div>
+
+          {/* Step indicators */}
+          <div className="flex justify-center gap-2 mb-3">
+            {steps.map((_, index) => (
+              <motion.button
+                key={index}
+                onClick={() => onStepSelect(index)}
+                className={cn(
+                  "w-2 h-2 rounded-full transition-colors",
+                  index === currentStep
+                    ? "bg-primary"
+                    : completedSteps.includes(index)
+                    ? "bg-primary/60"
+                    : "bg-muted-foreground/30"
+                )}
+                aria-label={`Go to step ${index + 1}`}
+                whileHover={{ scale: 1.2 }}
+                whileTap={{ scale: 0.9 }}
+              />
+            ))}
+          </div>
+
+          <div className="flex items-center justify-center space-x-2">
+            <Checkbox
+              id="skipNextTime"
+              checked={skipNextTime}
+              onCheckedChange={(checked) => setSkipNextTime(checked as boolean)}
+            />
+            <label htmlFor="skipNextTime" className="text-sm text-muted-foreground">
+              Don't show this again
+            </label>
+          </div>
+        </div>
+      </div>
     )
   }
 
@@ -227,7 +388,7 @@ function StepContent({
         </motion.div>
       </div>
       <AnimatePresence mode="wait" initial={false}>
-        <motion.div key={currentStep} {...slideInOut(direction)} className="mt-6 space-y-4 ">
+        <motion.div key={currentStep} {...slideInOut(direction)} className="mt-6 space-y-4">
           {steps[currentStep]?.action ? (
             <div className="px-2">{renderActionButton(steps[currentStep]?.action)}</div>
           ) : (
@@ -290,6 +451,7 @@ export function IntroDisclosure({
   const [direction, setDirection] = React.useState<1 | -1>(1)
   const { isVisible, hideFeature } = useFeatureVisibility(featureId)
   const stepRef = React.useRef<HTMLButtonElement>(null) as React.RefObject<HTMLButtonElement>
+  const isMobile = useIsMobile()
 
   // Close the dialog if feature is hidden
   React.useEffect(() => {
@@ -357,6 +519,39 @@ export function IntroDisclosure({
     }
   }
 
+  // Mobile Drawer implementation
+  if (isMobile) {
+    return (
+      <Sheet open={open} onOpenChange={setOpen}>
+        <SheetContent 
+          side="bottom" 
+          className="h-[95vh] p-0 rounded-t-xl overflow-hidden"
+          onKeyDown={handleKeyDown}
+        >
+          <SheetHeader className="sr-only">
+            <SheetTitle>Feature Tour</SheetTitle>
+            <SheetDescription>Interactive tour of features</SheetDescription>
+          </SheetHeader>
+          
+          <StepContent
+            steps={steps}
+            currentStep={currentStep}
+            onSkip={handleSkip}
+            onNext={handleNext}
+            onPrevious={handlePrevious}
+            hideFeature={hideFeature}
+            completedSteps={completedSteps}
+            onStepSelect={handleStepSelect}
+            direction={direction}
+            stepRef={stepRef}
+            isMobile={true}
+          />
+        </SheetContent>
+      </Sheet>
+    )
+  }
+
+  // Desktop Dialog implementation
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="max-w-5xl p-0 gap-0 overflow-hidden" onKeyDown={handleKeyDown}>
@@ -382,6 +577,7 @@ export function IntroDisclosure({
               onStepSelect={handleStepSelect}
               direction={direction}
               stepRef={stepRef}
+              isMobile={false}
             />
           </div>
           <AnimatePresence mode="wait" initial={false}>

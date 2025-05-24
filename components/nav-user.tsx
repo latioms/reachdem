@@ -7,6 +7,7 @@ import {
   CreditCard,
   LogOut,
   Sparkles,
+  Languages,
 } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -27,6 +28,7 @@ import {
 } from "@/components/ui/sidebar";
 import { useRouter } from 'next/navigation';
 import { useAuth } from "@/context/authContext";
+import LanguageToggle from "@/components/ui/LanguageToggle";
 
 export function NavUser() {
   const { isMobile } = useSidebar();
@@ -92,15 +94,21 @@ export function NavUser() {
               </div>
               </div>
             </DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
+            <DropdownMenuSeparator />            <DropdownMenuGroup>
               <DropdownMenuItem>
               <BadgeCheck />
               Account
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={() => router.push('/billing')}>
               <CreditCard />
               Billing
+              </DropdownMenuItem>              
+              <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                <div className="flex items-center gap-2 w-full  py-1">
+                  <Languages className="h-4 w-4" />
+                  <span className="flex-1">Lang</span>
+                  <LanguageToggle />
+                </div>
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
@@ -111,6 +119,7 @@ export function NavUser() {
               <LogOut />
               Déconnexion
             </DropdownMenuItem>
+
             </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>
