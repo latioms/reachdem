@@ -53,6 +53,45 @@
         "about": "About",
         "settings": "Settings"
       }
+    }  },  "dashboard": {
+    "title": "Dashboard",
+    "subtitle": "Overview of your SMS activity and projects",
+    "detailedStatsTitle": "Detailed Statistics",
+    "stats": {
+      "activeProjects": "Active Projects",
+      "monthlyMessages": "Monthly Messages",
+      "smsCredits": "SMS Credits",
+      "successRate": "Success Rate"
+    },
+    "detailed": {
+      "messageActivity": "Message Activity",
+      "today": "Today",
+      "thisWeek": "This Week",
+      "averagePerDay": "Average per Day",
+      "financialStats": "Financial Statistics",
+      "monthlySpending": "Monthly Spending",
+      "yearlySpending": "Yearly Spending",
+      "totalTransactions": "Total Transactions",
+      "mostActiveProjects": "Most Active Projects",
+      "messages": "messages",
+      "projectsRanking": "Projects Ranking"
+    },
+    "loading": {
+      "stats": "Loading statistics...",
+      "error": "Error loading data"
+    },
+    "empty": {
+      "noProjects": "No projects with messages",
+      "noMessages": "No messages",
+      "noTransactions": "No transactions"
+    },
+    "units": {
+      "thisMonth": "this month",
+      "creditsRemaining": "credits remaining",
+      "ofMessages": "of messages",
+      "outOfTotal": "out of {total} total projects",
+      "lastTransaction": "Last transaction:",
+      "totalSpent": "Total spent"
     }
   },
   "campaigns": {

@@ -56,6 +56,45 @@
         "about": "A propos",
         "settings": "Paramètres"
       }
+    }  },  "dashboard": {
+    "title": "Tableau de bord",
+    "subtitle": "Vue d'ensemble de votre activité SMS et projets",
+    "detailedStatsTitle": "Statistiques détaillées",
+    "stats": {
+      "activeProjects": "Projets actifs",
+      "monthlyMessages": "Messages mensuels",
+      "smsCredits": "Crédits SMS",
+      "successRate": "Taux de réussite"
+    },
+    "detailed": {
+      "messageActivity": "Activité des messages",
+      "today": "Aujourd'hui",
+      "thisWeek": "Cette semaine",
+      "averagePerDay": "Moyenne par jour",
+      "financialStats": "Statistiques financières",
+      "monthlySpending": "Dépenses mensuelles",
+      "yearlySpending": "Dépenses annuelles",
+      "totalTransactions": "Total transactions",
+      "mostActiveProjects": "Projets les plus actifs",
+      "messages": "messages",
+      "projectsRanking": "Classement des projets"
+    },
+    "loading": {
+      "stats": "Chargement des statistiques...",
+      "error": "Erreur lors du chargement"
+    },
+    "empty": {
+      "noProjects": "Aucun projet avec des messages",
+      "noMessages": "Aucun message",
+      "noTransactions": "Aucune transaction"
+    },
+    "units": {
+      "thisMonth": "ce mois-ci",
+      "creditsRemaining": "crédits restants",
+      "ofMessages": "des messages",
+      "outOfTotal": "sur {total} projets total",
+      "lastTransaction": "Dernière transaction:",
+      "totalSpent": "Total dépensé"
     }
   },
   "campaigns": {

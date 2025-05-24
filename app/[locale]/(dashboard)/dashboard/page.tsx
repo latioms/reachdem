@@ -6,82 +6,31 @@ import CreditsManagementTable from '@/components/billing/CreditsManagementTable'
 import { MessagesHistoryTable } from '@/components/history/messages-history-table';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { MessageSquare, FolderDot, CreditCard, TrendingUp } from 'lucide-react';
+import { DashboardStatsCards } from '@/components/dashboard/dashboard-stats-cards';
+import { DashboardDetailedStats } from '@/components/dashboard/dashboard-detailed-stats';
 
 export default async function Page() {
   const lang = await getLang();
   const t = await getDictionary(lang);
 
   return (
-    <div className="container mx-auto py-6 space-y-8">
-      {/* Header du Dashboard */}
-      <div className="flex flex-col space-y-2">
-        <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
+    <div className="container mx-auto py-6 space-y-8">      {/* Header du Dashboard */}
+      <div className="flex flex-col space-y-2">        <h1 className="text-3xl font-bold tracking-tight">
+          {t.dashboard?.title || t.sidebar?.dashboard?.title || "Dashboard"}
+        </h1>
         <p className="text-muted-foreground">
-          Vue d'ensemble de votre activité SMS et projets
+          {t.dashboard?.subtitle || 
+            (t.lang === 'fr' 
+              ? "Vue d'ensemble de votre activité SMS et projets"
+              : "Overview of your SMS activity and projects")
+          }
         </p>
-      </div>
-
-      {/* Cartes de statistiques rapides */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              {t.projects?.title || "Projets"}
-            </CardTitle>
-            <FolderDot className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">-</div>
-            <p className="text-xs text-muted-foreground">
-              projets actifs
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              Messages envoyés
-            </CardTitle>
-            <MessageSquare className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">-</div>
-            <p className="text-xs text-muted-foreground">
-              ce mois-ci
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              Crédits SMS
-            </CardTitle>
-            <CreditCard className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">-</div>
-            <p className="text-xs text-muted-foreground">
-              crédits restants
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              Taux de succès
-            </CardTitle>
-            <TrendingUp className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">-</div>
-            <p className="text-xs text-muted-foreground">
-              des messages
-            </p>
-          </CardContent>
-        </Card>
+      </div>{/* Cartes de statistiques rapides */}
+      <DashboardStatsCards dictionary={t} />      {/* Statistiques détaillées */}
+      <div className="space-y-6">        <h2 className="text-2xl font-semibold tracking-tight">
+          {t.dashboard?.detailedStatsTitle || (t.lang === 'fr' ? 'Statistiques détaillées' : 'Detailed Statistics')}
+        </h2>
+        <DashboardDetailedStats dictionary={t} />
       </div>
 
       {/* Section Projets */}
