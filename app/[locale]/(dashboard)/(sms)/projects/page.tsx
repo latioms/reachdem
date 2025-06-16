@@ -1,6 +1,6 @@
 import { getLang } from "@/lib/lang"
-import { getDictionary } from "../../dictionaries"
-import { ProjectClientPage } from "../../../../components/project/project-client-page"
+import { getDictionary } from "../../../dictionaries"
+import { ProjectClientPage } from "../../../../../components/project/project-client-page"
 
 export default async function ProjectPage() {
   const lang = await getLang()

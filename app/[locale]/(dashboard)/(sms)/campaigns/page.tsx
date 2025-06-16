@@ -1,5 +1,5 @@
 import { getLang } from "@/lib/lang";
-import { getDictionary } from "../../dictionaries";
+import { getDictionary } from "../../../dictionaries";
 import { Button } from "@/components/ui/button";
 import { DialogCampaign } from "@/components/campaigns/dialog-campaign";
 

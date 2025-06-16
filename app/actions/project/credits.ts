@@ -1,6 +1,5 @@
 "use server";
 import { account, databases } from "@/lib/appwrite";
-import { ID } from "appwrite";
 
 // function to decrease the sms credits of a project
 export async function decreaseSmsCredits(projectId: string, smsCredits: number) {

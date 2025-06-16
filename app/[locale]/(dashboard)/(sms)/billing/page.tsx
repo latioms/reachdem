@@ -1,6 +1,6 @@
 import BillingHistoryTable from "@/components/billing/BillingHistoryTable";
 import CreditsManagementTable from "@/components/billing/CreditsManagementTable";
-import { getDictionary } from "../../dictionaries";
+import { getDictionary } from "../../../dictionaries";
 import { getLang } from "@/lib/lang";
 
 export default async function BillingPage() {

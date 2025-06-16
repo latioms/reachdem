@@ -1,6 +1,6 @@
 import React from 'react'
 import { MessagesHistoryTable } from '@/components/history/messages-history-table'
-import { getDictionary } from '../../dictionaries'
+import { getDictionary } from '../../../dictionaries'
 import { getLang } from '@/lib/lang'
 
 export default async function HistoryPage() {

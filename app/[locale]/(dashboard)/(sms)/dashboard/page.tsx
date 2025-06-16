@@ -1,5 +1,5 @@
 import React from 'react'
-import { getDictionary } from '../../dictionaries';
+import { getDictionary } from '../../../dictionaries';
 import { getLang } from '@/lib/lang';
 import { ProjectClientPage } from '@/components/project/project-client-page';
 import CreditsManagementTable from '@/components/billing/CreditsManagementTable';
