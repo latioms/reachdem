@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form"
 import { Form, FormField, FormDescription, FormControl, FormMessage, FormLabel, FormItem } from "@/components/ui/form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { projectSchema, type ProjectInput } from "@/lib/validations/project"
-import { createProject } from "@/app/actions/project/createProject"
+import { createProject } from "@/app/actions/SMS/project/createProject"
 
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"

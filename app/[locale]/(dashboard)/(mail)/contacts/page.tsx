@@ -1,9 +1,8 @@
 import React from 'react'
+import { ContactsClientPage } from '@/components/contacts'
 
-function page() {
-  return (
-    <div>Mail</div>
-  )
+function ContactsPage() {
+  return <ContactsClientPage />
 }
 
-export default page
+export default ContactsPage

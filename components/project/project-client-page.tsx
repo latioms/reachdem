@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { getProjects } from "@/app/actions/project/getProjects"
+import { getProjects } from "@/app/actions/SMS/project/getProjects"
 import type { Project } from "@/types/schema"
 import { ProjectForm } from "@/components/project/project-form"
 import { ProjectList } from "@/components/project/project-list"

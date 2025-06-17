@@ -4,11 +4,11 @@ import { usePaymentStore } from "@/store/payment-store"
 import { CheckCircle } from "lucide-react"
 import { useEffect } from "react"
 import { useAuth } from "@/context/authContext"
-import { increaseSMSCredit } from "@/app/actions/project/credit"
+import { increaseSMSCredit } from "@/app/actions/SMS/project/credit"
 import { sendEmailReceipt } from "@/lib/notifications"
 import { sendSMS } from "@/lib/sms"
-import { createTransaction } from "@/app/actions/transactions/createTransaction"
-import { updateTransaction } from "@/app/actions/transactions/updateTransaction"
+import { createTransaction } from "@/app/actions/SMS/transactions/createTransaction"
+import { updateTransaction } from "@/app/actions/SMS/transactions/updateTransaction"
 
 interface StatusStepProps {
   reference?: string

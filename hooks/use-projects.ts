@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from 'react'
-import { getProjects } from '@/app/actions/project/getProjects'
+import { getProjects } from '@/app/actions/SMS/project/getProjects'
 import type { Project } from '@/types/schema'
 
 export function useUserProjects(userId: string | undefined) {

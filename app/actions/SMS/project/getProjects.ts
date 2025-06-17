@@ -1,6 +1,6 @@
 'use server';
 import { databases } from "@/lib/appwrite";
-import checkAuth from "../chechAuth";
+import checkAuth from "../../chechAuth";
 import { Query } from "appwrite";
 
 export async function getProjects() {

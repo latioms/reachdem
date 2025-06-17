@@ -1,7 +1,7 @@
 'use server';
 
 import { databases } from '@/lib/appwrite';
-import checkAuth from '../chechAuth';
+import checkAuth from '../../chechAuth';
 import { revalidatePath } from 'next/cache';
 
 const DATABASE_ID   = process.env.NEXT_PUBLIC_APPWRITE_REACHDEM_DATABASE_ID!;

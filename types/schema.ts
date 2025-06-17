@@ -7,11 +7,14 @@ export type Project = {
 }
 
 export type Contact = {
-    contact_id: string;
-    phonebook_id: string;
-    first_name: string;
-    last_name: string;
-    phone: string;
+    $id: string;
+    first_name?: string;
+    last_name?: string;
+    email: string;
+    phone?: string;
+    address?: string;
+    user_id: string;
+    created_at?: string;
 }
 
 export type ContactGroup = {

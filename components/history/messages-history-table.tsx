@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useEffect, useState } from 'react'
-import { getMessagesByUserId } from '@/app/actions/messages/getMessagesByUserId'
+import { getMessagesByUserId } from '@/app/actions/SMS/messages/getMessagesByUserId'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { useAuth } from '@/context/authContext'

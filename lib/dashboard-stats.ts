@@ -3,10 +3,10 @@
  * Ces fonctions permettent d'obtenir des métriques clés pour l'affichage du dashboard
  */
 
-import { getProjects } from '@/app/actions/project/getProjects';
-import { getProjectsByUserId } from '@/app/actions/project/getProjectsByUserId';
-import { getMessagesByUserId } from '@/app/actions/messages/getMessagesByUserId';
-import { getTransactions } from '@/app/actions/transactions/getTransaction';
+import { getProjects } from '@/app/actions/SMS/project/getProjects';
+import { getProjectsByUserId } from '@/app/actions/SMS/project/getProjectsByUserId';
+import { getMessagesByUserId } from '@/app/actions/SMS/messages/getMessagesByUserId';
+import { getTransactions } from '@/app/actions/SMS/transactions/getTransaction';
 
 /**
  * Interface pour les statistiques du dashboard

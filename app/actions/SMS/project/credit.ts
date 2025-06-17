@@ -1,7 +1,7 @@
 "use server";
 
 import { databases } from "@/lib/appwrite";
-import checkAuth from "../chechAuth";
+import checkAuth from "../../chechAuth";
 
 export async function increaseSMSCredit(projectId: string, smsCount: number) {
     try {

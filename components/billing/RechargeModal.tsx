@@ -7,7 +7,7 @@ import { StatusStep } from "./statusStep"
 import { initPayment } from "@/app/actions/payment"
 import { useAuth } from "@/context/authContext"
 import { usePaymentStore } from "@/store/payment-store"
-import { createTransaction } from "@/app/actions/transactions/createTransaction"
+import { createTransaction } from "@/app/actions/SMS/transactions/createTransaction"
 
 interface RechargeModalProps {
   projectId: string;

@@ -15,7 +15,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { getTransactions } from '@/app/actions/transactions/getTransaction';
+import { getTransactions } from '@/app/actions/SMS/transactions/getTransaction';
 import { formatDistanceToNow, format } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import { ArrowUpDown, Search, Calendar, RefreshCw, CreditCard, CopyIcon } from 'lucide-react';

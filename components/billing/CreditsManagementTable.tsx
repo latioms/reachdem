@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Dialog, DialogTrigger } from "@/components/ui/dialog"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { RechargeModal } from "./RechargeModal"
-import { getProjects } from '@/app/actions/project/getProjects'
+import { getProjects } from '@/app/actions/SMS/project/getProjects'
 import { Project } from '@/types/schema'
 
 interface CreditsManagementTableProps {
