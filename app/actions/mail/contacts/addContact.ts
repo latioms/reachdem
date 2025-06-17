@@ -35,7 +35,8 @@ export async function addContact({
         }
 
         // Créer le contact
-        const contactId = ID.unique();        await databases.createDocument(
+        const contactId = ID.unique() 
+        await databases.createDocument(
             process.env.NEXT_PUBLIC_APPWRITE_MAILING_DATABASE_ID!,
             process.env.NEXT_PUBLIC_APPWRITE_MAILING_CONTACTS_COLLECTION_ID!,
             contactId,
