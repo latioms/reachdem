@@ -1,5 +1,6 @@
 'use client'
 import { useState, useRef, useEffect, useCallback } from "react"
+import { trackNavigationEvent } from "@/lib/tracking"
 
 import {
     Dialog,
@@ -30,7 +31,14 @@ export function DialogCampaign({ children, dictionary }: DialogCampaignProps) {
 
     return (
         <>
-            <Dialog open={open} onOpenChange={setOpen}>
+            <Dialog open={open} onOpenChange={(newOpen) => {
+                setOpen(newOpen)
+                if (newOpen) {
+                    trackNavigationEvent.modalOpen('campaign-dialog')
+                } else {
+                    trackNavigationEvent.modalClose('campaign-dialog')
+                }
+            }}>
                 <DialogTrigger asChild>{children}</DialogTrigger>
                 <DialogContent className="max-w-2xl w-full">
                     <DialogHeader>

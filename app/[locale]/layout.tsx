@@ -3,6 +3,8 @@ import AuthWrapper from "@/components/AuthWrapper";
 import NavBar from "@/components/Layout/Navbar";
 import { Toaster } from "sonner";
 import { ThemeProvider } from "next-themes";
+import { MixpanelProvider } from "@/providers/MixpanelProvider";
+import { MixpanelStatus } from "@/components/ui/mixpanel-status";
 import "../globals.css";
 import checkAuth from "../actions/chechAuth";
 import { Sidebar } from "@/providers/SidebarProvider";
@@ -36,24 +38,25 @@ export default async function RootLayout({
   const { locale } = await params;
   const dictionary = await getDictionary(locale);
 
-  return (
-    <html lang={locale} className={`${geistSans.variable} ${geistMono.variable}`}>
+  return (    <html lang={locale} className={`${geistSans.variable} ${geistMono.variable}`}>
       <body>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <AuthWrapper>
-            <Toaster richColors />
-            {!isAuthenticated && (
-              <>
-                <NavBar dictionary={dictionary.landing.nav} />
-                <main>{children}</main>
-              </>
-            )}
-            {isAuthenticated && (
-              <Sidebar dictionary={dictionary}>
-                <main className="container mx-auto p-4">{children}</main>
-              </Sidebar>
-            )}
-          </AuthWrapper>
+          <MixpanelProvider>
+            <AuthWrapper>
+              <Toaster richColors />
+              {!isAuthenticated && (
+                <>
+                  <NavBar dictionary={dictionary.landing.nav} />
+                  <main>{children}</main>
+                </>
+              )}
+              {isAuthenticated && (
+                <Sidebar dictionary={dictionary}>
+                  <main className="container mx-auto p-4">{children}</main>
+                </Sidebar>
+              )}            </AuthWrapper>
+            <MixpanelStatus />
+          </MixpanelProvider>
         </ThemeProvider>
       </body>
     </html>

@@ -2,6 +2,7 @@
 
 import { LucideIcon } from 'lucide-react'
 import { cn } from "@/lib/utils"
+import { trackNavigationEvent } from "@/lib/tracking"
 
 import {
   SidebarGroup,
@@ -29,8 +30,7 @@ export function NavMain({
       {items.map((group) => (
         <SidebarGroup key={group.title}>
           <SidebarGroupLabel>{group.title}</SidebarGroupLabel>
-          <SidebarMenu>
-            {group.items.map((item) => (
+          <SidebarMenu>            {group.items.map((item) => (
               <SidebarMenuItem key={item.title}>
                 <SidebarMenuButton 
                   asChild 
@@ -42,6 +42,11 @@ export function NavMain({
                     className={cn(
                       !item.active && "pointer-events-none opacity-50"
                     )}
+                    onClick={() => {
+                      if (item.active) {
+                        trackNavigationEvent.sidebarClick(item.title)
+                      }
+                    }}
                   >
                     <item.icon />
                     <span>{item.title}</span>

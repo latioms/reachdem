@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import createSession from "@/app/actions/createSession"
 import { useAuth } from "@/context/authContext"
+import { trackAuthEvent } from "@/lib/tracking"
 import Link from "next/link"
 
 // Define schema for login form validation
@@ -70,9 +71,7 @@ export function LoginForm({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setGeneralError(null)
-
-    // Validate form inputs
+    setGeneralError(null)    // Validate form inputs
     if (!validateForm()) return
 
     setIsLoading(true)
@@ -90,15 +89,23 @@ export function LoginForm({
             'countryName' in authCheck.user) {
           setIsAuthenticated(true)
           setCurrentUser(authCheck.user)
+          
+          // Track successful login
+          trackAuthEvent.login(authCheck.user.id, 'email')
+          trackAuthEvent.loginAttempt(true)
+          
           router.push("/dashboard") // Redirect to home or dashboard
         } else {
           setGeneralError("Authentication failed. Please try again.")
+          trackAuthEvent.loginAttempt(false, "Authentication failed")
         }
       } else {
         setGeneralError("Invalid email or password. Please try again.")
+        trackAuthEvent.loginAttempt(false, "Invalid credentials")
       }
     } catch (err) {
       setGeneralError("An error occurred. Please try again later.")
+      trackAuthEvent.loginAttempt(false, "Network error")
       console.error(err)
     } finally {
       setIsLoading(false)

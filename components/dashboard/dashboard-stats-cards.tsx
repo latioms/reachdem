@@ -6,6 +6,7 @@ import { MessageSquare, FolderDot, CreditCard, TrendingUp } from 'lucide-react'
 import { useAuth } from '@/context/authContext'
 import { getDashboardStats, formatPercentage, type DashboardStats } from '@/lib/dashboard-stats'
 import { Skeleton } from '@/components/ui/skeleton'
+import { trackDashboardEvent } from '@/lib/tracking'
 
 interface DashboardStatsCardsProps {
   dictionary: any
@@ -16,7 +17,6 @@ export function DashboardStatsCards({ dictionary }: DashboardStatsCardsProps) {
   const [stats, setStats] = useState<DashboardStats | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-
   useEffect(() => {
     const fetchStats = async () => {
       if (!currentUser?.id) {
@@ -28,6 +28,9 @@ export function DashboardStatsCards({ dictionary }: DashboardStatsCardsProps) {
         setLoading(true)
         const dashboardStats = await getDashboardStats(currentUser.id)
         setStats(dashboardStats)
+        
+        // Track dashboard view
+        trackDashboardEvent.viewDashboard('stats')
       } catch (err) {
         console.error('Erreur lors de la récupération des statistiques:', err)
         setError('Erreur lors du chargement des statistiques')

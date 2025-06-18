@@ -28,6 +28,7 @@ import {
 } from "@/components/ui/sidebar";
 import { useRouter } from 'next/navigation';
 import { useAuth } from "@/context/authContext";
+import { trackAuthEvent, trackNavigationEvent } from "@/lib/tracking";
 import LanguageToggle from "@/components/ui/LanguageToggle";
 
 export function NavUser() {
@@ -98,11 +99,13 @@ export function NavUser() {
               <DropdownMenuItem>
               <BadgeCheck />
               Account
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => router.push('/billing')}>
+              </DropdownMenuItem>              <DropdownMenuItem onClick={() => {
+                trackNavigationEvent.buttonClick('billing', 'nav-user')
+                router.push('/billing')
+              }}>
               <CreditCard />
               Billing
-              </DropdownMenuItem>              
+              </DropdownMenuItem>
               <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
                 <div className="flex items-center gap-2 w-full  py-1">
                   <Languages className="h-4 w-4" />
@@ -111,8 +114,8 @@ export function NavUser() {
                 </div>
               </DropdownMenuItem>
             </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={async () => {
+            <DropdownMenuSeparator />            <DropdownMenuItem onClick={async () => {
+              trackAuthEvent.logout()
               await fetch('/api/logout', { method: 'POST' });
               router.push('/login');
             }}>
