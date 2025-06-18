@@ -16,6 +16,7 @@ import { Label } from "@/components/ui/label"
 import createSession from "@/app/actions/createSession"
 import { useAuth } from "@/context/authContext"
 import { trackAuthEvent } from "@/lib/tracking"
+import { useDualTracking } from "@/hooks/use-dual-analytics"
 import Link from "next/link"
 
 // Define schema for login form validation
@@ -39,6 +40,7 @@ export function LoginForm({
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
   const { setIsAuthenticated, setCurrentUser } = useAuth()
+  const { trackAuthEvent: dualTrackAuth } = useDualTracking()
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -90,22 +92,22 @@ export function LoginForm({
           setIsAuthenticated(true)
           setCurrentUser(authCheck.user)
           
-          // Track successful login
-          trackAuthEvent.login(authCheck.user.id, 'email')
-          trackAuthEvent.loginAttempt(true)
+          // Track successful login in both platforms
+          dualTrackAuth.login(authCheck.user.id, 'email')
+          dualTrackAuth.loginAttempt(true)
           
           router.push("/dashboard") // Redirect to home or dashboard
         } else {
           setGeneralError("Authentication failed. Please try again.")
-          trackAuthEvent.loginAttempt(false, "Authentication failed")
+          dualTrackAuth.loginAttempt(false, "Authentication failed")
         }
       } else {
         setGeneralError("Invalid email or password. Please try again.")
-        trackAuthEvent.loginAttempt(false, "Invalid credentials")
+        dualTrackAuth.loginAttempt(false, "Invalid credentials")
       }
     } catch (err) {
       setGeneralError("An error occurred. Please try again later.")
-      trackAuthEvent.loginAttempt(false, "Network error")
+      dualTrackAuth.loginAttempt(false, "Network error")
       console.error(err)
     } finally {
       setIsLoading(false)

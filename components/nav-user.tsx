@@ -29,12 +29,14 @@ import {
 import { useRouter } from 'next/navigation';
 import { useAuth } from "@/context/authContext";
 import { trackAuthEvent, trackNavigationEvent } from "@/lib/tracking";
+import { useDualTracking } from "@/hooks/use-dual-analytics";
 import LanguageToggle from "@/components/ui/LanguageToggle";
 
 export function NavUser() {
   const { isMobile } = useSidebar();
   const router = useRouter();
   const { currentUser } = useAuth();
+  const { trackNavigationEvent: dualTrackNav, trackAuthEvent: dualTrackAuth } = useDualTracking();
 
   // Extraire les initiales du nom pour l'avatar fallback
   const getInitials = (name: string) => {
@@ -100,7 +102,7 @@ export function NavUser() {
               <BadgeCheck />
               Account
               </DropdownMenuItem>              <DropdownMenuItem onClick={() => {
-                trackNavigationEvent.buttonClick('billing', 'nav-user')
+                dualTrackNav.buttonClick('billing', 'nav-user')
                 router.push('/billing')
               }}>
               <CreditCard />
@@ -115,7 +117,7 @@ export function NavUser() {
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />            <DropdownMenuItem onClick={async () => {
-              trackAuthEvent.logout()
+              dualTrackAuth.logout()
               await fetch('/api/logout', { method: 'POST' });
               router.push('/login');
             }}>

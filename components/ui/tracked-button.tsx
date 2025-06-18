@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Button, ButtonProps } from '@/components/ui/button';
-import { trackNavigationEvent } from '@/lib/tracking';
+import { useDualTracking } from '@/hooks/use-dual-analytics';
 
 interface TrackedButtonProps extends ButtonProps {
   trackingName: string;
@@ -18,8 +18,10 @@ export function TrackedButton({
   children,
   ...props
 }: TrackedButtonProps) {
+  const { trackNavigationEvent } = useDualTracking();
+
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    // Track the button click
+    // Track the button click in both platforms
     trackNavigationEvent.buttonClick(trackingName, trackingLocation, {
       ...trackingProperties,
       buttonText: typeof children === 'string' ? children : trackingName,
@@ -38,20 +40,17 @@ export function TrackedButton({
   );
 }
 
-// Hook for tracking form submissions
+// Hook for tracking form submissions with dual analytics
 export function useFormTracking() {
+  const { trackFormEvent } = useDualTracking();
+
   const trackFormSubmission = (
     formName: string,
     success: boolean,
     formData?: Record<string, any>,
     error?: string
   ) => {
-    trackNavigationEvent.buttonClick(`${formName}-submit`, 'form', {
-      success,
-      error: error || null,
-      formData: formData || {},
-      timestamp: new Date().toISOString(),
-    });
+    trackFormEvent.submit(formName, success, formData, error);
   };
 
   const trackFormFieldInteraction = (
@@ -60,17 +59,7 @@ export function useFormTracking() {
     action: 'focus' | 'blur' | 'change',
     value?: string
   ) => {
-    // Only track if not sensitive data
-    const isSensitiveField = ['password', 'credit_card', 'ssn', 'token'].some(
-      sensitive => fieldName.toLowerCase().includes(sensitive)
-    );
-
-    trackNavigationEvent.buttonClick(`${formName}-field-${action}`, 'form-field', {
-      fieldName,
-      action,
-      value: isSensitiveField ? '[REDACTED]' : value,
-      timestamp: new Date().toISOString(),
-    });
+    trackFormEvent.fieldInteraction(formName, fieldName, action);
   };
 
   return {

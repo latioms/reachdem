@@ -3,8 +3,9 @@ import AuthWrapper from "@/components/AuthWrapper";
 import NavBar from "@/components/Layout/Navbar";
 import { Toaster } from "sonner";
 import { ThemeProvider } from "next-themes";
-import { MixpanelProvider } from "@/providers/MixpanelProvider";
-import { MixpanelStatus } from "@/components/ui/mixpanel-status";
+import { AnalyticsProvider } from "@/providers/AnalyticsProvider";
+import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
+import { AnalyticsStatus } from "@/components/ui/mixpanel-status";
 import "../globals.css";
 import checkAuth from "../actions/chechAuth";
 import { Sidebar } from "@/providers/SidebarProvider";
@@ -37,11 +38,12 @@ export default async function RootLayout({
   const {isAuthenticated} = await checkAuth()
   const { locale } = await params;
   const dictionary = await getDictionary(locale);
-
-  return (    <html lang={locale} className={`${geistSans.variable} ${geistMono.variable}`}>
+  return (
+    <html lang={locale} className={`${geistSans.variable} ${geistMono.variable}`}>
+      <GoogleAnalytics measurementId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
       <body>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <MixpanelProvider>
+          <AnalyticsProvider>
             <AuthWrapper>
               <Toaster richColors />
               {!isAuthenticated && (
@@ -55,8 +57,8 @@ export default async function RootLayout({
                   <main className="container mx-auto p-4">{children}</main>
                 </Sidebar>
               )}            </AuthWrapper>
-            <MixpanelStatus />
-          </MixpanelProvider>
+            <AnalyticsStatus />
+          </AnalyticsProvider>
         </ThemeProvider>
       </body>
     </html>
