@@ -1,4 +1,6 @@
 "use server"
+import React from "react";
+import PasswordResetEmail from "@/emails/password-reset";
 
 import { Resend } from 'resend'
 
@@ -27,5 +29,21 @@ export async function sendEmailReceipt(email: string, reference: string, amount:
   } catch (error) {
     console.error('Error sending email receipt:', error)
     return { error: 'Failed to send email receipt' }
+  }
+}
+
+export async function sendPasswordResetEmail(email: string, userId: string, secret: string) {
+  const resetLink = `${process.env.NEXT_PUBLIC_APP_URL}/reset-password?userId=${userId}&secret=${secret}`;
+  try {
+    await resend.emails.send({
+      from: 'ReachDem <support@updates.reachdem.cc>',
+      to: email,
+      subject: 'Reset your ReachDem password',
+      react: <PasswordResetEmail userEmail={email} resetLink={resetLink} />,
+    });
+    return { success: true };
+  } catch (error) {
+    console.error('Error sending password reset email:', error);
+    return { error: 'Failed to send password reset email' };
   }
 }

@@ -5,6 +5,7 @@ ReachDem (anciennement **CMPAIGN**) est une application Next.js d'envoi de messa
 ## Fonctionnalités clés
 
 - Envoi de campagnes directes ou programmées
+- Réinitialisation de mot de passe par e-mail
 - API SMS/Mail pour intégration tierce
 - Tableau de bord détaillé (projets, messages, transactions)
 - Suivi Mixpanel et Google Analytics via un hook unique
@@ -43,3 +44,4 @@ Certaines fonctionnalités requièrent des variables d'environnement (`.env.loca
 
 - `DASHBOARD_IMPROVEMENTS.md` – pistes d'évolution du tableau de bord
 - `DUAL_ANALYTICS_GUIDE.md` et `MIXPANEL_TRACKING_GUIDE.md` – configuration du suivi analytique
+- `PASSWORD_RESET_GUIDE.md` – mise en place de la réinitialisation de mot de passe
