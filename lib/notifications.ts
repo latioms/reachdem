@@ -1,8 +1,7 @@
 "use server"
-import React from "react";
-import PasswordResetEmail from "@/emails/password-reset";
-
 import { Resend } from 'resend'
+import PasswordResetEmail from "@/emails/password-reset"
+import { createElement } from 'react'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
@@ -39,7 +38,7 @@ export async function sendPasswordResetEmail(email: string, userId: string, secr
       from: 'ReachDem <support@updates.reachdem.cc>',
       to: email,
       subject: 'Reset your ReachDem password',
-      react: <PasswordResetEmail userEmail={email} resetLink={resetLink} />,
+      react: createElement(PasswordResetEmail, { userEmail: email, resetLink: resetLink }),
     });
     return { success: true };
   } catch (error) {

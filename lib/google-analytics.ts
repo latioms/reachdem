@@ -1,8 +1,8 @@
 // Google Analytics 4 Configuration
 declare global {
   interface Window {
-    gtag: (...args: any[]) => void;
-    dataLayer: any[];
+    gtag: (...args: unknown[]) => void;
+    dataLayer: unknown[];
   }
 }
 
@@ -20,8 +20,7 @@ export const loadGoogleAnalytics = () => {
   document.head.appendChild(script);
 
   // Initialize dataLayer and gtag
-  window.dataLayer = window.dataLayer || [];
-  window.gtag = function(...args: any[]) {
+  window.dataLayer = window.dataLayer || [];  window.gtag = function(...args: unknown[]) {
     window.dataLayer.push(args);
   };
 
@@ -43,13 +42,12 @@ export const googleAnalytics = {
       page_title: title,
     });
   },
-
   // Track custom events
   event: (action: string, parameters?: {
     event_category?: string;
     event_label?: string;
     value?: number;
-    [key: string]: any;
+    [key: string]: unknown;
   }) => {
     if (!GA_MEASUREMENT_ID || !window.gtag) return;
     

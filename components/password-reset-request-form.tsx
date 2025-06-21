@@ -6,7 +6,8 @@ import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import requestPasswordReset from '@/app/actions/requestPasswordReset'
 import { toast } from 'sonner'
-import { useRouter } from 'next/navigation'
+import { useRouter, useParams } from 'next/navigation'
+import { useDualTracking } from '@/hooks/use-dual-analytics'
 
 const schema = z.object({ email: z.string().email() })
 
@@ -15,6 +16,9 @@ export default function PasswordResetRequestForm() {
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
+  const params = useParams()
+  const locale = params.locale as string || 'en'
+  const { trackAuthEvent, trackFormEvent } = useDualTracking()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -26,16 +30,19 @@ export default function PasswordResetRequestForm() {
         setError(err.errors[0]?.message)
       }
       return
-    }
-
-    setIsLoading(true)
-    const res = await requestPasswordReset(email)
+    }    setIsLoading(true)
+    const res = await requestPasswordReset(email, locale)
     setIsLoading(false)
+    
     if (res.success) {
       toast.success('Password reset email sent')
+      trackAuthEvent.loginAttempt(true, 'password_reset_requested')
+      trackFormEvent.submit('password-reset-request', true, { email })
       router.push('/login')
     } else {
       toast.error(res.error)
+      trackAuthEvent.loginAttempt(false, res.error || 'password_reset_request_failed')
+      trackFormEvent.submit('password-reset-request', false, { email }, res.error)
     }
   }
 
