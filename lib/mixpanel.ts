@@ -14,7 +14,7 @@ if (MIXPANEL_TOKEN) {
 // Wrapper functions for type safety and easier usage
 export const analytics = {
   // Track page views
-  trackPageView: (pageName: string, properties?: Record<string, any>) => {
+  trackPageView: (pageName: string, properties?: Record<string, unknown>) => {
     if (MIXPANEL_TOKEN) {
       mixpanel.track('Page View', {
         page: pageName,
@@ -24,7 +24,7 @@ export const analytics = {
   },
 
   // Track custom events
-  track: (eventName: string, properties?: Record<string, any>) => {
+  track: (eventName: string, properties?: Record<string, unknown>) => {
     if (MIXPANEL_TOKEN) {
       mixpanel.track(eventName, properties);
     }
@@ -38,14 +38,14 @@ export const analytics = {
   },
 
   // Set user properties
-  setUserProperties: (properties: Record<string, any>) => {
+  setUserProperties: (properties: Record<string, unknown>) => {
     if (MIXPANEL_TOKEN) {
       mixpanel.people.set(properties);
     }
   },
 
   // Track user registration
-  trackSignUp: (userId: string, properties?: Record<string, any>) => {
+  trackSignUp: (userId: string, properties?: Record<string, unknown>) => {
     if (MIXPANEL_TOKEN) {
       mixpanel.alias(userId);
       mixpanel.track('Sign Up', properties);
@@ -53,7 +53,7 @@ export const analytics = {
   },
 
   // Track user login
-  trackLogin: (userId: string, properties?: Record<string, any>) => {
+  trackLogin: (userId: string, properties?: Record<string, unknown>) => {
     if (MIXPANEL_TOKEN) {
       mixpanel.identify(userId);
       mixpanel.track('Login', properties);
@@ -61,7 +61,7 @@ export const analytics = {
   },
 
   // Track navigation events
-  trackNavigation: (from: string, to: string, properties?: Record<string, any>) => {
+  trackNavigation: (from: string, to: string, properties?: Record<string, unknown>) => {
     if (MIXPANEL_TOKEN) {
       mixpanel.track('Navigation', {
         from,

@@ -7,7 +7,7 @@ import { useDualTracking } from '@/hooks/use-dual-analytics';
 interface TrackedButtonProps extends ButtonProps {
   trackingName: string;
   trackingLocation?: string;
-  trackingProperties?: Record<string, any>;
+  trackingProperties?: Record<string, unknown>;
 }
 
 export function TrackedButton({
@@ -43,11 +43,10 @@ export function TrackedButton({
 // Hook for tracking form submissions with dual analytics
 export function useFormTracking() {
   const { trackFormEvent } = useDualTracking();
-
   const trackFormSubmission = (
     formName: string,
     success: boolean,
-    formData?: Record<string, any>,
+    formData?: Record<string, unknown>,
     error?: string
   ) => {
     trackFormEvent.submit(formName, success, formData, error);

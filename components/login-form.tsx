@@ -15,7 +15,6 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import createSession from "@/app/actions/createSession"
 import { useAuth } from "@/context/authContext"
-import { trackAuthEvent } from "@/lib/tracking"
 import { useDualTracking } from "@/hooks/use-dual-analytics"
 import Link from "next/link"
 
@@ -148,12 +147,12 @@ export function LoginForm({
                   <p className="text-sm text-destructive">{errors.email}</p>
                 )}
               </div>
-              <div className="grid gap-2">
-                <div className="flex items-center">
+              <div className="grid gap-2">                <div className="flex items-center">
                   <Label htmlFor="password">Password</Label>
                   <a
-                    href="#"
+                    href="forgot-password"
                     className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
+                    onClick={() => dualTrackAuth.loginAttempt(true, 'forgot_password_clicked')}
                   >
                     Forgot your password?
                   </a>

@@ -24,6 +24,7 @@
     "@radix-ui/react-slot": "^1.1.2",
     "@radix-ui/react-switch": "^1.1.4",
     "@radix-ui/react-tooltip": "^1.2.0",
+    "@react-email/components": "^0.1.0",
     "@types/qrcode": "^1.5.5",
     "appwrite": "^17.0.1",
     "class-variance-authority": "^0.7.1",
@@ -63,6 +64,8 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "15.3.4",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
