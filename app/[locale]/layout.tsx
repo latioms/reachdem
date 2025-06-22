@@ -9,7 +9,7 @@ import { AnalyticsStatus } from "@/components/ui/mixpanel-status";
 import "../globals.css";
 import checkAuth from "../actions/chechAuth";
 import { Sidebar } from "@/providers/SidebarProvider";
-import  {getDictionary}  from "./dictionaries";
+import { getDictionary } from "./dictionaries";
 
 // fonts 
 const geistSans = Geist({
@@ -35,11 +35,14 @@ export default async function RootLayout({
   params: { locale: 'en' | 'fr' };
 }>) {
 
-  const {isAuthenticated} = await checkAuth()
+  const { isAuthenticated } = await checkAuth()
   const { locale } = await params;
   const dictionary = await getDictionary(locale);
   return (
     <html lang={locale} className={`${geistSans.variable} ${geistMono.variable}`}>
+      <head>
+        <meta name="facebook-domain-verification" content="scys6nt50s3yllrgoz9gfen1bv217d" />
+      </head>
       <GoogleAnalytics measurementId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
       <body>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
