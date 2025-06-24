@@ -91,7 +91,7 @@ const mailPlans: PricingPlan[] = [
   {
     name: "Free Mail",
     price: "Free",
-    description: "Send up to 50,000 emails per day with custom domain.",
+    description: "Send up to 50 emails per day with custom domain.",
     buttonText: "Start for Free",
     buttonVariant: "outline",
     features: [
@@ -108,7 +108,7 @@ const mailPlans: PricingPlan[] = [
   {
     name: "Basic Mail",
     price: "8 F / email",
-    description: "Up to 300,000 emails per day.",
+    description: "Up to 300 emails per day.",
     buttonText: "Choose Plan",
     features: [
       {
@@ -124,7 +124,7 @@ const mailPlans: PricingPlan[] = [
   {
     name: "Advanced Mail",
     price: "Custom",
-    description: "Enhanced features for large senders (up to 300k/day).",
+    description: "Enhanced features for large senders.",
     buttonText: "Get Started",
     features: [
       {
@@ -146,7 +146,7 @@ const mailPlans: PricingPlan[] = [
     features: [
       {
         title: "Flexible volume:",
-        description: "More than 300k emails per day",
+        description: "More than 10 000 emails per day",
       },
       {
         title: "Dedicated support:",
