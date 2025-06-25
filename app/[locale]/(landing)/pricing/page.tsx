@@ -1,10 +1,8 @@
 "use client";
 
 import { Check } from "lucide-react";
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Switch } from "@/components/ui/switch";
 
 type Feature = {
   title: string;
@@ -20,65 +18,148 @@ type PricingPlan = {
   features: Feature[];
 };
 
-const pricingPlans: PricingPlan[] = [
+const smsPlans: PricingPlan[] = [
   {
-    name: "Basic Plan",
-    price: "$0",
-    description: "Ideal for individuals getting started with our service. No credit card required.",
+    name: "Free SMS",
+    price: "Free",
+    description: "15 SMS included then 25 F per additional SMS.",
     buttonText: "Start for Free",
     buttonVariant: "outline",
     features: [
       {
-        title: "Limited access to features:",
-        description: "3 users, 1 project, 1GB storage",
+        title: "Included messages:",
+        description: "15 SMS",
       },
       {
-        title: "Basic support:",
-        description: "Email support only for 30 days after signup",
+        title: "Pay as you go:",
+        description: "25 F per SMS after the first 15",
       },
     ],
   },
   {
-    name: "Standard Plan",
-    price: { monthly: "$20", yearly: "$199" },
-    description: "Perfect for small businesses looking to grow. Start with a 30-day free trial.",
-    buttonText: "Try for Free",
+    name: "Starter SMS",
+    price: "18 F / SMS",
+    description: "For orders of 1,000 SMS or more.",
+    buttonText: "Choose Plan",
     features: [
       {
-        title: "Access to all standard features:",
-        description: "10 users, 5 projects, 5GB storage",
+        title: "Volume pricing:",
+        description: "18 F per SMS (min. 1000)",
       },
       {
-        title: "Priority support:",
-        description: "Email and phone support for 30 days after signup",
+        title: "API access:",
+        description: "Send through our SMS API",
       },
     ],
   },
   {
-    name: "Premium Plan",
+    name: "Pro SMS",
+    price: "15 F / SMS",
+    description: "Reduced rate for 10,000 SMS or more.",
+    buttonText: "Get Started",
+    features: [
+      {
+        title: "Volume pricing:",
+        description: "15 F per SMS (min. 10,000)",
+      },
+      {
+        title: "Technical support:",
+        description: "Access to our support team",
+      },
+    ],
+  },
+  {
+    name: "Custom SMS",
     price: "Custom",
-    description: "Best for large organizations with advanced needs. Contact us for a custom quote.",
+    description: "Need more? Contact us to discuss your pricing.",
     buttonText: "Contact Sales",
     buttonVariant: "outline",
     features: [
       {
-        title: "Dedicated support:",
-        description: "24/7 email and phone support",
+        title: "Negotiated rates:",
+        description: "Tailored to your volume",
       },
       {
-        title: "Custom integrations:",
-        description: "Tailored to your organization's needs",
+        title: "Dedicated support:",
+        description: "Personalised assistance",
+      },
+    ],
+  },
+];
+
+const mailPlans: PricingPlan[] = [
+  {
+    name: "Free Mail",
+    price: "Free",
+    description: "Send up to 50,000 emails per day with custom domain.",
+    buttonText: "Start for Free",
+    buttonVariant: "outline",
+    features: [
+      {
+        title: "Daily limit:",
+        description: "50k emails",
+      },
+      {
+        title: "Custom domain:",
+        description: "Use your own sender domain",
+      },
+    ],
+  },
+  {
+    name: "Basic Mail",
+    price: "8 F / email",
+    description: "Up to 300,000 emails per day.",
+    buttonText: "Choose Plan",
+    features: [
+      {
+        title: "Daily limit:",
+        description: "300k emails",
+      },
+      {
+        title: "Analytics:",
+        description: "Basic stats and tracking",
+      },
+    ],
+  },
+  {
+    name: "Advanced Mail",
+    price: "Custom",
+    description: "Enhanced features for large senders (up to 300k/day).",
+    buttonText: "Get Started",
+    features: [
+      {
+        title: "Priority sending:",
+        description: "Improved deliverability",
+      },
+      {
+        title: "Advanced analytics:",
+        description: "Detailed reporting tools",
+      },
+    ],
+  },
+  {
+    name: "Custom Mail",
+    price: "Custom",
+    description: "Contact us to negotiate a tailored offer.",
+    buttonText: "Contact Sales",
+    buttonVariant: "outline",
+    features: [
+      {
+        title: "Flexible volume:",
+        description: "More than 300k emails per day",
+      },
+      {
+        title: "Dedicated support:",
+        description: "Personalised assistance",
       },
     ],
   },
 ];
 
 const Pricing = () => {
-  const [isYearly, setIsYearly] = useState(false);
-
   const getPrice = (price: string | { monthly: string; yearly: string }) => {
     if (typeof price === "string") return price;
-    return isYearly ? price.yearly : price.monthly;
+    return price.monthly;
   };
 
   return (
@@ -92,19 +173,54 @@ const Pricing = () => {
             Check out our pricing plans to find the best fit for you.
           </p>
         </div>
-        <div className="mt-20 grid gap-10 md:grid-cols-3">
-          {pricingPlans.map((plan, index) => (
+
+        <h3 className="mt-20 mb-6 text-2xl font-semibold text-center">SMS Plans</h3>
+        <div className="mb-20 grid gap-10 md:grid-cols-3">
+          {smsPlans.map((plan, index) => (
             <div key={index}>
               <div className="flex flex-col justify-between gap-10 rounded-lg border p-6">
                 <div>
                   <p className="mb-2 text-lg font-semibold">{plan.name}</p>
                   <p className="mb-4 text-4xl font-semibold">
                     {getPrice(plan.price)}
-                    {typeof plan.price === "object" && (
-                      <span className="ml-1 text-sm font-normal text-muted-foreground">
-                        per user
-                      </span>
+                  </p>
+                  <p className="text-sm text-muted-foreground">{plan.description}</p>
+                </div>
+                <Button variant={plan.buttonVariant} className="w-full">
+                  {plan.buttonText}
+                </Button>
+              </div>
+              <ul className="mt-8 px-6">
+                {plan.features.map((feature, featureIndex) => (
+                  <>
+                    <li key={featureIndex} className="flex gap-2">
+                      <Check className="w-4" />
+                      <p className="text-sm text-muted-foreground">
+                        <span className="mr-1 font-semibold text-primary">
+                          {feature.title}
+                        </span>
+                        {feature.description}
+                      </p>
+                    </li>
+                    {featureIndex < plan.features.length - 1 && (
+                      <Separator className="my-4" />
                     )}
+                  </>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+
+        <h3 className="mb-6 text-2xl font-semibold text-center">Mail Plans</h3>
+        <div className="grid gap-10 md:grid-cols-3">
+          {mailPlans.map((plan, index) => (
+            <div key={index}>
+              <div className="flex flex-col justify-between gap-10 rounded-lg border p-6">
+                <div>
+                  <p className="mb-2 text-lg font-semibold">{plan.name}</p>
+                  <p className="mb-4 text-4xl font-semibold">
+                    {getPrice(plan.price)}
                   </p>
                   <p className="text-sm text-muted-foreground">{plan.description}</p>
                 </div>
