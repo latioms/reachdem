@@ -248,6 +248,39 @@
       "failed": "FAILED",
       "enabled": "ENABLED",
       "disabled": "DISABLED"
-    }
+    }  },
+  "footer": {
+    "description": "Building communication solutions for businesses and individuals around the globe. Send SMS and emails efficiently with our platform.",
+    "emailPlaceholder": "Your email",
+    "subscribe": "Subscribe",
+    "products": {
+      "title": "Products",
+      "sms": "SMS",
+      "email": "Email",
+      "campaigns": "Campaigns",
+      "contacts": "Contacts",
+      "api": "API"
+    },
+    "support": {
+      "title": "Support",
+      "pricing": "Pricing",
+      "faq": "FAQ",
+      "demo": "Demo",
+      "contact": "Contact"
+    },
+    "company": {
+      "title": "Company",
+      "about": "About",
+      "terms": "Terms of Service",
+      "privacy": "Privacy Policy"
+    },
+    "social": {
+      "twitter": "Twitter",
+      "facebook": "Facebook",
+      "linkedin": "LinkedIn",
+      "telegram": "Telegram"
+    },
+    "copyright": "© {year} ReachDem. All rights reserved.",
+    "learnMore": "Learn more about us"
   }
 }

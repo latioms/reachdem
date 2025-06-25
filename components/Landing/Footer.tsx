@@ -1,71 +1,143 @@
 import { FaFacebook, FaLinkedin, FaXTwitter, FaTelegram } from "react-icons/fa6";
 import LocaleSwitcher from "../ui/LocaleSwitcher";
 
-const navigation = [
-	{
-		title: "Products",
-		links: [
-			{ name: "SMS", href: "/pricing" },
-			{ name: "Email", href: "/pricing" },
-			{ name: "Campaigns", href: "/campaigns" },
-			{ name: "Contacts", href: "/contacts" },
-			{ name: "API", href: "#" },
-		],
-	},
-	{
-		title: "Support",
-		links: [
-			{ name: "Pricing", href: "/pricing" },
-			{ name: "FAQ", href: "/faq" },
-			{ name: "Demo", href: "/demo" },
-			{ name: "Contact", href: "/about" },
-		],
-	},
-	{
-		title: "Company",
-		links: [
-			{ name: "About", href: "/about" },
-			{ name: "Terms of Service", href: "#" },
-			{ name: "Privacy Policy", href: "#" },
-		],
-	},
-];
+interface FooterDictionary {
+	description: string;
+	emailPlaceholder: string;
+	subscribe: string;
+	products: {
+		title: string;
+		sms: string;
+		email: string;
+		campaigns: string;
+		contacts: string;
+		api: string;
+	};
+	support: {
+		title: string;
+		pricing: string;
+		faq: string;
+		demo: string;
+		contact: string;
+	};
+	company: {
+		title: string;
+		about: string;
+		terms: string;
+		privacy: string;
+	};
+	social: {
+		twitter: string;
+		facebook: string;
+		linkedin: string;
+		telegram: string;
+	};
+	copyright: string;
+	learnMore: string;
+}
 
-const socialLinks = [
-	{ name: "Twitter", icon: FaXTwitter, href: "https://twitter.com" },
-	{ name: "Facebook", icon: FaFacebook, href: "https://facebook.com/" },
-	{ name: "LinkedIn", icon: FaLinkedin, href: "https://www.linkedin.com/company/101800400" },
-	{ name: "Telegram", icon: FaTelegram, href: "https://t.me/reachdem" },
-];
+interface FooterProps {
+	dictionary: FooterDictionary;
+	locale: string;
+}
 
-export const Footer = () => {
+export const Footer = ({ 
+	dictionary: dict = {
+		description: "Building communication solutions for businesses and individuals around the globe.",
+		emailPlaceholder: "Your email",
+		subscribe: "Subscribe",
+		products: {
+			title: "Products",
+			sms: "SMS",
+			email: "Email",
+			campaigns: "Campaigns",
+			contacts: "Contacts",
+			api: "API"
+		},
+		support: {
+			title: "Support",
+			pricing: "Pricing",
+			faq: "FAQ",
+			demo: "Demo",
+			contact: "Contact"
+		},
+		company: {
+			title: "Company",
+			about: "About",
+			terms: "Terms of Service",
+			privacy: "Privacy Policy"
+		},
+		social: {
+			twitter: "Twitter",
+			facebook: "Facebook",
+			linkedin: "LinkedIn",
+			telegram: "Telegram"
+		},
+		copyright: "© {year} ReachDem. All rights reserved.",
+		learnMore: "Learn more about us"
+	},
+	locale = "en" 
+}: FooterProps) => {
+	const navigation = [
+		{
+			title: dict.products.title,
+			links: [
+				{ name: dict.products.sms, href: `/${locale}/pricing` },
+				{ name: dict.products.email, href: `/${locale}/pricing` },
+				{ name: dict.products.campaigns, href: `/${locale}/campaigns` },
+				{ name: dict.products.contacts, href: `/${locale}/contacts` },
+				{ name: dict.products.api, href: "#" },
+			],
+		},
+		{
+			title: dict.support.title,
+			links: [
+				{ name: dict.support.pricing, href: `/${locale}/pricing` },
+				{ name: dict.support.faq, href: `/${locale}/faq` },
+				{ name: dict.support.demo, href: `/${locale}/demo` },
+				{ name: dict.support.contact, href: `/${locale}/about` },
+			],
+		},
+		{
+			title: dict.company.title,
+			links: [
+				{ name: dict.company.about, href: `/${locale}/about` },
+				{ name: dict.company.terms, href: "#" },
+				{ name: dict.company.privacy, href: "#" },
+			],
+		},
+	];
+
+	const socialLinks = [
+		{ name: dict.social.twitter, icon: FaXTwitter, href: "https://twitter.com" },
+		{ name: dict.social.facebook, icon: FaFacebook, href: "https://facebook.com/" },
+		{ name: dict.social.linkedin, icon: FaLinkedin, href: "https://www.linkedin.com/company/101800400" },
+		{ name: dict.social.telegram, icon: FaTelegram, href: "https://t.me/reachdem" },
+	];
 	return (
 		<section className="bg-background py-12 sm:py-16 md:py-24">
 			<div className="container mx-auto max-w-full px-4 sm:px-6 lg:px-24">
 				{/* Logo and newsletter section */}
 				<div className="mb-10 flex flex-col items-start justify-between gap-10 border-b pb-10 sm:mb-16 sm:pb-12 md:flex-row">
-					<div className="w-full max-w-full sm:max-w-sm">
-						<a href="/">
+					<div className="w-full max-w-full sm:max-w-sm">						<a href={`/${locale}`}>
 							<img
 								src="/images/reachdem.png"
 								alt="ReachDem logo"
 								className="mb-6 h-8 dark:invert"
 							/>
-						</a>
-						<p className="mb-8 text-base text-muted-foreground">
-							Building communication solutions for businesses and individuals
-							around the globe. Send SMS and emails efficiently with our platform.
+						</a><p className="mb-8 text-base text-muted-foreground">
+							{dict.description}
 						</p>
 
 						{/* Newsletter subscription */}
 						<div className="flex w-full max-w-full flex-col gap-3 sm:max-w-md sm:flex-row">
 							<input
 								type="email"
-								placeholder="Your email"
+								placeholder={dict.emailPlaceholder}
 								className="flex h-12 flex-1 rounded-md border border-input bg-background px-4 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 sm:h-10 sm:text-sm"
 							/>
 							<button className="inline-flex h-12 items-center justify-center rounded-md bg-primary px-6 py-2 text-base font-medium whitespace-nowrap text-primary-foreground ring-offset-background transition-colors hover:bg-primary/90 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 sm:h-10 sm:px-4 sm:text-sm">
-								Subscribe
+								{dict.subscribe}
 							</button>
 						</div>
 					</div>
@@ -116,16 +188,14 @@ export const Footer = () => {
 								<link.icon className="h-6 w-6 sm:h-5 sm:w-5" />
 							</a>
 						))}
-					</div>
-
-					{/* Copyright - Below on mobile, left on desktop */}
+					</div>					{/* Copyright - Below on mobile, left on desktop */}
 					<p className="order-2 text-center text-sm text-muted-foreground sm:text-left md:order-1">
-						© {new Date().getFullYear()} ReachDem. All rights reserved.{" "}
+						{dict.copyright.replace("{year}", new Date().getFullYear().toString())}{" "}
 						<a
-							href="/about"
+							href={`/${locale}/about`}
 							className="text-foreground underline underline-offset-4 transition-colors hover:text-primary"
 						>
-							Learn more about us
+							{dict.learnMore}
 						</a>
 					</p>
 				</div>

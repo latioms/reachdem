@@ -251,6 +251,39 @@
       "failed": "ÉCHOUÉ",
       "enabled": "ACTIVÉ",
       "disabled": "DÉSACTIVÉ"
-    }
+    }  },
+  "footer": {
+    "description": "Construire des solutions de communication pour les entreprises et les particuliers dans le monde entier. Envoyez des SMS et des emails efficacement avec notre plateforme.",
+    "emailPlaceholder": "Votre email",
+    "subscribe": "S'abonner",
+    "products": {
+      "title": "Produits",
+      "sms": "SMS",
+      "email": "Email",
+      "campaigns": "Campagnes",
+      "contacts": "Contacts",
+      "api": "API"
+    },
+    "support": {
+      "title": "Support",
+      "pricing": "Tarifs",
+      "faq": "FAQ",
+      "demo": "Démo",
+      "contact": "Contact"
+    },
+    "company": {
+      "title": "Entreprise",
+      "about": "À propos",
+      "terms": "Conditions d'utilisation",
+      "privacy": "Politique de confidentialité"
+    },
+    "social": {
+      "twitter": "Twitter",
+      "facebook": "Facebook",
+      "linkedin": "LinkedIn",
+      "telegram": "Telegram"
+    },
+    "copyright": "© {year} ReachDem. Tous droits réservés.",
+    "learnMore": "En savoir plus sur nous"
   }
 }

@@ -46,27 +46,27 @@ export default async function RootLayout({
       </head>
       <GoogleAnalytics measurementId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
       <body className="overflow-x-hidden w-full">
-        <ThemeProvider 
-          attribute="class" 
-          defaultTheme="system" 
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
           <AnalyticsProvider>
             <AuthWrapper>
-              <Toaster richColors />              
-              {!isAuthenticated && (
-                <>
-                  <NavBar dictionary={dictionary.landing.nav} />
-                  <main>{children}</main>
-                  <Footer />
-                </>
+              <Toaster richColors />
+              {!isAuthenticated && (<>
+                <NavBar dictionary={dictionary.landing.nav} />
+                <main>{children}</main>
+                <Footer dictionary={dictionary.footer} locale={locale} />
+              </>
               )}
               {isAuthenticated && (
                 <Sidebar dictionary={dictionary}>
                   <main className="container mx-auto p-4">{children}</main>
                 </Sidebar>
-              )}            </AuthWrapper>
+              )}
+            </AuthWrapper>
             <AnalyticsStatus />
           </AnalyticsProvider>
         </ThemeProvider>
