@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import AuthWrapper from "@/components/AuthWrapper";
 import NavBar from "@/components/Layout/Navbar";
+import { Footer } from "@/components/Landing/Footer";
 import { Toaster } from "sonner";
 import { ThemeProvider } from "next-themes";
 import { AnalyticsProvider } from "@/providers/AnalyticsProvider";
@@ -48,11 +49,11 @@ export default async function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <AnalyticsProvider>
             <AuthWrapper>
-              <Toaster richColors />
-              {!isAuthenticated && (
+              <Toaster richColors />              {!isAuthenticated && (
                 <>
                   <NavBar dictionary={dictionary.landing.nav} />
                   <main>{children}</main>
+                  <Footer />
                 </>
               )}
               {isAuthenticated && (

@@ -156,101 +156,99 @@ const mailPlans: PricingPlan[] = [
   },
 ];
 
-const Pricing = () => {
-  const getPrice = (price: string | { monthly: string; yearly: string }) => {
+const Pricing = () => {  const getPrice = (price: string | { monthly: string; yearly: string }) => {
     if (typeof price === "string") return price;
     return price.monthly;
   };
 
   return (
     <section className="py-32 px-4 lg:px-24">
-      <div>
-        <div className="flex flex-col items-center text-center">
-          <h2 className="mb-6 text-4xl font-bold text-pretty lg:text-6xl">
-            Our affordable pricing
-          </h2>
-          <p className="text-muted-foreground lg:text-xl">
-            Check out our pricing plans to find the best fit for you.
-          </p>
-        </div>
+        <div>
+          <div className="flex flex-col items-center text-center">
+            <h2 className="mb-6 text-4xl font-bold text-pretty lg:text-6xl">
+              Our affordable pricing
+            </h2>
+            <p className="text-muted-foreground lg:text-xl">
+              Check out our pricing plans to find the best fit for you.
+            </p>
+          </div>
 
-        <h3 className="mt-20 mb-6 text-2xl font-semibold text-center">SMS Plans</h3>
-        <div className="mb-20 grid gap-10 md:grid-cols-3">
-          {smsPlans.map((plan, index) => (
-            <div key={index}>
-              <div className="flex flex-col justify-between gap-10 rounded-lg border p-6">
-                <div>
-                  <p className="mb-2 text-lg font-semibold">{plan.name}</p>
-                  <p className="mb-4 text-4xl font-semibold">
-                    {getPrice(plan.price)}
-                  </p>
-                  <p className="text-sm text-muted-foreground">{plan.description}</p>
+          <h3 className="mt-20 mb-6 text-2xl font-semibold text-center">SMS Plans</h3>
+          <div className="mb-20 grid gap-10 md:grid-cols-3">
+            {smsPlans.map((plan, index) => (
+              <div key={index}>
+                <div className="flex flex-col justify-between gap-10 rounded-lg border p-6">
+                  <div>
+                    <p className="mb-2 text-lg font-semibold">{plan.name}</p>
+                    <p className="mb-4 text-4xl font-semibold">
+                      {getPrice(plan.price)}
+                    </p>
+                    <p className="text-sm text-muted-foreground">{plan.description}</p>
+                  </div>
+                  <Button variant={plan.buttonVariant} className="w-full">
+                    {plan.buttonText}
+                  </Button>
                 </div>
-                <Button variant={plan.buttonVariant} className="w-full">
-                  {plan.buttonText}
-                </Button>
+                <ul className="mt-8 px-6">
+                  {plan.features.map((feature, featureIndex) => (
+                    <>
+                      <li key={featureIndex} className="flex gap-2">
+                        <Check className="w-4" />
+                        <p className="text-sm text-muted-foreground">
+                          <span className="mr-1 font-semibold text-primary">
+                            {feature.title}
+                          </span>
+                          {feature.description}
+                        </p>
+                      </li>
+                      {featureIndex < plan.features.length - 1 && (
+                        <Separator className="my-4" />
+                      )}
+                    </>
+                  ))}
+                </ul>
               </div>
-              <ul className="mt-8 px-6">
-                {plan.features.map((feature, featureIndex) => (
-                  <>
-                    <li key={featureIndex} className="flex gap-2">
-                      <Check className="w-4" />
-                      <p className="text-sm text-muted-foreground">
-                        <span className="mr-1 font-semibold text-primary">
-                          {feature.title}
-                        </span>
-                        {feature.description}
-                      </p>
-                    </li>
-                    {featureIndex < plan.features.length - 1 && (
-                      <Separator className="my-4" />
-                    )}
-                  </>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
 
-        <h3 className="mb-6 text-2xl font-semibold text-center">Mail Plans</h3>
-        <div className="grid gap-10 md:grid-cols-3">
-          {mailPlans.map((plan, index) => (
-            <div key={index}>
-              <div className="flex flex-col justify-between gap-10 rounded-lg border p-6">
-                <div>
-                  <p className="mb-2 text-lg font-semibold">{plan.name}</p>
-                  <p className="mb-4 text-4xl font-semibold">
-                    {getPrice(plan.price)}
-                  </p>
-                  <p className="text-sm text-muted-foreground">{plan.description}</p>
+          <h3 className="mb-6 text-2xl font-semibold text-center">Mail Plans</h3>
+          <div className="grid gap-10 md:grid-cols-3">
+            {mailPlans.map((plan, index) => (
+              <div key={index}>
+                <div className="flex flex-col justify-between gap-10 rounded-lg border p-6">
+                  <div>
+                    <p className="mb-2 text-lg font-semibold">{plan.name}</p>
+                    <p className="mb-4 text-4xl font-semibold">
+                      {getPrice(plan.price)}
+                    </p>
+                    <p className="text-sm text-muted-foreground">{plan.description}</p>
+                  </div>
+                  <Button variant={plan.buttonVariant} className="w-full">
+                    {plan.buttonText}
+                  </Button>
                 </div>
-                <Button variant={plan.buttonVariant} className="w-full">
-                  {plan.buttonText}
-                </Button>
+                <ul className="mt-8 px-6">
+                  {plan.features.map((feature, featureIndex) => (
+                    <>
+                      <li key={featureIndex} className="flex gap-2">
+                        <Check className="w-4" />
+                        <p className="text-sm text-muted-foreground">
+                          <span className="mr-1 font-semibold text-primary">
+                            {feature.title}
+                          </span>
+                          {feature.description}
+                        </p>
+                      </li>
+                      {featureIndex < plan.features.length - 1 && (
+                        <Separator className="my-4" />
+                      )}
+                    </>
+                  ))}
+                </ul>
               </div>
-              <ul className="mt-8 px-6">
-                {plan.features.map((feature, featureIndex) => (
-                  <>
-                    <li key={featureIndex} className="flex gap-2">
-                      <Check className="w-4" />
-                      <p className="text-sm text-muted-foreground">
-                        <span className="mr-1 font-semibold text-primary">
-                          {feature.title}
-                        </span>
-                        {feature.description}
-                      </p>
-                    </li>
-                    {featureIndex < plan.features.length - 1 && (
-                      <Separator className="my-4" />
-                    )}
-                  </>
-                ))}
-              </ul>
-            </div>
-          ))}
+            ))}          </div>
         </div>
-      </div>
-    </section>
+      </section>
   );
 };
 

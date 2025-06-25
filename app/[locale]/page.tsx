@@ -49,9 +49,7 @@ export async function generateMetadata(
 export default async function Page() {
 
 	const lang = await getLang();
-	const t = await getDictionary(lang);
-
-	return (
+	const t = await getDictionary(lang);	return (
 		<div className="">
 			<Hero dictionary={t.landing.hero}/>
 			<Logos dictionary={t.landing.logos} />
