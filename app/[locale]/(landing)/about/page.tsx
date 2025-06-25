@@ -4,9 +4,7 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-} from "@/components/ui/carousel";
-
- const About = () => {
+} from "@/components/ui/carousel";const About = () => {
   return (
     <section className="py-20z px-4 lg:px-24">
       {/* Hero Section */}
@@ -159,8 +157,7 @@ import {
             width={480}
             height={400}
             className="order-1 shadow-xl object-cover md:order-2"
-          />
-        </div>
+          />        </div>
       </section>
     </section>
   );
