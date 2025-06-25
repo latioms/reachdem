@@ -39,7 +39,7 @@ const socialLinks = [
 export const Footer = () => {
   return (
     <section className="bg-background py-12 sm:py-16 md:py-24">
-      <div className="container mx-auto max-w-7xl px-5 md:px-6">
+      <div className="container mx-auto max-w-7xl px-5 md:px-4">
         {/* Logo and newsletter section */}
         <div className="mb-10 flex flex-col items-start justify-between gap-10 border-b pb-10 sm:mb-16 sm:pb-12 md:flex-row">
           <div className="w-full max-w-full sm:max-w-sm">

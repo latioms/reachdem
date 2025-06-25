@@ -52,7 +52,6 @@ export default async function Page() {
 	const t = await getDictionary(lang);	return (
 		<div className="">
 			<Hero dictionary={t.landing.hero}/>
-			<Logos dictionary={t.landing.logos} />
 		</div>
 	);
 }
