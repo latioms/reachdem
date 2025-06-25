@@ -45,11 +45,17 @@ export default async function RootLayout({
         <meta name="facebook-domain-verification" content="scys6nt50s3yllrgoz9gfen1bv217d" />
       </head>
       <GoogleAnalytics measurementId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
-      <body>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      <body className="overflow-x-hidden w-full">
+        <ThemeProvider 
+          attribute="class" 
+          defaultTheme="system" 
+          enableSystem
+          disableTransitionOnChange
+        >
           <AnalyticsProvider>
             <AuthWrapper>
-              <Toaster richColors />              {!isAuthenticated && (
+              <Toaster richColors />              
+              {!isAuthenticated && (
                 <>
                   <NavBar dictionary={dictionary.landing.nav} />
                   <main>{children}</main>
