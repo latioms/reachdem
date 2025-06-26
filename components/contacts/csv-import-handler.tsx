@@ -236,10 +236,11 @@ export function CsvImportTab({ onSuccess, dictionary }: CsvImportProps) {
               { id: 'import-promise' }
             );
           };
-          
-          // Transform data according to field mapping
+            // Transform data according to field mapping
           const transformedData = csvData.map(row => {
-            const transformedRow: Record<string, string> = {};
+            const transformedRow: { [key: string]: string; email: string } = {
+              email: '' // Initialize with empty email
+            };
             
             // Map each field according to the defined mapping
             Object.entries(fieldMapping).forEach(([targetField, sourceHeader]) => {
@@ -250,7 +251,7 @@ export function CsvImportTab({ onSuccess, dictionary }: CsvImportProps) {
               }
             });
 
-            // Ensure email is added if available
+            // Ensure email is properly set
             if (fieldMapping.email && row[fieldMapping.email]) {
               transformedRow.email = row[fieldMapping.email];
             }

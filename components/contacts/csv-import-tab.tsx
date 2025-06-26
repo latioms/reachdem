@@ -241,8 +241,13 @@ export function CsvImportTab({ onSuccess, dictionary }: CsvImportProps) {
           return transformedRow;
         });
 
-        // Filter out records without email
-        const validData = transformedData.filter(row => row.email && row.email.trim() !== '');
+        // Filter out records without email and ensure email property exists
+        const validData = transformedData
+          .filter(row => row.email && row.email.trim() !== '')
+          .map(row => ({
+            ...row,
+            email: row.email // Explicitly ensure email property exists
+          } as { email: string; [key: string]: string }));
         
         if (validData.length === 0) {
           throw new Error(t.requiredFields || 'Email est obligatoire');
