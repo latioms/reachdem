@@ -14,26 +14,58 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+  PaginationEllipsis,
+} from "@/components/ui/pagination"
 
 interface ContactListProps {
   contacts: Contact[];
   dictionary?: any;
   onEdit?: (contact: Contact) => void;
   onDelete?: (contactId: string) => void;
+  currentPage?: number;
+  contactsPerPage?: number;
+  onPageChange?: (page: number) => void;
+  totalContacts?: number;
 }
 
-export function ContactList({ contacts, dictionary, onEdit, onDelete }: ContactListProps) {
+export function ContactList({ 
+  contacts, 
+  dictionary, 
+  onEdit, 
+  onDelete, 
+  currentPage = 1, 
+  contactsPerPage = 10, 
+  onPageChange,
+  totalContacts
+}: ContactListProps) {
   const t = dictionary?.contacts || {}
 
-  if (contacts.length === 0) {
+  // Pagination logic
+  const indexOfLastContact = currentPage * contactsPerPage;
+  const indexOfFirstContact = indexOfLastContact - contactsPerPage;
+  const currentContacts = contacts.slice(indexOfFirstContact, indexOfLastContact);
+  const totalPages = Math.ceil(contacts.length / contactsPerPage);  if (contacts.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-12 text-center">
         <User className="h-12 w-12 text-muted-foreground mb-4" />
         <h3 className="text-lg font-semibold text-muted-foreground mb-2">
-          {t.emptyState?.title || "Aucun contact"}
+          {totalContacts && totalContacts > 0 
+            ? (t.emptySearch?.title || "Aucun contact trouvé")
+            : (t.emptyState?.title || "Aucun contact")
+          }
         </h3>
         <p className="text-muted-foreground max-w-md">
-          {t.emptyState?.description || "Vous n'avez pas encore de contacts. Commencez par ajouter votre premier contact."}
+          {totalContacts && totalContacts > 0 
+            ? (t.emptySearch?.description || "Aucun contact ne correspond à votre recherche. Essayez de modifier les termes de recherche.")
+            : (t.emptyState?.description || "Vous n'avez pas encore de contacts. Commencez par ajouter votre premier contact.")
+          }
         </p>
       </div>
     )
@@ -44,9 +76,8 @@ export function ContactList({ contacts, dictionary, onEdit, onDelete }: ContactL
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-semibold">
           {t.list?.title || "Vos contacts"}
-        </h2>
-        <Badge variant="secondary">
-          {contacts.length} {contacts.length === 1 ? 'contact' : 'contacts'}
+        </h2>        <Badge variant="secondary">
+          {totalContacts !== undefined ? totalContacts : contacts.length} {(totalContacts !== undefined ? totalContacts : contacts.length) === 1 ? 'contact' : 'contacts'}
         </Badge>
       </div>
 
@@ -61,9 +92,9 @@ export function ContactList({ contacts, dictionary, onEdit, onDelete }: ContactL
               <TableHead className="w-[120px]">Ajouté</TableHead>
               <TableHead className="w-[80px] text-right">Actions</TableHead>
             </TableRow>
-          </TableHeader>
+          </TableHeader>          
           <TableBody>
-            {contacts.map((contact) => (
+            {currentContacts.map((contact) => (
               <TableRow key={contact.$id} className="hover:bg-muted/50">
                 <TableCell className="font-medium">
                   <div className="flex items-center gap-2">
@@ -151,10 +182,88 @@ export function ContactList({ contacts, dictionary, onEdit, onDelete }: ContactL
                   )}
                 </TableCell>
               </TableRow>
-            ))}
-          </TableBody>
+            ))}          
+            </TableBody>
         </Table>
-      </div>
+      </div>      {/* Pagination */}
+      {contacts.length > contactsPerPage && onPageChange && (
+        <div className="mt-8 space-y-4">
+          <div className="flex justify-center">
+            <p className="text-sm text-muted-foreground">
+              {dictionary?.table?.pagination?.showing
+                ? dictionary.table.pagination.showing
+                  .replace('{start}', String(indexOfFirstContact + 1))
+                  .replace('{end}', String(Math.min(indexOfLastContact, contacts.length)))
+                  .replace('{total}', String(contacts.length))
+                : `Affichage de ${indexOfFirstContact + 1} à ${Math.min(indexOfLastContact, contacts.length)} sur ${contacts.length} contacts`
+              }
+            </p>
+          </div>
+          
+          <Pagination>
+            <PaginationContent>
+              <PaginationItem>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => onPageChange(Math.max(currentPage - 1, 1))}
+                  disabled={currentPage === 1}
+                  className="gap-1 px-2.5"
+                >
+                  {dictionary?.table?.pagination?.previous || "Précédent"}
+                </Button>
+              </PaginationItem>
+              
+              {[...Array(totalPages)].map((_, index) => {
+                const page = index + 1;
+                
+                // Show first page, last page, current page, and pages around current
+                if (
+                  page === 1 ||
+                  page === totalPages ||
+                  (page >= currentPage - 1 && page <= currentPage + 1)
+                ) {
+                  return (
+                    <PaginationItem key={page}>
+                      <Button
+                        variant={currentPage === page ? "default" : "ghost"}
+                        size="sm"
+                        onClick={() => onPageChange(page)}
+                        className="w-9 h-9 p-0"
+                      >
+                        {page}
+                      </Button>
+                    </PaginationItem>
+                  );
+                }
+                
+                // Show ellipsis
+                if (page === currentPage - 2 || page === currentPage + 2) {
+                  return (
+                    <PaginationItem key={page}>
+                      <PaginationEllipsis />
+                    </PaginationItem>
+                  );
+                }
+                
+                return null;
+              })}
+              
+              <PaginationItem>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => onPageChange(Math.min(currentPage + 1, totalPages))}
+                  disabled={currentPage === totalPages}
+                  className="gap-1 px-2.5"
+                >
+                  {dictionary?.table?.pagination?.next || "Suivant"}
+                </Button>
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
+        </div>
+      )}
     </div>
   )
 }

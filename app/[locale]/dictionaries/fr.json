@@ -244,13 +244,37 @@
       "errors": {
         "userEmail": "Impossible de récupérer l'email de l'utilisateur. Veuillez vous reconnecter."
       }
-    },
-    "status": {
+    },    "status": {
       "pending": "EN ATTENTE",
       "completed": "COMPLÉTÉ",
       "failed": "ÉCHOUÉ",
       "enabled": "ACTIVÉ",
       "disabled": "DÉSACTIVÉ"
+    },
+    "contacts": {
+      "csvImport": {
+        "title": "Importer des contacts",
+        "description": "Importez des contacts à partir d'un fichier CSV ou Excel",
+        "fieldMappingTitle": "Correspondance des champs",
+        "selectField": "Sélectionner...",
+        "firstName": "Prénom",
+        "lastName": "Nom",
+        "email": "Email",
+        "phone": "Téléphone",
+        "address": "Adresse",
+        "previewTitle": "Aperçu des données",
+        "importButton": "Importer",
+        "importing": "Import en cours...",
+        "success": "Import réussi",
+        "successDescription": "contacts importés avec succès",
+        "failed": "contacts en échec",
+        "noMapping": "Veuillez faire correspondre au moins l'email avant d'importer",        "noData": "Aucune donnée à importer",
+        "backToForm": "Retour au formulaire",
+        "errors": "Erreurs",
+        "requiredFields": "Email est obligatoire",
+        "emptyFile": "Fichier vide",
+        "processingError": "Erreur lors du traitement du fichier CSV"
+      }
     }
   }
 }

@@ -1,21 +1,33 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { ContactList, DialogAddContact } from "@/components/contacts"
+import { ContactList, ContactSearch, DialogAddContact } from "@/components/contacts"
 import { Button } from "@/components/ui/button"
 import { Plus, Users, RefreshCw } from "lucide-react"
 import { getContacts } from "@/app/actions/mail/contacts/getContacts"
 import type { Contact } from "@/types/schema"
 import { Skeleton } from "@/components/ui/skeleton"
+import { useSearchDebounce } from "@/hooks/use-search-debounce"
+import { useContactFilter } from "@/hooks/use-contact-filter"
 
 interface ContactsClientPageProps {
   dictionary?: any;
 }
 
-export function ContactsClientPage({ dictionary }: ContactsClientPageProps) {
-  const [contacts, setContacts] = useState<Contact[]>([])
+export function ContactsClientPage({ dictionary }: ContactsClientPageProps) {  const [contacts, setContacts] = useState<Contact[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [contactsPerPage] = useState(10)
+  
+  // Utilisation des hooks personnalisés pour la recherche
+  const { searchTerm, debouncedSearchTerm, setSearchTerm } = useSearchDebounce()
+  const filteredContacts = useContactFilter(contacts, debouncedSearchTerm)
+
+  // Réinitialiser la page courante quand on effectue une recherche
+  useEffect(() => {
+    setCurrentPage(1)
+  }, [debouncedSearchTerm])
 
   const fetchContacts = async () => {
     setIsLoading(true)
@@ -41,10 +53,11 @@ export function ContactsClientPage({ dictionary }: ContactsClientPageProps) {
   useEffect(() => {
     fetchContacts()
   }, [])
-
   const handleContactAdded = () => {
     // Rafraîchir la liste après ajout d'un contact
     fetchContacts()
+    // Réinitialiser à la première page
+    setCurrentPage(1)
   }
 
   const handleDeleteContact = async (contactId: string) => {
@@ -114,21 +127,30 @@ export function ContactsClientPage({ dictionary }: ContactsClientPageProps) {
             </Button>
           </DialogAddContact>
         </div>
-      </div>
-
+      </div>    
       {/* Error State */}
       {error && (
         <div className="p-4 text-sm text-red-700 bg-red-100 border border-red-200 rounded-md">
           {error}
         </div>
-      )}
-
+      )}    
+      <ContactSearch
+        searchTerm={searchTerm}
+        onSearchChange={setSearchTerm}
+        resultsCount={filteredContacts.length}
+        totalCount={contacts.length}
+        dictionary={dictionary}
+      />
       {/* Contact List */}
       <ContactList 
-        contacts={contacts}
+        contacts={filteredContacts}
         dictionary={dictionary}
         onEdit={handleEditContact}
         onDelete={handleDeleteContact}
+        currentPage={currentPage}
+        contactsPerPage={contactsPerPage}
+        onPageChange={setCurrentPage}
+        totalContacts={contacts.length}
       />
     </div>
   )

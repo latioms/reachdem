@@ -13,7 +13,9 @@ import { addContact } from "@/app/actions/mail/contacts/addContact"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { User, Mail, Phone, MapPin, UserCheck } from "lucide-react"
+import { User, Mail, Phone, MapPin, UserCheck, FileSpreadsheet, UserPlus } from "lucide-react"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { CsvImportTab } from "./csv-import-tab"
 
 interface ContactFormProps {
   onSuccess?: () => void;
@@ -23,6 +25,7 @@ interface ContactFormProps {
 export function ContactForm({ onSuccess, dictionary }: ContactFormProps): React.JSX.Element {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [activeTab, setActiveTab] = useState<'form' | 'import'>('form')
   const router = useRouter()
   const t = dictionary?.contacts || {}
   const form = useForm<ContactInput>({
@@ -62,25 +65,38 @@ export function ContactForm({ onSuccess, dictionary }: ContactFormProps): React.
       setIsLoading(false)
     }
   }
-
   return (
     <Card className="w-full max-w-2xl mx-auto">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <UserCheck className="h-5 w-5" />
           {t.form?.title || "Ajouter un nouveau contact"}
-        </CardTitle>        <CardDescription>
+        </CardTitle>
+        <CardDescription>
           {t.form?.description || "Remplissez les informations du contact. Seul l'email est obligatoire."}
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            {error && (
-              <div className="p-3 text-sm text-red-700 bg-red-100 border border-red-200 rounded-md">
-                {error}
-              </div>
-            )}
+        <Tabs defaultValue="single" className="w-full">
+          <TabsList className="grid grid-cols-2 mb-4">
+            <TabsTrigger value="single" className="flex items-center gap-2">
+              <UserPlus className="h-4 w-4" />
+              {t.form?.singleTab || "Contact unique"}
+            </TabsTrigger>
+            <TabsTrigger value="import" className="flex items-center gap-2">
+              <FileSpreadsheet className="h-4 w-4" />
+              {t.form?.importTab || "Import CSV/Excel"}
+            </TabsTrigger>
+          </TabsList>
+          
+          <TabsContent value="single">
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                {error && (
+                  <div className="p-3 text-sm text-red-700 bg-red-100 border border-red-200 rounded-md">
+                    {error}
+                  </div>
+                )}
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">              <FormField
                 control={form.control}
@@ -181,9 +197,7 @@ export function ContactForm({ onSuccess, dictionary }: ContactFormProps): React.
                   </FormItem>
                 )}
               />
-            </div>
-
-            <div className="flex gap-2 pt-4">
+            </div>            <div className="flex gap-2 pt-4">
               <Button 
                 type="submit" 
                 disabled={isLoading}
@@ -209,6 +223,12 @@ export function ContactForm({ onSuccess, dictionary }: ContactFormProps): React.
             </div>
           </form>
         </Form>
+          </TabsContent>
+          
+          <TabsContent value="import">
+            <CsvImportTab onSuccess={onSuccess} dictionary={dictionary} />
+          </TabsContent>
+        </Tabs>
       </CardContent>
     </Card>
   )
