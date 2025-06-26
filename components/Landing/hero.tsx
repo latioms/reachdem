@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, CheckCircle, MessageSquare, User } from "lucide-react"
+import { ArrowRight, CheckCircle, MessageSquare } from "lucide-react"
 import { IntroDisclosure } from "@/components/ui/intro-disclosure"
 import { steps } from "@/constants/steps"
+import Link from "next/link"
 
 interface HeroProps {
   dictionary?: any;
@@ -42,7 +43,7 @@ export default function Hero({dictionary}: HeroProps) {
 						</p>
 						<div className="flex flex-col sm:flex-row gap-4">
 							<Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">
-								<a href="/register">{dictionary.startButton}</a>
+								<Link href="/register">{dictionary.startButton}</Link>
 								<ArrowRight className="ml-2 h-4 w-4" />
 							</Button>
 							<Button size="lg" variant="outline" onClick={() => setShowGuide(true)}>

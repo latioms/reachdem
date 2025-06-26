@@ -41,9 +41,9 @@ export async function getContacts(limit: number = 5000, offset: number = 0) {
             total: response.total
         }
 
-    } catch (error: any) {
+    } catch (error) {
         console.log("Error fetching contacts:", error);
-        const errorMessage = error.response?.message || error.message || "Unknown error occurred while fetching contacts";
+        const errorMessage = (error as any).response?.message || (error as Error).message || "Unknown error occurred while fetching contacts";
         return {
             error: errorMessage,
             contacts: []

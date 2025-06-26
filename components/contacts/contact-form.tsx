@@ -5,7 +5,7 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 
-import { Form, FormField, FormDescription, FormControl, FormMessage, FormLabel, FormItem } from "@/components/ui/form"
+import { Form, FormField, FormControl, FormMessage, FormLabel, FormItem } from "@/components/ui/form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { contactSchema, type ContactInput } from "@/lib/validations/contact"
 import { addContact } from "@/app/actions/mail/contacts/addContact"
@@ -25,7 +25,6 @@ interface ContactFormProps {
 export function ContactForm({ onSuccess, dictionary }: ContactFormProps): React.JSX.Element {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [activeTab, setActiveTab] = useState<'form' | 'import'>('form')
   const router = useRouter()
   const t = dictionary?.contacts || {}
   const form = useForm<ContactInput>({
@@ -60,7 +59,7 @@ export function ContactForm({ onSuccess, dictionary }: ContactFormProps): React.
         router.refresh()
       }
     } catch (err) {
-      setError("Une erreur inattendue s'est produite")
+      setError("Une erreur inattendue s'est produite :" + err)
     } finally {
       setIsLoading(false)
     }

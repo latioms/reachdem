@@ -28,6 +28,7 @@ async function checkAuth() {
       },
     };
   } catch (error) {
+    console.error('Authentication check failed:', error);
     return {
       isAuthenticated: false,
       user: null

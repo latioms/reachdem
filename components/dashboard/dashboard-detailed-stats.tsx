@@ -4,9 +4,9 @@ import React, { useEffect, useState } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { useAuth } from '@/context/authContext'
-import { getMessageStats, getFinancialStats, formatAmount, formatPercentage, formatRelativeDate, type MessageStats, type FinancialStats } from '@/lib/dashboard-stats'
+import { getMessageStats, getFinancialStats, formatAmount, formatRelativeDate, type MessageStats, type FinancialStats } from '@/lib/dashboard-stats'
 import { Skeleton } from '@/components/ui/skeleton'
-import { TrendingUp, TrendingDown, Clock, CheckCircle, XCircle, AlertCircle } from 'lucide-react'
+import { TrendingUp, Clock, CheckCircle, XCircle } from 'lucide-react'
 
 interface DashboardDetailedStatsProps {
   dictionary: any
@@ -30,7 +30,7 @@ export function DashboardDetailedStats({ dictionary }: DashboardDetailedStatsPro
         setLoading(true)
         const [msgStats, finStats] = await Promise.all([
           getMessageStats(currentUser.id),
-          getFinancialStats(currentUser.id)
+          getFinancialStats()
         ])
         
         setMessageStats(msgStats)

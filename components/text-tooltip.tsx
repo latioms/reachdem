@@ -1,11 +1,9 @@
-import { Button } from "@/components/ui/button"
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { Info } from "lucide-react"
 
 interface TextTooltipProps {
   text: string

@@ -33,11 +33,11 @@
       "title": "Soutenu depuis le début par les meilleurs partenaires."
     }
   },
-  "sidebar": {
-    "dashboard": {
+  "sidebar": {    "dashboard": {
       "title": "Tableau de bord",
       "items": {
-        "home": "Accueil"
+        "home": "Accueil",
+        "contacts": "Contacts"
       }
     },
     "SMS": {

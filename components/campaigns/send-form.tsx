@@ -12,11 +12,8 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Textarea } from '@/components/ui/textarea'
-import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { Paperclip, Clock } from 'lucide-react'
-import { useState, useEffect } from 'react'
-import { TextTooltip } from '@/components/text-tooltip'
+import { useState } from 'react'
 import { sendSMSAction } from '@/app/actions/SMS/send/sendSMS'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { useUserProjects } from '@/hooks/use-projects'
@@ -88,9 +85,9 @@ export default function SMSForm({ dictionary }: SendFormProps) {
     },
   })
 
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const [success, setSuccess] = useState(false)
+  const [loading, ] = useState(false)
+  const [error, ] = useState<string | null>(null)
+  const [success, ] = useState(false)
   const [shakeProgress, setShakeProgress] = useState(false)
   const [showError, setShowError] = useState(false)
 

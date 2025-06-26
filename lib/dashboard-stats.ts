@@ -3,7 +3,6 @@
  * Ces fonctions permettent d'obtenir des métriques clés pour l'affichage du dashboard
  */
 
-import { getProjects } from '@/app/actions/SMS/project/getProjects';
 import { getProjectsByUserId } from '@/app/actions/SMS/project/getProjectsByUserId';
 import { getMessagesByUserId } from '@/app/actions/SMS/messages/getMessagesByUserId';
 import { getTransactions } from '@/app/actions/SMS/transactions/getTransaction';
@@ -318,7 +317,7 @@ export async function getProjectStats(userId: string): Promise<ProjectStats | nu
 /**
  * Obtient les statistiques financières
  */
-export async function getFinancialStats(userId?: string): Promise<FinancialStats | null> {
+export async function getFinancialStats(): Promise<FinancialStats | null> {
   try {
     const transactionsResult = await getTransactions();
 
@@ -463,7 +462,7 @@ export async function getQuickStats(userId: string) {
       getDashboardStats(userId),
       getMessageStats(userId),
       getProjectStats(userId),
-      getFinancialStats(userId)
+      getFinancialStats()
     ]);
 
     return {

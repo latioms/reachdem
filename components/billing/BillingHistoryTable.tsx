@@ -13,7 +13,6 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { getTransactions } from '@/app/actions/SMS/transactions/getTransaction';
 import { formatDistanceToNow, format } from 'date-fns';
@@ -44,7 +43,7 @@ export default function BillingHistoryTable({ projectId, dictionary }: { project
     key: '$createdAt', direction: 'desc'
   });
   const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState<string>('all');
+  const [statusFilter, ] = useState<string>('all');
   const [refreshTrigger, setRefreshTrigger] = useState(0);
 
   useEffect(() => {

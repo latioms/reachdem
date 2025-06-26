@@ -27,10 +27,10 @@ async function createAccount(name: string, email: string, password: string) {
             success: true,
             data: response
         };
-    } catch (error: any) {
+    } catch (error) {
         return {
             success: false,
-            error: error.message || "Erreur lors de la création du compte"
+            error: (error as Error).message || "Erreur lors de la création du compte"
         };
     }
 }

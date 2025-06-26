@@ -5,7 +5,7 @@ import { ProjectClientPage } from '@/components/project/project-client-page';
 import CreditsManagementTable from '@/components/billing/CreditsManagementTable';
 import { MessagesHistoryTable } from '@/components/history/messages-history-table';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { MessageSquare, FolderDot, CreditCard, TrendingUp } from 'lucide-react';
+import { MessageSquare } from 'lucide-react';
 import { DashboardStatsCards } from '@/components/dashboard/dashboard-stats-cards';
 import { DashboardDetailedStats } from '@/components/dashboard/dashboard-detailed-stats';
 
@@ -50,7 +50,7 @@ export default async function Page() {
               {t.history?.table?.description || "Messages History"}
             </CardTitle>
             <CardDescription>
-              Consultez l'historique de vos envois SMS récents
+              Consultez l{"'"}historique de vos envois SMS récents
             </CardDescription>
           </CardHeader>
           <CardContent>

@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { getMessagesByUserId } from '@/app/actions/SMS/messages/getMessagesByUserId'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardHeader } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { useAuth } from '@/context/authContext'
 import { formatDistanceToNow, parseISO } from 'date-fns'
@@ -37,9 +37,9 @@ export function MessagesHistoryTable({ dictionary }: MessagesHistoryTableProps) 
   const uniqueReceivers = [...new Set(messages.map(message => message.receiver))]
 
   // Get unique dates for filtering
-  const uniqueDates = [...new Set(messages.map(message =>
-    new Date(message.$createdAt).toISOString().split('T')[0]
-  ))].sort((a, b) => b.localeCompare(a)); // Sort dates in descending order
+  // const uniqueDates = [...new Set(messages.map(message =>
+  //   new Date(message.$createdAt).toISOString().split('T')[0]
+  // ))].sort((a, b) => b.localeCompare(a)); // Sort dates in descending order
 
   useEffect(() => {
     const fetchMessages = async () => {

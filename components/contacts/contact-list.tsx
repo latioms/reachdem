@@ -199,19 +199,15 @@ export function ContactList({
               }
             </p>
           </div>
-          
-          <Pagination>
+            <Pagination>
             <PaginationContent>
               <PaginationItem>
-                <Button
-                  variant="ghost"
-                  size="sm"
+                <PaginationPrevious 
                   onClick={() => onPageChange(Math.max(currentPage - 1, 1))}
-                  disabled={currentPage === 1}
-                  className="gap-1 px-2.5"
+                  className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
                 >
                   {dictionary?.table?.pagination?.previous || "Précédent"}
-                </Button>
+                </PaginationPrevious>
               </PaginationItem>
               
               {[...Array(totalPages)].map((_, index) => {
@@ -225,14 +221,13 @@ export function ContactList({
                 ) {
                   return (
                     <PaginationItem key={page}>
-                      <Button
-                        variant={currentPage === page ? "default" : "ghost"}
-                        size="sm"
+                      <PaginationLink
                         onClick={() => onPageChange(page)}
-                        className="w-9 h-9 p-0"
+                        isActive={currentPage === page}
+                        className="cursor-pointer"
                       >
                         {page}
-                      </Button>
+                      </PaginationLink>
                     </PaginationItem>
                   );
                 }
@@ -250,15 +245,12 @@ export function ContactList({
               })}
               
               <PaginationItem>
-                <Button
-                  variant="ghost"
-                  size="sm"
+                <PaginationNext 
                   onClick={() => onPageChange(Math.min(currentPage + 1, totalPages))}
-                  disabled={currentPage === totalPages}
-                  className="gap-1 px-2.5"
+                  className={currentPage === totalPages ? "pointer-events-none opacity-50" : "cursor-pointer"}
                 >
                   {dictionary?.table?.pagination?.next || "Suivant"}
-                </Button>
+                </PaginationNext>
               </PaginationItem>
             </PaginationContent>
           </Pagination>

@@ -56,7 +56,6 @@ export function useFormTracking() {
     formName: string,
     fieldName: string,
     action: 'focus' | 'blur' | 'change',
-    value?: string
   ) => {
     trackFormEvent.fieldInteraction(formName, fieldName, action);
   };

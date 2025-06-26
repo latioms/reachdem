@@ -125,22 +125,21 @@ export function ContactCsvImport({ onSuccess, dictionary }: CsvImportProps) {
   };
   const processCsvContent = (content: string) => {
     try {
-      const lines = content.split(/\r?\n/);      if (lines.length === 0) {
+      const lines = content.split(/\r?\n/);
+      if (lines.length === 0) {
         setError(t?.emptyFile || 'Fichier vide');
         return;
       }
 
       // Detect the delimiter (comma, semicolon, or tab)
       const firstLine = lines[0];
-      let delimiter = ',';
-      if (firstLine.includes(';')) delimiter = ';';
-      else if (firstLine.includes('\t')) delimiter = '\t';
+      const delimiter = CSV_DELIMITERS.find(d => firstLine.includes(d)) || ',';
 
       // Parse headers
       const headersLine = lines[0];
       const detectedHeaders = headersLine
         .split(delimiter)
-        .map(header => header.trim().replace(/^["']|["']$/g, ''));
+        .map(header => header.trim().replace(/^['"]|['"]$/g, ''));
       
       setHeaders(detectedHeaders);
 
@@ -239,7 +238,9 @@ export function ContactCsvImport({ onSuccess, dictionary }: CsvImportProps) {
       try {
         // Transform data according to field mapping
         const transformedData = csvData.map(row => {
-          const transformedRow: Record<string, string> = {};
+          const transformedRow: { email: string; [key: string]: string } = {
+            email: '', // Initialize email as required property
+          };
           
           // Map each field according to the defined mapping
           Object.entries(fieldMapping).forEach(([targetField, sourceHeader]) => {

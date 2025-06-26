@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { FaFacebook, FaLinkedin, FaXTwitter, FaTelegram } from "react-icons/fa6";
 import LocaleSwitcher from "../ui/LocaleSwitcher";
 
@@ -45,13 +46,13 @@ export const Footer = () => {
 				{/* Logo and newsletter section */}
 				<div className="mb-10 flex flex-col items-start justify-between gap-10 border-b pb-10 sm:mb-16 sm:pb-12 md:flex-row">
 					<div className="w-full max-w-full sm:max-w-sm">
-						<a href="/">
+						<Link href="/">
 							<img
 								src="/images/reachdem.png"
 								alt="ReachDem logo"
 								className="mb-6 h-8 dark:invert"
 							/>
-						</a>
+						</Link>
 						<p className="mb-8 text-base text-muted-foreground">
 							Building communication solutions for businesses and individuals
 							around the globe. Send SMS and emails efficiently with our platform.
@@ -81,12 +82,21 @@ export const Footer = () => {
 									<ul className="space-y-3.5">
 										{section.links.map((link) => (
 											<li key={link.name}>
-												<a
-													href={link.href}
-													className="inline-block py-1 text-muted-foreground transition-colors duration-200 hover:text-foreground active:text-primary"
-												>
-													{link.name}
-												</a>
+												{link.href.startsWith("/") ? (
+													<Link
+														href={link.href}
+														className="inline-block py-1 text-muted-foreground transition-colors duration-200 hover:text-foreground active:text-primary"
+													>
+														{link.name}
+													</Link>
+												) : (
+													<a
+														href={link.href}
+														className="inline-block py-1 text-muted-foreground transition-colors duration-200 hover:text-foreground active:text-primary"
+													>
+														{link.name}
+													</a>
+												)}
 											</li>
 										))}
 									</ul>
@@ -121,12 +131,12 @@ export const Footer = () => {
 					{/* Copyright - Below on mobile, left on desktop */}
 					<p className="order-2 text-center text-sm text-muted-foreground sm:text-left md:order-1">
 						© {new Date().getFullYear()} ReachDem. All rights reserved.{" "}
-						<a
+						<Link
 							href="/about"
 							className="text-foreground underline underline-offset-4 transition-colors hover:text-primary"
 						>
 							Learn more about us
-						</a>
+						</Link>
 					</p>
 				</div>
 			</div>

@@ -125,13 +125,6 @@ export function RechargeModal({ projectId, dictionary }: RechargeModalProps) {
       }
     }
 
-  const handleCloseStatusInModal = () => {
-    setCurrentStep("form");
-    setTransactionData({});
-    setError(null);
-    setLoading(false);
-  }
-
   return (
     <DialogContent>
       <DialogHeader>

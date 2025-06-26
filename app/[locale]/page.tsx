@@ -1,7 +1,6 @@
 import { getLang } from '@/lib/lang';
 import { getDictionary } from './dictionaries';
 import Hero from '@/components/Landing/hero';
-import Logos from '@/components/Landing/logos';
 import type { Metadata, ResolvingMetadata } from 'next';
 
 type Props = {

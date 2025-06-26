@@ -12,7 +12,7 @@ export async function POST(request: Request) {
             },
         });
     } catch (error) {
-        return new Response(JSON.stringify({ error: "Failed to send SMS" }), {
+        return new Response(JSON.stringify({ error: "Failed to send SMS" + error }), {
             status: 500,
             headers: {
                 "Content-Type": "application/json",

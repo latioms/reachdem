@@ -30,11 +30,11 @@
       "title": "Supported from the start by the best partners."
     }
   },
-  "sidebar": {
-    "dashboard": {
+  "sidebar": {    "dashboard": {
       "title": "Dashboard",
       "items": {
-        "home": "Home"
+        "home": "Home",
+        "contacts": "Contacts"
       }
     },
     "SMS": {

@@ -1,5 +1,5 @@
 'use client'
-import { useState, useRef, useEffect, useCallback } from "react"
+import { useState, useEffect } from "react"
 import { trackNavigationEvent } from "@/lib/tracking"
 
 import {
@@ -12,8 +12,6 @@ import {
 
 import SendForm  from "./send-form"
 
-// Constante pour la limite de caractères SMS
-const SMS_CHARACTER_LIMIT = 160
 
 interface DialogCampaignProps {
     children: React.ReactNode;
@@ -22,8 +20,8 @@ interface DialogCampaignProps {
 
 export function DialogCampaign({ children, dictionary }: DialogCampaignProps) {
     const [open, setOpen] = useState(false)
-    const [message, setMessage] = useState("")
-    const [characterCount, setCharacterCount] = useState(0)
+    const [message, ] = useState("")
+    const [, setCharacterCount] = useState(0)
 
     useEffect(() => {
         setCharacterCount(message.length)

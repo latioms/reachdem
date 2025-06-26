@@ -31,11 +31,11 @@ export async function storeMessage(
 		}
 
 
-	} catch (error: any) {
-		console.log(error);
-		const errorMessage = error.response?.message || error.message || "Unknown error";
-		return {
-			error: errorMessage,
-		};
-	}
+	} catch (error) {
+        console.log(error);
+        const errorMessage = (error as any).response?.message || (error as Error).message || "Unknown error";
+        return {
+            error: errorMessage,
+        };
+    }
 }

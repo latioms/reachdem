@@ -13,7 +13,7 @@ interface ImportContactResult {
   errors: { email: string; error: string }[];
 }
 
-export async function importContacts(contacts: any[]) {
+export async function importContacts(contacts: { email: string; [key: string]: string }[]) {
   try {
     const { user } = await checkAuth();
 

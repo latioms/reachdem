@@ -43,14 +43,14 @@ const Changelog2 = () => {
               Better export options
             </h2>
             <p className="prose text-primary/80 dark:prose-invert">
-              We've added a <a href="#">components</a> and{" "}
-              <a href="#">analytics</a> to help you track your website's
-              performance. You can now see your website's performance over time,
+              We&rsquo;ve added a <a href="#">components</a> and{" "}
+              <a href="#">analytics</a> to help you track your website&rsquo;s
+              performance. You can now see your website&rsquo;s performance over time,
               and get insights into your users.
               <br />
               <br />
               As with all of our <a href="#">integrations</a>, we do the heavy
-              lifting for you. It's easy to set up, privacy-focused, performant,
+              lifting for you. It&rsquo;s easy to set up, privacy-focused, performant,
               and secure. We also handle cookie consent where required, in a
               very Supertape way.
             </p>
@@ -69,14 +69,14 @@ const Changelog2 = () => {
               New dashboard and analytics
             </h2>
             <p className="prose text-primary/80 dark:prose-invert">
-              We've added a <a href="#">components</a> and{" "}
-              <a href="#">analytics</a> to help you track your website's
-              performance. You can now see your website's performance over time,
+              We&rsquo;ve added a <a href="#">components</a> and{" "}
+              <a href="#">analytics</a> to help you track your website&rsquo;s
+              performance. You can now see your website&rsquo;s performance over time,
               and get insights into your users.
               <br />
               <br />
               As with all of our <a href="#">integrations</a>, we do the heavy
-              lifting for you. It's easy to set up, privacy-focused, performant,
+              lifting for you. It&rsquo;s easy to set up, privacy-focused, performant,
               and secure. We also handle cookie consent where required, in a
               very Supertape way.
             </p>
@@ -87,4 +87,4 @@ const Changelog2 = () => {
   );
 };
 
-export default Changelog2 
+export default Changelog2;

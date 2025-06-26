@@ -70,7 +70,7 @@ export function QRCodeModal({
       await navigator.clipboard.writeText(textToCopy)
       toast.success("Contenu copié dans le presse-papier")
     } catch (error) {
-      toast.error("Erreur lors de la copie")
+      toast.error("Erreur lors de la copie" + error)
     }
   }
 

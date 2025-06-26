@@ -38,9 +38,9 @@ export async function createProject(sender_name: string,) {
             success: true,
         }
 
-    } catch (error: any) {
+    } catch (error) {
         console.log(error);
-        const errorMessage = error.response?.message || error.message || "Unknown error";
+        const errorMessage = (error as any).response?.message || (error as Error).message || "Unknown error";
         return {
             error: errorMessage,
         };

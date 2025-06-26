@@ -43,7 +43,7 @@ export function ContactsClientPage({ dictionary }: ContactsClientPageProps) {  c
         setContacts(result.contacts || [])
       }
     } catch (err) {
-      setError("Une erreur inattendue s'est produite")
+      setError("Une erreur inattendue s'est produite" + err)
       setContacts([])
     } finally {
       setIsLoading(false)

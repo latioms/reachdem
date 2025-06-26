@@ -38,8 +38,8 @@ export async function POST(request: Request) {
     try {
       // Tenter de parser le texte en JSON
       result = JSON.parse(responseText);
-    } catch (parseError) {
-      console.error('Failed to parse JSON response:', responseText.substring(0, 200));
+    } catch (_parseError) {
+      console.error('Failed to parse JSON response:', responseText.substring(0, 200), _parseError);
       return NextResponse.json(
         { success: false, error: 'Failed to parse API response' }, 
         { status: 500 }

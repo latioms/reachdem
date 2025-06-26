@@ -58,9 +58,9 @@ export async function addContact({
             message: "Contact created successfully"
         }
 
-    } catch (error: any) {
+    } catch (error) {
         console.log("Error creating contact:", error);
-        const errorMessage = error.response?.message || error.message || "Unknown error occurred while creating contact";
+        const errorMessage = (error as any).response?.message || (error as Error).message || "Unknown error occurred while creating contact";
         return {
             error: errorMessage,
         };

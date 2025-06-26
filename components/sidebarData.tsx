@@ -1,26 +1,59 @@
 import {
   Home,
-  ShoppingCart,
-  FolderTree,
   MessageSquare,
   History,
   FolderDot,
   CreditCard,
   HelpCircle,
   Info,
-  Settings
+  Settings,
+  Users
 } from "lucide-react";
 
-export const getSidebarData = (dictionary: any) => {
+interface DictionaryType {
+  sidebar: {
+    dashboard: {
+      title: string;
+      items: {
+        home: string;
+        contacts: string;
+      };
+    };
+    SMS: {
+      title: string;
+      items: {
+        campaigns: string;
+        history: string;
+        projects: string;
+        billing: string;
+      };
+    };
+    platform: {
+      title: string;
+      items: {
+        help: string;
+        about: string;
+        settings: string;
+      };
+    };
+  };
+}
+
+export const getSidebarData = (dictionary: DictionaryType) => {
   return {
-    navMain: [
-      {
+    navMain: [      {
         title: dictionary.sidebar.dashboard.title,
         items: [
           { 
             title: dictionary.sidebar.dashboard.items.home, 
             url: "/dashboard", 
             icon: Home,
+            active: true
+          },
+          { 
+            title: dictionary.sidebar.dashboard.items.contacts || "Contacts", 
+            url: "/contacts", 
+            icon: Users,
             active: true
           }
         ],
@@ -83,11 +116,11 @@ export const getSidebarData = (dictionary: any) => {
 
 // Keep the original data for backwards compatibility during transition
 export const data = {
-  navMain: [
-    {
+  navMain: [    {
       title: "Tableau de bord",
       items: [
-        { title: "Accueil", url: "/dashboard", icon: Home, active: true }
+        { title: "Accueil", url: "/dashboard", icon: Home, active: true },
+        { title: "Contacts", url: "/contacts", icon: Users, active: true }
       ],
     },
     {

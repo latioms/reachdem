@@ -48,9 +48,9 @@ export async function decreaseSmsCredits(projectId: string, smsCredits: number) 
             success: true,
         }
 
-    } catch (error: any) {
+    } catch (error) {
         console.log(error);
-        const errorMessage = error.response?.message || error.message || "Unknown error";
+        const errorMessage = (error as any).response?.message || (error as Error).message || "Unknown error";
         return {
             error: errorMessage,
         };
@@ -97,9 +97,9 @@ export async function increaseSmsCredits(projectId: string, smsCredits: number) 
             success: true,
         }
 
-    } catch (error: any) {
+    } catch (error) {
         console.log(error);
-        const errorMessage = error.response?.message || error.message || "Unknown error";
+        const errorMessage = (error as any).response?.message || (error as Error).message || "Unknown error";
         return {
             error: errorMessage,
         };

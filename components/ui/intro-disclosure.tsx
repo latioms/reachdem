@@ -3,7 +3,7 @@
 import * as React from "react"
 import Image from "next/image"
 import { AnimatePresence, motion, useAnimation } from "framer-motion"
-import { CheckIcon, ExternalLinkIcon, X } from "lucide-react"
+import { CheckIcon, ExternalLinkIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { useIsMobile } from "@/hooks/use-mobile"
@@ -359,7 +359,7 @@ function StepContent({
               onCheckedChange={(checked) => setSkipNextTime(checked as boolean)}
             />
             <label htmlFor="skipNextTime" className="text-sm text-muted-foreground">
-              Don't show this again
+              Don&rsquo;t show this again
             </label>
           </div>
         </div>
@@ -428,7 +428,7 @@ function StepContent({
               onCheckedChange={(checked) => setSkipNextTime(checked as boolean)}
             />
             <label htmlFor="skipNextTime" className="text-sm text-muted-foreground">
-              Don't show this again
+              Don&rsquo;t show this again
             </label>
           </div>
         </motion.div>

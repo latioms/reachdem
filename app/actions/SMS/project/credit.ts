@@ -44,9 +44,9 @@ export async function increaseSMSCredit(projectId: string, smsCount: number) {
         );
 
         return { success: true };
-    } catch (error: any) {
+    } catch (error) {
         console.error("Error increasing SMS credits:", error);
-        return { success: false, error: error.message };
+        return { success: false, error: (error as Error).message };
     }
 }
 
@@ -99,8 +99,8 @@ export async function decreaseSMSCredit(projectId: string, smsCount: number) {
         );
 
         return { success: true };
-    } catch (error: any) {
+    } catch (error) {
         console.error("Error decreasing SMS credits:", error);
-        return { success: false, error: error.message };
+        return { success: false, error: (error as Error).message };
     }
 }

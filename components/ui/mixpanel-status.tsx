@@ -5,8 +5,8 @@ import { useEffect, useState } from 'react';
 export function AnalyticsStatus() {
   const [mixpanelEnabled, setMixpanelEnabled] = useState(false);
   const [gaEnabled, setGaEnabled] = useState(false);
-  const [mixpanelToken, setMixpanelToken] = useState<string | null>(null);
-  const [gaId, setGaId] = useState<string | null>(null);
+  const [, setMixpanelToken] = useState<string | null>(null);
+  const [, setGaId] = useState<string | null>(null);
 
   useEffect(() => {
     const mixpanelTokenEnv = process.env.NEXT_PUBLIC_MIXPANEL_TOKEN;

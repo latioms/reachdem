@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import Link from 'next/link';
 
 function Page() {
   const [isLoading, setIsLoading] = React.useState(false);
@@ -118,9 +119,9 @@ function Page() {
               
               <div className="mx-auto mt-3 flex justify-center gap-1 text-sm text-muted-foreground">
                 <p>Already have an account?</p>
-                <a href="/login" className="font-medium text-primary hover:underline">
+                <Link href="/login" className="font-medium text-primary hover:underline">
                   Log in
-                </a>
+                </Link>
               </div>
             </div>
           </div>

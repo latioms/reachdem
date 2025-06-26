@@ -7,7 +7,6 @@ import { useAuth } from "@/context/authContext"
 import { increaseSMSCredit } from "@/app/actions/SMS/project/credit"
 import { sendEmailReceipt } from "@/lib/notifications"
 import { sendSMS } from "@/lib/sms"
-import { createTransaction } from "@/app/actions/SMS/transactions/createTransaction"
 import { updateTransaction } from "@/app/actions/SMS/transactions/updateTransaction"
 
 interface StatusStepProps {
@@ -24,7 +23,6 @@ export function StatusStep({
   reference, 
   amount, 
   phone, 
-  onClose,
   projectId,
   smsCount,
   dictionary

@@ -89,7 +89,7 @@ export function CsvImportTab({ onSuccess, dictionary }: CsvImportProps) {
   const handleCsvProcess = (file?: File, text?: string) => {
     setError(null);
     try {
-      let lines: string[] = [];
+      const lines: string[] = [];
       
       if (text) {
         // Handle manual input
