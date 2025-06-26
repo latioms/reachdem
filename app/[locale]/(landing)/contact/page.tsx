@@ -2,12 +2,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { Phone } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa6";
 
 const Contact = () => {
   return (
     <section className="py-32">
-      <div className="container">
-        <div className="mx-auto flex max-w-screen-xl flex-col justify-between gap-10 lg:flex-row lg:gap-20">
+      <div className="">
+        <div className="container mx-auto flex max-w-screen-xl flex-col justify-between gap-10 lg:flex-row lg:gap-20">
           <div className="mx-auto flex max-w-sm flex-col justify-between gap-10">
             <div className="text-center lg:text-left">
               <h1 className="mb-2 text-5xl font-semibold lg:mb-1 lg:text-6xl">
@@ -24,13 +26,33 @@ const Contact = () => {
               </h3>
               <ul className="ml-4 list-disc">
                 <li>
-                  <span className="font-bold">Phone: </span>
-                  (123) 34567890
+                  <div className="flex flex-row gap-3 items-center">
+                    <span className="font-bold">Phone: </span>
+                    <span className="flex items-center gap-2 mt-1">
+                      <a
+                        href="tel:+237233472836"
+                        className="flex items-center gap-1 underline"
+                      >
+                        <Phone className="w-4 h-4" />
+                        +237 233 472 836
+                      </a>
+                      or
+                      <a
+                        href="https://wa.me/237233472836"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-1 text-green-600 hover:text-green-800"
+                      >
+                        <FaWhatsapp className="w-4 h-4" />
+                        WhatsApp
+                      </a>
+                    </span>
+                  </div>
                 </li>
                 <li>
                   <span className="font-bold">Email: </span>
                   <a href="" className="underline">
-                    your-email@example.com
+                    contact@reachdem.cc
                   </a>
                 </li>
               </ul>
