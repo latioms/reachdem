@@ -6,26 +6,18 @@ import { ThemeToggle } from '@/components/ui/theme-toggle';
 import checkAuth from '@/app/actions/chechAuth'; // Import the checkAuth function
 import { useParams } from 'next/navigation';
 
-interface DictionaryStrings {
-  about?: string;
-  pricing?: string;
-  faq?: string;
-  contact?: string;
-  start?: string;
-}
-
 interface NavbarProps {
-  dictionary?: {
-    dictionary?: DictionaryStrings;
-  };
+  dictionary?: any;
 }
 
-export default function Navbar(props: NavbarProps) {
+export default function Navbar({ dictionary }: NavbarProps) {
+  const t = dictionary?.landing?.nav || {}
+  
   const navLinks = [
-    { href: '/about', label: props.dictionary?.dictionary?.about || 'About' },
-    { href: '/pricing', label: props.dictionary?.dictionary?.pricing || 'Pricing' },
-    { href: '/faq', label: props.dictionary?.dictionary?.faq || 'FAQ' },
-    { href: '/contact', label: props.dictionary?.dictionary?.contact || 'Contact' },
+    { href: '/about', label: t.about || 'About' },
+    { href: '/pricing', label: t.pricing || 'Pricing' },
+    { href: '/faq', label: t.faq || 'FAQ' },
+    { href: '/contact', label: t.contact || 'Contact' },
   ];
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
@@ -80,7 +72,7 @@ export default function Navbar(props: NavbarProps) {
                 {/* Login Button */}
                 <Link href="/login" className="transition-opacity duration-300 opacity-100">
                   <button className="inline-flex items-center justify-center whitespace-nowrap rounded-sm text-sm font-semibold transition-colors focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-xs hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:hover:bg-gray-600">
-                    {props.dictionary?.dictionary?.start || 'Login'}
+                    {t.login || 'Login'}
                   </button>
                 </Link>
               </>
@@ -97,10 +89,10 @@ export default function Navbar(props: NavbarProps) {
                 {isUserMenuOpen && (
                   <div className="absolute right-0 mt-2 w-48 rounded-md border bg-background shadow-lg dark:bg-gray-800 dark:border-gray-700">
                     <Link href="/dashboard" className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600">
-                      Dashboard
+                      {t.dashboard || 'Dashboard'}
                     </Link>
                     <button onClick={handleLogout} className="block w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-gray-100 dark:text-red-400 dark:hover:bg-gray-600">
-                      Logout
+                      {t.logout || 'Logout'}
                     </button>
                   </div>
                 )}
@@ -141,13 +133,13 @@ export default function Navbar(props: NavbarProps) {
           {/* Add mobile versions of Login/Signup or Dashboard/Logout */}
           {!isLoggedIn ? (
             <>
-              <Link href="/login" className="text-primary p-2 font-normal text-lg dark:text-white">Login</Link>
-              <Link href="/signup" className="text-primary p-2 font-normal text-lg dark:text-white">Sign Up</Link>
+              <Link href="/login" className="text-primary p-2 font-normal text-lg dark:text-white">{t.login || 'Login'}</Link>
+              <Link href="/signup" className="text-primary p-2 font-normal text-lg dark:text-white">{t.signup || 'Sign Up'}</Link>
             </>
           ) : (
             <>
-              <Link href="/dashboard" className="text-primary p-2 font-normal text-lg dark:text-white">Dashboard</Link>
-              <button onClick={handleLogout} className="text-red-600 p-2 font-normal text-lg dark:text-red-400 text-left">Logout</button>
+              <Link href="/dashboard" className="text-primary p-2 font-normal text-lg dark:text-white">{t.dashboard || 'Dashboard'}</Link>
+              <button onClick={handleLogout} className="text-red-600 p-2 font-normal text-lg dark:text-red-400 text-left">{t.logout || 'Logout'}</button>
             </>
           )}
         </div>
