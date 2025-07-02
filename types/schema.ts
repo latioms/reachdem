@@ -17,6 +17,21 @@ export type Contact = {
     created_at?: string;
 }
 
+export type Group = {
+    $id: string;
+    user_id: string;
+    group_name: string;
+    description?: string;
+    created_at?: string;
+}
+
+export type GroupContact = {
+    $id: string;
+    group_id: string;
+    contact_id: string;
+    created_at?: string;
+}
+
 export type ContactGroup = {
     group_id: string;
     group_name: string;
