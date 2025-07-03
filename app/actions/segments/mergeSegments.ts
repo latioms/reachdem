@@ -1,9 +1,9 @@
 'use server'
 
-import { databases, USERS_DATABASE_ID, SEGMENTS_COLLECTION_ID, CONTACT_SEGMENTS_COLLECTION_ID } from "@/lib/appwrite"
+import { databases, MAILING_DATABASE_ID, SEGMENTS_COLLECTION_ID, CONTACT_SEGMENTS_COLLECTION_ID } from "@/lib/appwrite"
 import { ID, Query } from "appwrite"
 import { getAccount } from "../getAccount"
-import { getSegmentById } from "./segmentCrud"
+import { getSegmentById } from "./getSegments"
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 
@@ -41,7 +41,7 @@ export async function mergeSegments(
 
         // Récupérer tous les contacts du segment source
         const sourceContacts = await databases.listDocuments(
-          USERS_DATABASE_ID,
+          MAILING_DATABASE_ID,
           CONTACT_SEGMENTS_COLLECTION_ID,
           [Query.equal("segment_id", sourceSegmentId)]
         )
@@ -51,7 +51,7 @@ export async function mergeSegments(
           try {
             // Vérifier si le contact n'est pas déjà dans le segment cible
             const existingRelation = await databases.listDocuments(
-              USERS_DATABASE_ID,
+              MAILING_DATABASE_ID,
               CONTACT_SEGMENTS_COLLECTION_ID,
               [
                 Query.equal("contact_id", relation.contact_id),
@@ -62,7 +62,7 @@ export async function mergeSegments(
             if (existingRelation.documents.length === 0) {
               // Créer la nouvelle relation
               await databases.createDocument(
-                USERS_DATABASE_ID,
+                MAILING_DATABASE_ID,
                 CONTACT_SEGMENTS_COLLECTION_ID,
                 ID.unique(),
                 {
@@ -76,7 +76,7 @@ export async function mergeSegments(
 
             // Supprimer l'ancienne relation
             await databases.deleteDocument(
-              USERS_DATABASE_ID,
+              MAILING_DATABASE_ID,
               CONTACT_SEGMENTS_COLLECTION_ID,
               relation.$id
             )
@@ -88,7 +88,7 @@ export async function mergeSegments(
         // Supprimer le segment source si demandé
         if (deleteSourceSegments) {
           await databases.deleteDocument(
-            USERS_DATABASE_ID,
+            MAILING_DATABASE_ID,
             SEGMENTS_COLLECTION_ID,
             sourceSegmentId
           )
@@ -111,7 +111,7 @@ export async function mergeSegments(
 
     // Mettre à jour le timestamp du segment cible
     await databases.updateDocument(
-      USERS_DATABASE_ID,
+      MAILING_DATABASE_ID,
       SEGMENTS_COLLECTION_ID,
       targetSegmentId,
       { updated_at: new Date().toISOString() }
