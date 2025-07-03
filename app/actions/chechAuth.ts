@@ -1,22 +1,18 @@
 'use server';
-import { verifyToken } from '@/lib/session';
-import { cookies } from 'next/headers';
+import { getSession } from '@/lib/session';
 
 async function checkAuth() {
-  const sessionCookie = (await cookies()).get('reachdem-session');
-
-  if (!sessionCookie) {
-    return {
-      isAuthenticated: false,
-    };
-  }
-
   try {
-    // Verify the session token and get user data
-    const token = sessionCookie?.value;
-    const payload = await verifyToken(token!);
-    const user = payload.user;
+    const session = await getSession();
+    
+    if (!session) {
+      return {
+        isAuthenticated: false,
+        user: null
+      };
+    }
 
+    const user = session.user;
     
     return {
       isAuthenticated: true,
