@@ -70,7 +70,7 @@ export async function getContactsByGroup(groupId: string, limit: number = 100, o
                 });
             } catch (error) {
                 // Contact peut avoir été supprimé, on ignore l'erreur
-                console.log(`Contact ${groupContact.contact_id} not found`);
+                console.log(`Contact ${groupContact.contact_id} not found`, error);
             }
         }
 

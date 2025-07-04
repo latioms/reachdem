@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { Briefcase, LucideMessageSquareDot } from 'lucide-react'
+import { LucideMessageSquareDot } from 'lucide-react'
 
 import {
   SidebarMenu,

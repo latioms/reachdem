@@ -18,7 +18,7 @@ const Changelog2 = () => {
             </sup>
           </h1>
           <p className="mx-auto max-w-lg text-lg">
-            Everything that's new and improved now available on any plan and
+            Everything that&apos;s new and improved now available on any plan and
             everywhere on the platform
           </p>
           <div className="mx-auto mt-10 flex w-full max-w-xs items-center space-x-2">

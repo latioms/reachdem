@@ -5,7 +5,7 @@ import { ID, Query } from 'appwrite'
 import { getAccount } from '../getAccount'
 import { revalidatePath } from 'next/cache'
 import { getSegmentById } from './getSegments'
-import type { Contact, ContactSegment } from '@/types/schema'
+import type { ContactSegment } from '@/types/schema'
 import { 
   MAILING_DATABASE_ID, 
   SEGMENTS_COLLECTION_ID, 

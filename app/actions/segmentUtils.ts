@@ -3,7 +3,7 @@
 import { databases } from '@/lib/appwrite'
 import { Query } from 'appwrite'
 import { getAccount } from './getAccount'
-import type { Segment, Contact } from '@/types/schema'
+import type { Segment } from '@/types/schema'
 import { 
   MAILING_DATABASE_ID, 
   SEGMENTS_COLLECTION_ID, 

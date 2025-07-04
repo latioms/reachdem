@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { User } from 'lucide-react';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
 import checkAuth from '@/app/actions/chechAuth'; // Import the checkAuth function
-import { useParams } from 'next/navigation';
 
 interface NavbarProps {
   dictionary?: any;
@@ -22,7 +21,6 @@ export default function Navbar({ dictionary }: NavbarProps) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const params = useParams();
   useEffect(() => {
     const fetchAuthStatus = async () => {
       try {

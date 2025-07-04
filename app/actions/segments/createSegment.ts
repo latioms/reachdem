@@ -4,7 +4,6 @@ import { databases } from '@/lib/appwrite'
 import { ID, Query } from 'appwrite'
 import { getAccount } from '../getAccount'
 import { revalidatePath } from 'next/cache'
-import { redirect } from 'next/navigation'
 import type { Segment } from '@/types/schema'
 import { MAILING_DATABASE_ID, SEGMENTS_COLLECTION_ID } from './constants'
 

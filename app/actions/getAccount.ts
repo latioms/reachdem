@@ -1,4 +1,4 @@
-import { client, account, databases } from '@/lib/appwrite';
+import { client, account } from '@/lib/appwrite';
 import { cookies } from 'next/headers';
 
 export const getAccount = async () => {

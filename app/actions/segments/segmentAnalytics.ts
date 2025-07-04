@@ -3,12 +3,10 @@
 import { databases } from '@/lib/appwrite'
 import { Query } from 'appwrite'
 import { getAccount } from '../getAccount'
-import type { Segment } from '@/types/schema'
 
 const MAILING_DATABASE_ID = process.env.NEXT_PUBLIC_APPWRITE_MAILING_DATABASE_ID as string
 const SEGMENTS_COLLECTION_ID = process.env.NEXT_PUBLIC_APPWRITE_SEGMENTS_COLLECTION_ID as string
 const CONTACT_SEGMENTS_COLLECTION_ID = process.env.NEXT_PUBLIC_APPWRITE_CONTACT_SEGMENTS_COLLECTION_ID as string
-const CONTACTS_COLLECTION_ID = process.env.NEXT_PUBLIC_APPWRITE_CONTACTS_COLLECTION_ID as string
 
 /**
  * Analyser l'utilisation des segments

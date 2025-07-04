@@ -90,7 +90,7 @@ export function GroupList({
     if (lastPage > maxVisiblePages) {
       // Calculer la plage de pages à afficher
       let startPage = Math.max(2, currentPage - Math.floor(maxVisiblePages / 2))
-      let endPage = Math.min(lastPage - 1, startPage + maxVisiblePages - 3)
+      const endPage = Math.min(lastPage - 1, startPage + maxVisiblePages - 3)
       
       if (endPage - startPage < maxVisiblePages - 3) {
         startPage = Math.max(2, endPage - (maxVisiblePages - 3))

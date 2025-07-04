@@ -14,7 +14,6 @@ import {
   Trash2, 
   Edit, 
   MoreHorizontal, 
-  Check, 
   UsersRound,
   UserPlus,
   Layers,
@@ -263,7 +262,7 @@ export function ContactList({
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline" size="sm">
                     <MoreHorizontal className="h-4 w-4 mr-1" />
-                    <span>Plus d'actions</span>
+                    <span>Plus d&apos;actions</span>
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
