@@ -6,7 +6,8 @@ import { getGroupById } from '@/app/actions/mail/groups/getGroupById'
 import { getContactsByGroup } from '@/app/actions/mail/group-contacts/getContactsByGroup'
 import { redirect } from 'next/navigation'
 
-export default async function GroupDetailRoute({ params }: { params: { groupId: string } }) {
+export default async function GroupDetailRoute(props: { params: Promise<{ groupId: string }> }) {
+  const params = await props.params;
   const { groupId } = params
   const lang = await getLang()
   const dictionary = await getDictionary(lang)
@@ -22,7 +23,7 @@ export default async function GroupDetailRoute({ params }: { params: { groupId: 
 
   // Get contacts for this group
   const contactsResult = await getContactsByGroup(groupId, 100, 0)
-  
+
   return (
     <GroupDetailPage
       dictionary={dictionary}
