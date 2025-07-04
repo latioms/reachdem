@@ -1,9 +1,14 @@
 'use server'
 
-import { databases, MAILING_DATABASE_ID, SEGMENTS_COLLECTION_ID, CONTACT_SEGMENTS_COLLECTION_ID } from "@/lib/appwrite"
+import { databases } from "@/lib/appwrite"
 import { ID, Query } from "appwrite"
 import { getAccount } from "../getAccount"
 import { getSegmentById } from "./getSegments"
+
+// Database and collection IDs
+const MAILING_DATABASE_ID = process.env.NEXT_PUBLIC_APPWRITE_MAILING_DATABASE_ID!
+const SEGMENTS_COLLECTION_ID = process.env.NEXT_PUBLIC_APPWRITE_SEGMENTS_COLLECTION_ID!
+const CONTACT_SEGMENTS_COLLECTION_ID = process.env.NEXT_PUBLIC_APPWRITE_CONTACT_SEGMENTS_COLLECTION_ID!
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 
