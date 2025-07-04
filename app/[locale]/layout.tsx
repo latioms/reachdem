@@ -57,7 +57,8 @@ export default async function RootLayout({
                 <Sidebar dictionary={dictionary}>
                   <main className="container mx-auto p-4">{children}</main>
                 </Sidebar>
-              )}            </AuthWrapper>
+              )}            
+              </AuthWrapper>
             <AnalyticsStatus />
           </AnalyticsProvider>
         </ThemeProvider>

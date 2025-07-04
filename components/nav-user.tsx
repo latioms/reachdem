@@ -50,7 +50,7 @@ export function NavUser() {
   const user = {
     name: currentUser.email.split('@')[0], // Using email username as display name
     email: currentUser.email,
-    avatar: '/user.png'
+    avatar: '/images/user.png'
   };
 
   return (
