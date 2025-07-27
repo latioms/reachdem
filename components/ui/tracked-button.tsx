@@ -1,8 +1,14 @@
 'use client';
 
 import React from 'react';
-import { Button, ButtonProps } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { useDualTracking } from '@/hooks/use-dual-analytics';
+import { VariantProps } from 'class-variance-authority';
+
+// Create a combined button props type
+type ButtonProps = React.ComponentProps<"button"> & VariantProps<typeof buttonVariants> & {
+  asChild?: boolean
+};
 
 interface TrackedButtonProps extends ButtonProps {
   trackingName: string;

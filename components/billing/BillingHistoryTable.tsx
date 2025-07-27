@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react';
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -17,7 +16,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { getTransactions } from '@/app/actions/SMS/transactions/getTransaction';
 import { formatDistanceToNow, format } from 'date-fns';
 import { fr } from 'date-fns/locale';
-import { ArrowUpDown, Search, Calendar, RefreshCw, CreditCard, CopyIcon } from 'lucide-react';
+import { ArrowUpDown, Search, RefreshCw, CreditCard, CopyIcon } from 'lucide-react';
 import { Label } from '../ui/label';
 
 interface Transaction {

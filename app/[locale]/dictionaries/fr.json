@@ -37,7 +37,8 @@
       "title": "Tableau de bord",
       "items": {
         "home": "Accueil",
-        "contacts": "Contacts"
+        "contacts": "Contacts",
+        "groups": "Groupes"
       }
     },
     "SMS": {
@@ -275,6 +276,26 @@
         "emptyFile": "Fichier vide",
         "processingError": "Erreur lors du traitement du fichier CSV"
       }
+    },
+    "groups": {
+      "title": "Groupes",
+      "pageDescription": "Gérer vos groupes de contacts",
+      "newGroup": "Nouveau Groupe",
+      "name": "Nom du groupe",
+      "descriptionField": "Description",
+      "members": "Membres",
+      "addMembers": "Ajouter des membres",
+      "removeMembers": "Retirer des membres",
+      "deleteGroup": "Supprimer le groupe",
+      "editGroup": "Modifier le groupe",
+      "createGroup": "Créer un groupe",
+      "noGroups": "Aucun groupe trouvé",
+      "search": "Rechercher des groupes...",
+      "actions": "Actions",
+      "confirmDelete": "Êtes-vous sûr de vouloir supprimer ce groupe ?",
+      "groupCreated": "Groupe créé avec succès",
+      "groupUpdated": "Groupe mis à jour avec succès",
+      "groupDeleted": "Groupe supprimé avec succès"
     }
   }
 }

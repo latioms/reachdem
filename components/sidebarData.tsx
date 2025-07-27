@@ -17,6 +17,7 @@ interface DictionaryType {
       items: {
         home: string;
         contacts: string;
+        groups: string;
       };
     };
     SMS: {
@@ -53,6 +54,12 @@ export const getSidebarData = (dictionary: DictionaryType) => {
           { 
             title: dictionary.sidebar.dashboard.items.contacts || "Contacts", 
             url: "/contacts", 
+            icon: Users,
+            active: true
+          },
+          {
+            title: dictionary.sidebar.dashboard.items.groups || "Groups",
+            url: "/groups",
             icon: Users,
             active: true
           }
@@ -120,7 +127,8 @@ export const data = {
       title: "Tableau de bord",
       items: [
         { title: "Accueil", url: "/dashboard", icon: Home, active: true },
-        { title: "Contacts", url: "/contacts", icon: Users, active: true }
+        { title: "Contacts", url: "/contacts", icon: Users, active: true },
+        { title: "Groupes", url: "/groups", icon: Users, active: true }
       ],
     },
     {

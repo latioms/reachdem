@@ -1,4 +1,5 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { GeistSans } from "geist/font/sans";
+import { GeistMono } from "geist/font/mono";
 import AuthWrapper from "@/components/AuthWrapper";
 import NavBar from "@/components/Layout/Navbar";
 import { Footer } from "@/components/Landing/Footer";
@@ -11,16 +12,6 @@ import "../globals.css";
 import checkAuth from "../actions/chechAuth";
 import { Sidebar } from "@/providers/SidebarProvider";
 import { getDictionary } from "./dictionaries";
-
-// fonts 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 
 export async function generateStaticParams() {
@@ -40,7 +31,7 @@ export default async function RootLayout({
   const { locale } = await params;
   const dictionary = await getDictionary(locale);
   return (
-    <html lang={locale} className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html lang={locale} className={`${GeistSans.variable} ${GeistMono.variable}`}>
       <head>
         <meta name="facebook-domain-verification" content="scys6nt50s3yllrgoz9gfen1bv217d" />
       </head>
@@ -66,7 +57,8 @@ export default async function RootLayout({
                 <Sidebar dictionary={dictionary}>
                   <main className="container mx-auto p-4">{children}</main>
                 </Sidebar>
-              )}            </AuthWrapper>
+              )}            
+              </AuthWrapper>
             <AnalyticsStatus />
           </AnalyticsProvider>
         </ThemeProvider>

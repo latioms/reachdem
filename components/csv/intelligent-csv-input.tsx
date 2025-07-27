@@ -5,7 +5,6 @@ import { Sparkles, Paperclip, FileText } from 'lucide-react';
 import { BorderBeam } from '@/components/magicui/border-beam';
 import { cn } from '@/lib/utils';
 import { Textarea } from '@/components/ui/textarea';
-import { Button } from '@/components/ui/button';
 
 interface IntelligentCsvInputProps {
   placeholder?: string;
