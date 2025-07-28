@@ -20,7 +20,7 @@ export default async function CampaignsPage() {
         {/* ligne de separation */}
         <hr className="my-4" />
 
-        <CampaignTabs />
+        <CampaignTabs dictionary={t.campaigns} />
     </section>
   );
 }

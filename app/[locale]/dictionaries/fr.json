@@ -128,6 +128,14 @@
       "phonesRequired": "Veuillez entrer au moins un numéro",
       "phonesInvalid": "Un ou plusieurs numéros sont invalides",
       "projectRequired": "Veuillez sélectionner un projet"
+    },
+    "tabs": {
+      "sms": "SMS",
+      "whatsapp": "WhatsApp"
+    },
+    "messages": {
+      "noSmsCampaigns": "Aucune campagne SMS pour l'instant",
+      "whatsappInDevelopment": "Cette fonctionnalité est en cours de développement"
     }
   },
   "history": {
