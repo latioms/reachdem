@@ -45,11 +45,27 @@ export type Phonebook = {
 
 export type Campaign = {
     campaign_id: string;
+    project_id: string; // ID du projet auquel la campagne est associée
     name: string;
-    project_id: string;
+    status: string; // 'draft' | 'scheduled' | 'sent' | 'failed'
+    type: string; // 'sms' | 'whatsapp' | 'email'
     scheduled_time: Date;
-    status: string;
-    messages: Message[]
+}
+
+export type Stats = {
+    campaign_id: string;
+    // Stats des contacts
+    total_contacts: number;
+    sent_count: number;
+    // Targetability stats
+    delivered_count: number; //Pour les mails
+    failed_count: number;
+    // Stats des interactions
+    opened_count?: number; // Pour les emails
+    clicked_count: number; // Pour les SMS et les mails.
+    unsubscribed_count?: number; // Pour les emails
+
+    created_at?: Date;
 }
 
 export type Message = {
