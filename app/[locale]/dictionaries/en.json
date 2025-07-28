@@ -96,7 +96,7 @@
     }
   },
   "campaigns": {
-    "title": "SMS Campaigns",
+    "title": "Message Campaigns",
     "sendNow": "Send Now",
     "new": "New SMS campaign",
     "form": {

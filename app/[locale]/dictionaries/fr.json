@@ -99,7 +99,7 @@
     }
   },
   "campaigns": {
-    "title": "Campagnes SMS",
+    "title": "Campagnes",
     "sendNow": "Envoyer Maintenant",
     "new": "Nouvelle campagne SMS",
     "form": {

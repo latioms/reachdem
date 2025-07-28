@@ -2,6 +2,7 @@ import { getLang } from "@/lib/lang";
 import { getDictionary } from "../../../dictionaries";
 import { Button } from "@/components/ui/button";
 import { DialogCampaign } from "@/components/campaigns/dialog-campaign";
+import CampaignTabs from "@/components/campaigns/campaign-tabs";
 
 export default async function CampaignsPage() {
   const lang = await getLang();
@@ -14,7 +15,12 @@ export default async function CampaignsPage() {
         <DialogCampaign dictionary={t.campaigns}>
           <Button variant="outline">{t.campaigns.sendNow}</Button>
         </DialogCampaign>
+
       </div>
+        {/* ligne de separation */}
+        <hr className="my-4" />
+
+        <CampaignTabs />
     </section>
   );
 }
