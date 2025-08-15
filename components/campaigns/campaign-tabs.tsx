@@ -1,6 +1,6 @@
 import React from 'react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import CampaignLists from './campaign-lists'
+import CampaignListClient from './campaign-list-client'
 
 interface CampaignTabsProps {
   dictionary: {
@@ -26,11 +26,7 @@ export default function CampaignTabs({ dictionary }: CampaignTabsProps) {
         </TabsList>
         
         <TabsContent value="sms" className="mt-6">
-          <div className="flex items-center justify-center min-h-[400px]">
-            <p className="text-muted-foreground text-lg">
-              {dictionary.messages.noSmsCampaigns}
-            </p>
-          </div>
+          <CampaignListClient dictionary={dictionary} />
         </TabsContent>
         
         <TabsContent value="whatsapp" className="mt-6">

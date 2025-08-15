@@ -1,3 +1,4 @@
+"use server";
 import { databases } from '@/lib/appwrite';
 import { Stats } from '@/types/schema';
 import { ID, Query } from 'appwrite';
