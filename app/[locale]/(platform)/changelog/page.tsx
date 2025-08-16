@@ -1,4 +1,5 @@
 import { ArrowRight } from "lucide-react";
+import Image from "next/image";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -34,9 +35,11 @@ const Changelog2 = () => {
               <time className="absolute top-1 -left-6 h-3 w-3 -translate-x-1/2 rounded-full bg-emerald-400"></time>
               January 11, 2025
             </p>
-            <img
+            <Image
               src="https://shadcnblocks.com/images/block/placeholder-1.svg"
               alt="placeholder"
+              width={400}
+              height={350}
               className="my-4 aspect-[8/7] rounded-md object-cover"
             />
             <h2 className="mb-2 text-3xl font-semibold">
@@ -60,9 +63,11 @@ const Changelog2 = () => {
               <time className="absolute top-1 -left-6 h-3 w-3 -translate-x-1/2 rounded-full bg-emerald-400"></time>
               December 23, 2024
             </p>
-            <img
+            <Image
               src="https://shadcnblocks.com/images/block/placeholder-2.svg"
               alt="placeholder"
+              width={400}
+              height={350}
               className="my-4 aspect-[8/7] rounded-md object-cover"
             />
             <h2 className="mb-2 text-3xl font-semibold">

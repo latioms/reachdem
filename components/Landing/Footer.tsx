@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { FaFacebook, FaLinkedin, FaXTwitter, FaTelegram } from "react-icons/fa6";
 import LocaleSwitcher from "../ui/LocaleSwitcher";
 
@@ -47,9 +48,11 @@ export const Footer = () => {
 				<div className="mb-10 flex flex-col items-start justify-between gap-10 border-b pb-10 sm:mb-16 sm:pb-12 md:flex-row">
 					<div className="w-full max-w-full sm:max-w-sm">
 						<Link href="/">
-							<img
+							<Image
 								src="/images/reachdem.png"
 								alt="ReachDem logo"
+								width={120}
+								height={32}
 								className="mb-6 h-8 dark:invert"
 							/>
 						</Link>

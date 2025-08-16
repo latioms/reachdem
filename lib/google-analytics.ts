@@ -151,7 +151,7 @@ export const googleAnalytics = {
   },
 
   // Set user properties
-  setUserProperties: (properties: Record<string, any>) => {
+  setUserProperties: (properties: Record<string, unknown>) => {
     if (!GA_MEASUREMENT_ID || !window.gtag) return;
     
     window.gtag('config', GA_MEASUREMENT_ID, {

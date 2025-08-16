@@ -11,6 +11,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import Image from 'next/image'
 import { Button } from "@/components/ui/button"
 import { Copy, Download, QrCode } from "lucide-react"
 import { toast } from "sonner"
@@ -118,9 +119,11 @@ export function QRCodeModal({
                 <p className="mt-2 text-sm text-muted-foreground">Génération...</p>
               </div>
             ) : qrCodeDataURL ? (
-              <img
+              <Image
                 src={qrCodeDataURL}
                 alt="QR Code"
+                width={256}
+                height={256}
                 className="max-w-full max-h-full rounded"
               />
             ) : (

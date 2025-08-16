@@ -13,6 +13,9 @@ import checkAuth from "../actions/chechAuth";
 import { Sidebar } from "@/providers/SidebarProvider";
 import { getDictionary } from "./dictionaries";
 
+// Force dynamic rendering since we use cookies for authentication
+export const dynamic = 'force-dynamic'
+
 
 export async function generateStaticParams() {
   return [{ locale: "en" }, { locale: "fr" }];
