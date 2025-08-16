@@ -44,12 +44,43 @@ export type Phonebook = {
 }
 
 export type Campaign = {
-    campaign_id: string;
+    $id: string;
+    project_id: string; // ID du projet auquel la campagne est associée
     name: string;
-    project_id: string;
-    scheduled_time: Date;
-    status: string;
-    messages: Message[]
+    description?: string;
+    message: string; // Contenu du message à envoyer
+    
+    // Cibles de la campagne
+    contact_targets: string[]; // IDs des contacts directs
+    group_targets: string[]; // IDs des groupes
+    
+    status: 'draft' | 'scheduled' | 'sending' | 'sent' | 'failed';
+    type: 'sms' | 'whatsapp' | 'email';
+    
+    scheduled_at?: string; // ISO string pour Appwrite
+    sent_at?: string;
+    
+    created_at?: string;
+    updated_at?: string;
+    user_id: string; // Pour la sécurité Appwrite
+}
+
+export type Stats = {
+    $id: string;
+    campaign_id: string;
+    // Stats des contacts
+    total_contacts: number;
+    sent_count: number;
+    // Targetability stats
+    delivered_count?: number; //Pour les mails
+    failed_count: number;
+    // Stats des interactions
+    opened_count?: number; // Pour les emails
+    clicked_count: number; // Pour les SMS et les mails.
+    unsubscribed_count?: number; // Pour les emails
+
+    created_at?: string;
+    updated_at?: string;
 }
 
 export type Message = {

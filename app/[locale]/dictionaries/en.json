@@ -96,7 +96,7 @@
     }
   },
   "campaigns": {
-    "title": "SMS Campaigns",
+    "title": "Message Campaigns",
     "sendNow": "Send Now",
     "new": "New SMS campaign",
     "form": {
@@ -125,6 +125,14 @@
       "phonesRequired": "Please enter at least one number",
       "phonesInvalid": "One or more numbers are invalid",
       "projectRequired": "Please select a project"
+    },
+    "tabs": {
+      "sms": "SMS",
+      "whatsapp": "WhatsApp"
+    },
+    "messages": {
+      "noSmsCampaigns": "No SMS campaigns yet",
+      "whatsappInDevelopment": "This feature is under development"
     }
   },
   "history": {
