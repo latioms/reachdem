@@ -1,5 +1,6 @@
 'use client'
 import React from 'react'
+import Image from 'next/image'
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RegisterInput, registerSchema } from "@/lib/validations/auth";
@@ -125,9 +126,11 @@ function Page() {
               </div>
             </div>
           </div>
-          <img
+          <Image
             src="/images/globe.svg"
             alt="placeholder"
+            width={600}
+            height={800}
             className="hidden h-full max-h-screen object-cover lg:block"
           />
         </div>

@@ -1,4 +1,5 @@
 import { SVGProps, useId } from "react";
+import Image from "next/image";
 
 import {
   Carousel,
@@ -94,27 +95,30 @@ import {
           <CarouselContent className="-ml-4">
             <CarouselItem className="basis-[80%] lg:basis-1/3 xl:basis-[40%]">
               <div className="relative h-[330px] lg:h-[440px] xl:h-[600px]">
-                <img
+                <Image
                   src="/images/homme-phone.jpg"
                   alt="Main tenant un téléphone"
+                  fill
                   className="aspect square w-full h-full object-cover"
                 />
               </div>
             </CarouselItem>
             <CarouselItem className="basis-[80%] lg:basis-1/3 xl:basis-[40%]">
               <div className="relative h-[330px] lg:h-[440px] xl:h-[600px]">
-                <img
+                <Image
                   src="/images/pommette-noire-entreprise.jpg" 
                   alt="Femme souriante travaillant sur ordinateur portable"
+                  fill
                   className="w-full h-full object-cover"
                 />
               </div>
             </CarouselItem>
             <CarouselItem className="basis-[80%] lg:basis-1/3 xl:basis-[40%]">
               <div className="relative h-[330px] lg:h-[440px] xl:h-[600px]">
-                <img
+                <Image
                   src="/images/woman-phone-student.jpg"
                   alt="Femme souriante regardant son téléphone"
+                  fill
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -151,7 +155,7 @@ import {
               ReachDem est un projet ambitieux porté par Latioms.co. Notre expertise dans la création de SaaS et la formation en informatique nous a permis de concevoir une plateforme SMS robuste et intuitive. Nous sommes dédiés à l&apos;innovation continue pour offrir les meilleurs outils de communication à nos clients au Cameroun et au-delà. Notre objectif est de simplifier vos campagnes SMS et de maximiser votre portée.
             </p>
           </div>
-          <img
+          <Image
             src="/images/LATIOMS.CO.svg"
             alt="Latioms.co"
             width={480}

@@ -1,4 +1,5 @@
 import React from 'react'
+import Image from 'next/image'
 
 const LOGOS = [
 	{
@@ -35,10 +36,12 @@ export default function Logos({ dictionary }: LogosProps) {
 				</p>
 				<div className="flex flex-wrap items-center justify-center gap-15 opacity-80">
 					{LOGOS.map((logo, index) => (
-						<img
+						<Image
 							key={index}
 							src={`/images/${logo.src}`}
 							alt={logo.alt}
+							width={100}
+							height={60}
 							className={`${logo.height} grayscale-100 transition-opacity hover:grayscale-0 hover:opacity-100`}
 						/>
 					))}

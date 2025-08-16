@@ -88,7 +88,7 @@ export const trackNavigationEvent = {
       timestamp: new Date().toISOString(),
     });
   },
-  buttonClick: (buttonName: string, location: string, additionalProps?: Record<string, any>) => {
+  buttonClick: (buttonName: string, location: string, additionalProps?: Record<string, unknown>) => {
     analytics.track('Button Click', {
       buttonName,
       location,
