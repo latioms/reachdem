@@ -5,6 +5,7 @@ import * as React from "react";
 import { NavMain } from "@/components/nav-main";
 import { NavUser } from "@/components/nav-user";
 import { TeamSwitcher } from "@/components/team-switcher";
+import FeedbackDialog from "@/components/ui/feedback-dialog";
 import {
   Sidebar,
   SidebarContent,
@@ -31,7 +32,10 @@ export function AppSidebar({ dictionary, ...props }: AppSidebarProps) {
         <NavMain items={sidebarData.navMain} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser/>
+        <div className="space-y-2">
+          <FeedbackDialog />
+          <NavUser/>
+        </div>
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
