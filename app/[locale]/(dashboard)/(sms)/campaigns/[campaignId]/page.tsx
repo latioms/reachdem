@@ -6,19 +6,20 @@ import { notFound } from "next/navigation";
 import CampaignDetailClient from "@/components/campaigns/campaign-detail-client";
 
 interface Props {
-  params: {
+  params: Promise<{
     campaignId: string;
     locale: string;
-  };
+  }>;
 }
 
-export default async function CampaignDetailPage({ params }: Props) {
+export default async function CampaignDetailPage(props: Props) {
+  const params = await props.params;
   const lang = await getLang();
   const t = await getDictionary(lang);
-  
+
   // Récupérer la campagne
   const campaign = await getCampaignById(params.campaignId);
-  
+
   if (!campaign) {
     notFound();
   }
