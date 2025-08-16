@@ -7,6 +7,7 @@ import {
   HelpCircle,
   Info,
   Settings,
+  User, 
   Users
 } from "lucide-react";
 
@@ -54,7 +55,7 @@ export const getSidebarData = (dictionary: DictionaryType) => {
           { 
             title: dictionary.sidebar.dashboard.items.contacts || "Contacts", 
             url: "/contacts", 
-            icon: Users,
+            icon: User,
             active: true
           },
           {
@@ -127,7 +128,7 @@ export const data = {
       title: "Tableau de bord",
       items: [
         { title: "Accueil", url: "/dashboard", icon: Home, active: true },
-        { title: "Contacts", url: "/contacts", icon: Users, active: true },
+        { title: "Contacts", url: "/contacts", icon: User, active: true },
         { title: "Groupes", url: "/groups", icon: Users, active: true }
       ],
     },

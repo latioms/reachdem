@@ -1,6 +1,8 @@
 import { getLang } from '@/lib/lang';
 import { getDictionary } from './dictionaries';
 import Hero from '@/components/Landing/hero';
+import checkAuth from '../actions/chechAuth';
+import { redirect } from 'next/navigation';
 import type { Metadata, ResolvingMetadata } from 'next';
 
 type Props = {
@@ -46,9 +48,18 @@ export async function generateMetadata(
 }
 
 export default async function Page() {
-
 	const lang = await getLang();
-	const t = await getDictionary(lang);	return (
+	
+	// Check if user is authenticated and redirect to dashboard
+	const { isAuthenticated } = await checkAuth();
+	
+	if (isAuthenticated) {
+		redirect(`/${lang}/dashboard`);
+	}
+
+	const t = await getDictionary(lang);
+	
+	return (
 		<div className="">
 			<Hero dictionary={t.landing.hero}/>
 		</div>
