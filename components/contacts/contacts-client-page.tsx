@@ -5,6 +5,7 @@ import { ContactList, ContactSearch, DialogAddContact } from "@/components/conta
 import { Button } from "@/components/ui/button"
 import { Plus, Users, RefreshCw } from "lucide-react"
 import { getContacts } from "@/app/actions/mail/contacts/getContacts"
+import checkAuth from "@/app/actions/chechAuth"
 import type { Contact } from "@/types/schema"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useSearchDebounce } from "@/hooks/use-search-debounce"
@@ -19,6 +20,7 @@ export function ContactsClientPage({ dictionary }: ContactsClientPageProps) {  c
   const [error, setError] = useState<string | null>(null)
   const [currentPage, setCurrentPage] = useState(1)
   const [contactsPerPage] = useState(10)
+  const [userId, setUserId] = useState<string | null>(null)
   
   // Utilisation des hooks personnalisés pour la recherche
   const { searchTerm, debouncedSearchTerm, setSearchTerm } = useSearchDebounce()
@@ -50,8 +52,23 @@ export function ContactsClientPage({ dictionary }: ContactsClientPageProps) {  c
     }
   }
 
+  const fetchUserInfo = async () => {
+    try {
+      const result = await checkAuth()
+      if (result.isAuthenticated && result.user?.id) {
+        setUserId(result.user.id)
+        console.log('User ID fetched:', result.user.id) // Debug log
+      } else {
+        console.error('User not authenticated or missing ID')
+      }
+    } catch (error) {
+      console.error('Error fetching user info:', error)
+    }
+  }
+
   useEffect(() => {
     fetchContacts()
+    fetchUserInfo()
   }, [])
   const handleContactAdded = () => {
     // Rafraîchir la liste après ajout d'un contact
@@ -151,6 +168,7 @@ export function ContactsClientPage({ dictionary }: ContactsClientPageProps) {  c
         contactsPerPage={contactsPerPage}
         onPageChange={setCurrentPage}
         totalContacts={contacts.length}
+        userId={userId || undefined}
       />
     </div>
   )

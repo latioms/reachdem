@@ -18,7 +18,8 @@ import {
   UserPlus,
   Layers,
   FileDown,
-  AlertCircle
+  AlertCircle,
+  MessageCircle
 } from "lucide-react"
 import { formatDistanceToNow } from "date-fns"
 import { fr } from "date-fns/locale"
@@ -40,6 +41,7 @@ import {
 } from "@/components/ui/pagination"
 import { Checkbox } from "@/components/ui/checkbox"
 import { toast } from "sonner"
+import SendMessageModal from "@/components/contacts/send-message-modal"
 
 interface ContactListProps {
   contacts: Contact[];
@@ -50,6 +52,7 @@ interface ContactListProps {
   contactsPerPage?: number;
   onPageChange?: (page: number) => void;
   totalContacts?: number;
+  userId?: string;
 }
 
 export function ContactList({ 
@@ -60,13 +63,18 @@ export function ContactList({
   currentPage = 1, 
   contactsPerPage = 10, 
   onPageChange,
-  totalContacts
+  totalContacts,
+  userId
 }: ContactListProps) {
   const t = dictionary?.contacts || {}
   const [selectedContacts, setSelectedContacts] = useState<string[]>([])
   const [isDeleteLoading, setIsDeleteLoading] = useState(false)
   // Référence pour suivre si une action de dialogue est en cours, pour éviter les actions multiples
   const dialogActionInProgress = useRef(false)
+  
+  // États pour le modal d'envoi de message
+  const [showSendMessageModal, setShowSendMessageModal] = useState(false)
+  const [selectedContactForMessage, setSelectedContactForMessage] = useState<Contact | null>(null)
 
   // Pagination logic
   const indexOfLastContact = currentPage * contactsPerPage;
@@ -184,6 +192,36 @@ export function ContactList({
   const exportContacts = () => {
     toast.info(`Cette fonctionnalité sera implémentée prochainement`);
     // Implementation will be done later
+  }
+
+  // Fonction pour ouvrir le modal d'envoi de message
+  const handleSendMessage = (contact: Contact) => {
+    if (!contact.phone) {
+      toast.error("Ce contact n'a pas de numéro de téléphone");
+      return;
+    }
+    
+    if (!userId) {
+      toast.error("Impossible d'identifier l'utilisateur. Veuillez actualiser la page.");
+      return;
+    }
+    
+    setSelectedContactForMessage(contact);
+    setShowSendMessageModal(true);
+  }
+
+  const handleCloseSendMessageModal = () => {
+    // Forcer un nettoyage complet des états
+    setShowSendMessageModal(false);
+    
+    // Utiliser requestAnimationFrame pour s'assurer que le DOM est mis à jour
+    requestAnimationFrame(() => {
+      setSelectedContactForMessage(null);
+      
+      // Forcer le nettoyage des événements
+      document.body.style.pointerEvents = '';
+      document.body.style.overflow = '';
+    });
   }
 
   if (contacts.length === 0) {
@@ -388,7 +426,7 @@ export function ContactList({
                 </TableCell>
                 
                 <TableCell className="text-right">
-                  {(onEdit || onDelete) && (
+                  {(onEdit || onDelete || contact.phone) && (
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <Button variant="ghost" className="h-8 w-8 p-0">
@@ -397,6 +435,18 @@ export function ContactList({
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
+                        {contact.phone && (
+                          <>
+                            <DropdownMenuItem 
+                              onClick={() => handleSendMessage(contact)}
+                              disabled={!userId}
+                            >
+                              <MessageCircle className="h-4 w-4 mr-2" />
+                              {t.actions?.sendMessage || "Envoyer message"}
+                            </DropdownMenuItem>
+                            {(onEdit || onDelete) && <DropdownMenuSeparator />}
+                          </>
+                        )}
                         {onEdit && (
                           <DropdownMenuItem onClick={() => onEdit(contact)}>
                             <Edit className="h-4 w-4 mr-2" />
@@ -586,6 +636,18 @@ export function ContactList({
               dialogActionInProgress.current = false;
             });
           }}
+        />
+      )}
+
+      {/* Modal d'envoi de message */}
+      {showSendMessageModal && selectedContactForMessage && userId && (
+        <SendMessageModal
+          key={`send-message-${selectedContactForMessage.$id}-${Date.now()}`}
+          isOpen={showSendMessageModal}
+          onClose={handleCloseSendMessageModal}
+          contact={selectedContactForMessage}
+          dictionary={dictionary}
+          userId={userId}
         />
       )}
     </div>
