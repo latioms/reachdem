@@ -95,7 +95,10 @@ export function NavUser() {
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />            <DropdownMenuGroup>
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={() => {
+                trackNavigationEvent.buttonClick('profile', 'nav-user')
+                router.push('/profile')
+              }}>
               <BadgeCheck />
               Account
               </DropdownMenuItem>              <DropdownMenuItem onClick={() => {
