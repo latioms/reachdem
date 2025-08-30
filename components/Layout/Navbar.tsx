@@ -55,7 +55,7 @@ export default function Navbar({ dictionary }: NavbarProps) {
               <ul data-orientation="horizontal" className="group flex flex-1 list-none items-center justify-center space-x-1" dir="ltr">
                 {navLinks.map((link) => (
                   <li key={link.href}>
-                    <Link href={link.href} className="text-primary p-2 font-normal lg:text-base dark:text-white">
+                    <Link href={link.href} className="p-2 font-normal lg:text-base dark:text-white">
                       {link.label}
                     </Link>
                   </li>
