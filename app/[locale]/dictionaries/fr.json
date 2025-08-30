@@ -187,6 +187,51 @@
       "senderCode": "Code expéditeur"
     }
   },
+  "auth": {
+    "register": {
+      "title": "Créez votre compte aujourd'hui",
+      "subtitle": "15 SMS gratuits inclus. Plans évolutifs avec tarifs dégressifs selon le volume.",
+      "continueWithGoogle": "Continuer avec Google",
+      "continueWithEmail": "Continuer avec Email",
+      "enterpriseSSO": "ou SSO Entreprise",
+      "or": "ou",
+      "form": {
+        "name": "Nom",
+        "namePlaceholder": "Entrez votre nom",
+        "email": "Email",
+        "emailPlaceholder": "Entrez votre email",
+        "password": "Mot de passe",
+        "passwordPlaceholder": "Entrez votre mot de passe",
+        "back": "Retour",
+        "signUp": "S'inscrire",
+        "creating": "Création du compte..."
+      },
+      "alreadyUser": "Déjà utilisateur ?",
+      "loginLink": "Se connecter",
+      "terms": "En continuant, vous acceptez nos",
+      "termsLink": "Conditions",
+      "and": "et",
+      "privacyLink": "Politique de confidentialité.",
+      "features": {
+        "organize": {
+          "title": "Organisez vos campagnes",
+          "description": "Gardez toutes vos campagnes SMS et email organisées dans un tableau de bord centralisé."
+        },
+        "track": {
+          "title": "Suivez le statut de livraison",
+          "description": "Surveillez la livraison des messages et l'engagement à travers toutes vos campagnes."
+        },
+        "manage": {
+          "title": "Gérez vos contacts",
+          "description": "Importez, segmentez et organisez vos contacts pour un meilleur ciblage."
+        }
+      },
+      "toast": {
+        "success": "Compte créé avec succès !",
+        "error": "Une erreur est survenue"
+      }
+    }
+  },
   "billing": {
     "title": "Facturation",
     "timeFormat": "fr",

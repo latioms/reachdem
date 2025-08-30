@@ -32,7 +32,7 @@ import {
         </>
       </section>
 
-      {/* Stats Section */}
+      {/* Stats Section
       <section className="container max-w-5xl border-y py-5">
         <h2 className="font-mono text-sm font-semibold tracking-widest text-accent-foreground">
           Latioms.co en chiffres
@@ -67,7 +67,7 @@ import {
             </p>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Mission Section */}
       <section className="container max-w-5xl py-10 md:py-12 lg:py-15">
@@ -149,7 +149,7 @@ import {
         <div className="grid gap-5 md:grid-cols-2 md:gap-10 lg:gap-16">
           <div className="order-2 md:order-1">
             <h2 className="text-4xl font-semibold tracking-tight md:text-4xl">
-              Fondé par Latioms.co
+              Fondé par LATIOMS.CO
             </h2>
             <p className="mt-5 text-lg md:mt-6">
               ReachDem est un projet ambitieux porté par Latioms.co. Notre expertise dans la création de SaaS et la formation en informatique nous a permis de concevoir une plateforme SMS robuste et intuitive. Nous sommes dédiés à l&apos;innovation continue pour offrir les meilleurs outils de communication à nos clients au Cameroun et au-delà. Notre objectif est de simplifier vos campagnes SMS et de maximiser votre portée.

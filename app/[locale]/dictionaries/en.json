@@ -184,6 +184,51 @@
       "senderCode": "Sender code"
     }
   },
+  "auth": {
+    "register": {
+      "title": "Create your account today",
+      "subtitle": "15 free SMS included. Scalable plans with volume-based pricing.",
+      "continueWithGoogle": "Continue with Google",
+      "continueWithEmail": "Continue with Email",
+      "enterpriseSSO": "or Enterprise SSO",
+      "or": "or",
+      "form": {
+        "name": "Name",
+        "namePlaceholder": "Enter your name",
+        "email": "Email",
+        "emailPlaceholder": "Enter your email",
+        "password": "Password",
+        "passwordPlaceholder": "Enter your password",
+        "back": "Back",
+        "signUp": "Sign up",
+        "creating": "Creating account..."
+      },
+      "alreadyUser": "Already a user?",
+      "loginLink": "Log in",
+      "terms": "By continuing, you agree to our",
+      "termsLink": "Terms",
+      "and": "and",
+      "privacyLink": "Privacy Policy.",
+      "features": {
+        "organize": {
+          "title": "Organize your campaigns",
+          "description": "Keep all your SMS and email campaigns organized in one centralized dashboard."
+        },
+        "track": {
+          "title": "Track delivery status",
+          "description": "Monitor message delivery and engagement across all your campaigns."
+        },
+        "manage": {
+          "title": "Manage your contacts",
+          "description": "Import, segment and organize your contacts for better targeting."
+        }
+      },
+      "toast": {
+        "success": "Account created successfully!",
+        "error": "An error occurred"
+      }
+    }
+  },
   "billing": {
     "title": "Billing",
     "timeFormat": "enUS",
