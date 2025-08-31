@@ -28,6 +28,7 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from "@/context/authContext";
 import { useDualTracking } from "@/hooks/use-dual-analytics";
 import LanguageToggle from "@/components/ui/LanguageToggle";
+import { revalidatePath } from "next/cache";
 
 export function NavUser() {
   const { isMobile } = useSidebar();
@@ -117,7 +118,6 @@ export function NavUser() {
             <DropdownMenuItem onClick={async () => {
               trackAuthEvent.logout()
               await fetch('/api/logout', { method: 'POST' });
-              router.push('/login');
             }}>
               <LogOut />
               Déconnexion
