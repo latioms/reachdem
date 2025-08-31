@@ -12,12 +12,13 @@ const AuthContext = createContext({
     isAuthenticated: false,
     setIsAuthenticated: (value: boolean) => {},
     currentUser: undefined as User | undefined,
-    setCurrentUser: (user: User) => {},
+    setCurrentUser: (user: User | undefined) => {},
+    logout: async () => {},
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-    const [currentUser, setCurrentUser] = useState<User>();
+    const [currentUser, setCurrentUser] = useState<User | undefined>();
 
 
     useEffect(() => {
@@ -26,14 +27,26 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             setIsAuthenticated(isAuthenticated);
             if (isAuthenticated && user) {
                 setCurrentUser(user as User);
+            } else {
+                setCurrentUser(undefined);
             }
         };
 
         checkAuthentication();
     }, []);
 
+    const logout = async () => {
+        setIsAuthenticated(false);
+        setCurrentUser(undefined);
+        try {
+            await fetch('/api/logout', { method: 'POST' });
+        } catch (error) {
+            console.error('Logout error:', error);
+        }
+    };
+
     return (
-        <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, currentUser, setCurrentUser }}>
+        <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, currentUser, setCurrentUser, logout }}>
             {children}
         </AuthContext.Provider>
     )
