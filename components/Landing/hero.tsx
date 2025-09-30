@@ -8,20 +8,19 @@ import { steps } from "@/constants/steps"
 import Link from "next/link"
 
 interface HeroProps {
-  dictionary?: any;
+	dictionary?: any;
 }
 
-export default function Hero({dictionary}: HeroProps) {
+export default function Hero({ dictionary }: HeroProps) {
 	const [showGuide, setShowGuide] = useState(false)
 
 	useEffect(() => {
-		// Vérifier si c'est la première visite
-		const hasVisited = localStorage.getItem("has_visited_before")
-		if (!hasVisited) {
-			// Si c'est la première visite, montrer le guide et marquer comme visité
-			setShowGuide(true)
-			localStorage.setItem("has_visited_before", "true")
-		}
+		// Désactivé temporairement - guide en cours de réparation
+		// const hasVisited = localStorage.getItem("has_visited_before")
+		// if (!hasVisited) {
+		// 	setShowGuide(true)
+		// 	localStorage.setItem("has_visited_before", "true")
+		// }
 	}, [])
 
 	return (
@@ -32,7 +31,7 @@ export default function Hero({dictionary}: HeroProps) {
 					<div className="space-y-6">
 						<div className="inline-flex items-center rounded-full border border-border bg-card px-3 py-1 text-sm">
 							<span className="flex h-2 w-2 rounded-full animate-pulse bg-emerald-500 mr-2"></span>
-						<span>{dictionary.newFeature}</span>
+							<span>{dictionary.newFeature}</span>
 						</div>
 						<h1 className="text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl md:text-6xl text-foreground">
 							{dictionary.title}<br />
@@ -46,15 +45,16 @@ export default function Hero({dictionary}: HeroProps) {
 								<Link href="/register">{dictionary.startButton}</Link>
 								<ArrowRight className="ml-2 h-4 w-4" />
 							</Button>
-							<Button size="lg" variant="outline" onClick={() => setShowGuide(true)}>
+							{/* Bouton temporairement masqué - guide en cours de réparation */}
+							{/* <Button size="lg" variant="outline" onClick={() => setShowGuide(true)}>
 								{dictionary.starTour}
 								<MessageSquare className="ml-2 h-4 w-4" />
-							</Button>
+							</Button> */}
 						</div>
 						<div className="flex items-center gap-4 text-sm text-muted-foreground">
 							<div className="flex items-center">
 								<CheckCircle className="mr-1 h-4 w-4 text-primary" />
-								{dictionary.trial}	
+								{dictionary.trial}
 							</div>
 							<div className="flex items-center">
 								<CheckCircle className="mr-1 h-4 w-4 text-primary" />

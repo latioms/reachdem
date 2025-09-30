@@ -45,7 +45,7 @@ export const steps: Step[] = [
     full_description: "Créez des projets pour organiser vos campagnes SMS et suivre vos communications avec différents groupes de clients.",
     media: {
       type: "image",
-      src: "/images/Step1",
+      src: "/images/Step1.png",
       alt: "Project management",
     },
   },
