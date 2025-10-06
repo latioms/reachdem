@@ -185,10 +185,6 @@ const CookingPage = () => {
 						L&rsquo;interface de connexion et l’application seront temporairement indisponibles lors de la transition. Mais si vous souhaitez urgemment accéder à votre compte,
 						n&rsquo;hésitez pas à nous contacter via le <a href="https://wa.me/237233472836" className='underline underline-offset-2 font-mono text-blue-500'>support</a>, nous serons ravis de vous aider.
 					</p>
-					<p>
-						Restez-connectés pour être informés du lancement, des exclusivités et des coulisses du
-						développement.
-					</p>
 					<form onSubmit={handleSubmit} className="space-y-3 pt-4" noValidate>
 						<div className="flex flex-col gap-2 sm:flex-row">
 							<Input
