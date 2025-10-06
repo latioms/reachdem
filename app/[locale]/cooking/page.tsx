@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState, type ReactNode } from 'react'
+import { useRef, useState, type ReactNode, type FormEvent } from 'react'
 import {
 	useDragControls,
 	useMotionValue,
@@ -11,6 +11,14 @@ import {
 import { BubbleText } from '@/components/bubble-text'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+} from '@/components/ui/dialog'
 
 type DragCloseDrawerProps = {
 	open: boolean
@@ -97,6 +105,61 @@ const DragCloseDrawer = ({ open, setOpen, children }: DragCloseDrawerProps) => {
 
 const CookingPage = () => {
 	const [open, setOpen] = useState(false)
+	const [email, setEmail] = useState('')
+	const [isSubmitting, setIsSubmitting] = useState(false)
+	const [error, setError] = useState<string | null>(null)
+	const [successOpen, setSuccessOpen] = useState(false)
+	const [successMessage, setSuccessMessage] = useState<string>('Merci pour votre inscription !')
+
+	const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+		event.preventDefault()
+		setError(null)
+
+		const normalizedEmail = email.trim().toLowerCase()
+		if (!normalizedEmail) {
+			setError('Veuillez renseigner votre adresse e-mail.')
+			return
+		}
+		const emailRegex = /^[\w.!#$%&'*+/=?^`{|}~-]+@[\w-]+(?:\.[\w-]+)+$/i
+		if (!emailRegex.test(normalizedEmail)) {
+			setError('Cette adresse e-mail ne semble pas valide.')
+			return
+		}
+
+		setIsSubmitting(true)
+		try {
+			const response = await fetch('/api/newsletter', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ email: normalizedEmail }),
+			})
+
+			const data = (await response.json().catch(() => null)) as
+				| { success?: boolean; alreadySubscribed?: boolean; error?: string }
+				| null
+
+			if (!response.ok || !data?.success) {
+				throw new Error(data?.error ?? "Impossible d'enregistrer votre inscription.")
+			}
+
+			setSuccessMessage(
+				data.alreadySubscribed
+					? 'Vous êtes déjà inscrit(e) à notre newsletter. Merci de rester connecté(e).'
+					: 'Merci pour votre inscription ! Nous vous préviendrons dès que ReachDem revient en ligne.'
+			)
+			setSuccessOpen(true)
+			setEmail('')
+			setOpen(false)
+		} catch (submissionError) {
+			const message =
+				submissionError instanceof Error
+					? submissionError.message
+					: "Impossible d'enregistrer votre inscription pour le moment."
+			setError(message)
+		} finally {
+			setIsSubmitting(false)
+		}
+	}
 
 	return (
 		<div className="flex h-screen flex-col items-center justify-center space-y-6 bg-neutral-950 text-neutral-100">
@@ -119,28 +182,59 @@ const CookingPage = () => {
 						Vos comptes, crédits et données actuels resteront inchangés et seront automatiquement transférés vers la nouvelle version à son lancement.
 					</p>
 					<p>
-						L'interface de connexion et l'application seront temporairement indisponibles lors de la transition. Mais si vous souhaitez urgemment accéder à votre compte,
-						n'hésitez pas à nous contacter via le <a href="wa.me/237233472836" className='underline underline-offset-2 font-mono text-blue-500'>support</a>, nous serons ravis de vous aider.
+						L&rsquo;interface de connexion et l’application seront temporairement indisponibles lors de la transition. Mais si vous souhaitez urgemment accéder à votre compte,
+						n&rsquo;hésitez pas à nous contacter via le <a href="https://wa.me/237233472836" className='underline underline-offset-2 font-mono text-blue-500'>support</a>, nous serons ravis de vous aider.
 					</p>
 					<p>
 						Restez-connectés pour être informés du lancement, des exclusivités et des coulisses du
 						développement.
 					</p>
-					<div className="space-y-3 pt-4">
+					<form onSubmit={handleSubmit} className="space-y-3 pt-4" noValidate>
 						<div className="flex flex-col gap-2 sm:flex-row">
 							<Input
 								type="email"
 								placeholder="Entrez votre email"
+								value={email}
+								onChange={(event) => setEmail(event.target.value)}
 								className="flex-1 bg-neutral-800 text-neutral-100 placeholder:text-neutral-500"
+								disabled={isSubmitting}
+								required
+								aria-label="Adresse e-mail"
 							/>
-							<Button className="sm:w-auto">S&apos;inscrire</Button>
+							<Button
+								type="submit"
+								className="sm:w-auto"
+								disabled={isSubmitting}
+							>
+								{isSubmitting ? 'Inscription…' : 'S’inscrire'}
+							</Button>
 						</div>
 						<p className="text-sm text-neutral-400">
 							Souscrivez pour être informé du lancement.
 						</p>
-					</div>
+						{error && (
+							<p className="text-sm text-red-400" role="alert" aria-live="assertive">
+								{error}
+							</p>
+						)}
+					</form>
 				</div>
 			</DragCloseDrawer>
+			<Dialog open={successOpen} onOpenChange={setSuccessOpen}>
+				<DialogContent className="bg-neutral-900 text-neutral-100">
+					<DialogHeader>
+						<DialogTitle>Merci !</DialogTitle>
+						<DialogDescription className="text-neutral-300">
+							{successMessage}
+						</DialogDescription>
+					</DialogHeader>
+					<DialogFooter>
+						<Button variant="outline" onClick={() => setSuccessOpen(false)}>
+							Fermer
+						</Button>
+					</DialogFooter>
+				</DialogContent>
+			</Dialog>
 		</div>
 	)
 }
