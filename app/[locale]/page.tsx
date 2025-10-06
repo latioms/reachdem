@@ -4,6 +4,7 @@ import Hero from '@/components/Landing/hero';
 import checkAuth from '../actions/chechAuth';
 import { redirect } from 'next/navigation';
 import type { Metadata, ResolvingMetadata } from 'next';
+import CookingLanding from '@/components/cooking/CookingLanding';
 
 type Props = {
   params: Promise<{ lang: "en" | "fr" }>;
@@ -60,8 +61,6 @@ export default async function Page() {
 	const t = await getDictionary(lang);
 	
 	return (
-		<div className="">
-			<Hero dictionary={t.landing.hero}/>
-		</div>
+			<CookingLanding />
 	);
 }
