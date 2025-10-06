@@ -6,5 +6,5 @@ export default async function Home() {
     // get locale from cookies
     const lang = (await cookies()).get('NEXT_LOCALE')?.value ?? 'en';
     
-    redirect(`/${lang}`);
+    redirect(`/${lang}/cooking`);
 }

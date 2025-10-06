@@ -138,6 +138,35 @@
   *, *::before, *::after {
     box-sizing: border-box;
   }
+
+    .bubble-text-char {
+    transition: 0.35s font-weight, 0.35s color;
+  }
+
+  .bubble-text-char:hover {
+    font-weight: 900;
+    color: rgb(238, 242, 255);
+  }
+
+  /* To the right */
+  .bubble-text-char:hover + .bubble-text-char {
+    font-weight: 500;
+    color: rgb(199, 210, 254);
+  }
+
+  .bubble-text-char:hover + .bubble-text-char + .bubble-text-char {
+    font-weight: 300;
+  }
+
+  /* To the left */
+  .bubble-text-char:has(+ .bubble-text-char:hover) {
+    font-weight: 500;
+    color: rgb(199, 210, 254);
+  }
+
+  .bubble-text-char:has(+ .bubble-text-char + .bubble-text-char:hover) {
+    font-weight: 300;
+  }
 }
 
 
