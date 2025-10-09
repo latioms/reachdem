@@ -67,7 +67,7 @@ export async function POST(request: NextRequest) {
       try {
         const resend = new Resend(resendApiKey);
         await resend.emails.send({
-          from: "ReachDem Newsletter <updates@reachdem.cc>",
+          from: "ReachDem Newsletter <register@updates.reachdem.cc>",
           to: [resendRecipient],
           subject: "Nouvelle inscription à la newsletter",
           html: `
