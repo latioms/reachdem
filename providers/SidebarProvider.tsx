@@ -28,10 +28,13 @@ export const Sidebar = ({
   const isLoginPage = pathname === '/login';
 
   const renderBreadcrumbs = () => {
-    return pathname
+    const locales = ['en', 'fr'];
+    const segments = pathname
       .split('/')
       .filter(Boolean)
-      .map((path, index, array) => (
+      .filter((segment) => !locales.includes(segment));
+
+    return segments.map((path, index, array) => (
         <React.Fragment key={path}>
           <BreadcrumbItem className="hidden md:block">
             {index === array.length - 1 ? (

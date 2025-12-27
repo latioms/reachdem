@@ -27,12 +27,12 @@ export default async function RootLayout({
   params,
 }: Readonly<{
   children: React.ReactNode;
-  params: Promise<{ locale: 'en' | 'fr' }>;
+  params: Promise<{ locale: string }>;
 }>) {
 
   const { isAuthenticated } = await checkAuth()
   const { locale } = await params;
-  const dictionary = await getDictionary(locale);
+  const dictionary = await getDictionary(locale as 'en' | 'fr');
   return (
     <html lang={locale} className={`${GeistSans.variable} ${GeistMono.variable}`} suppressHydrationWarning>
       <head>
