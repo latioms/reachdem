@@ -2,7 +2,6 @@ import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import AuthWrapper from "@/components/AuthWrapper";
 import NavBar from "@/components/Layout/Navbar";
-import { Footer } from "@/components/Landing/Footer";
 import { Toaster } from "sonner";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 import { AnalyticsProvider } from "@/providers/AnalyticsProvider";
@@ -54,7 +53,6 @@ export default async function RootLayout({
                 <>
                   <NavBar dictionary={dictionary.landing.nav} />
                   <main>{children}</main>
-                  <Footer />
                 </>
               )}
               {isAuthenticated && (
