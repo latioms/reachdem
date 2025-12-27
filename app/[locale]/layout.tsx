@@ -8,6 +8,7 @@ import { ThemeProvider } from "@/providers/ThemeProvider";
 import { AnalyticsProvider } from "@/providers/AnalyticsProvider";
 import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
 import { AnalyticsStatus } from "@/components/ui/mixpanel-status";
+import { Analytics } from "@vercel/analytics/next";
 import "../globals.css";
 import checkAuth from "../actions/chechAuth";
 import { Sidebar } from "@/providers/SidebarProvider";
@@ -40,15 +41,15 @@ export default async function RootLayout({
       </head>
       <body className="overflow-x-hidden w-full" suppressHydrationWarning>
         <GoogleAnalytics measurementId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
-        <ThemeProvider 
-          attribute="class" 
-          defaultTheme="system" 
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
           <AnalyticsProvider>
             <AuthWrapper>
-              <Toaster richColors />              
+              <Toaster richColors />
               {!isAuthenticated && (
                 <>
                   <NavBar dictionary={dictionary.landing.nav} />
@@ -60,11 +61,12 @@ export default async function RootLayout({
                 <Sidebar dictionary={dictionary}>
                   <main className="container mx-auto p-4">{children}</main>
                 </Sidebar>
-              )}            
-              </AuthWrapper>
+              )}
+            </AuthWrapper>
             <AnalyticsStatus />
           </AnalyticsProvider>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );

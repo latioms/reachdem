@@ -30,6 +30,7 @@
     "@react-email/components": "^0.1.0",
     "@types/lodash": "^4.17.18",
     "@types/qrcode": "^1.5.5",
+    "@vercel/analytics": "^1.6.1",
     "appwrite": "^17.0.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
