@@ -73,6 +73,12 @@ export default function Navbar({ dictionary }: NavbarProps) {
                     {t.login || 'Login'}
                   </button>
                 </Link>
+                {/* Get Started Button */}
+                <Link href="/register" className="transition-opacity duration-300 opacity-100">
+                  <button className="inline-flex items-center justify-center whitespace-nowrap rounded-sm text-sm font-semibold transition-colors focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow-xs hover:bg-primary/90 h-9 px-4 py-2">
+                    {t.getStarted || 'Get Started'}
+                  </button>
+                </Link>
               </>
             ) : (
               /* User Popover Button */
@@ -132,7 +138,7 @@ export default function Navbar({ dictionary }: NavbarProps) {
           {!isLoggedIn ? (
             <>
               <Link href="/login" className="text-primary p-2 font-normal text-lg dark:text-white">{t.login || 'Login'}</Link>
-              <Link href="/signup" className="text-primary p-2 font-normal text-lg dark:text-white">{t.signup || 'Sign Up'}</Link>
+              <Link href="/register" className="bg-primary text-primary-foreground rounded-sm p-2 font-semibold text-lg text-center">{t.getStarted || 'Get Started'}</Link>
             </>
           ) : (
             <>
