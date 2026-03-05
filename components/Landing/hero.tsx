@@ -1,10 +1,7 @@
 "use client"
 
-import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, CheckCircle, MessageSquare } from "lucide-react"
-import { IntroDisclosure } from "@/components/ui/intro-disclosure"
-import { steps } from "@/constants/steps"
+import { ArrowRight, CheckCircle } from "lucide-react"
 import Link from "next/link"
 
 interface HeroProps {
@@ -12,18 +9,6 @@ interface HeroProps {
 }
 
 export default function Hero({dictionary}: HeroProps) {
-	const [showGuide, setShowGuide] = useState(false)
-
-	useEffect(() => {
-		// Vérifier si c'est la première visite
-		const hasVisited = localStorage.getItem("has_visited_before")
-		if (!hasVisited) {
-			// Si c'est la première visite, montrer le guide et marquer comme visité
-			setShowGuide(true)
-			localStorage.setItem("has_visited_before", "true")
-		}
-	}, [])
-
 	return (
 		<div className="min-h-screen bg-background">
 			<div className="container mx-auto px-4 lg:px-24 py-16 md:py-24 lg:py-20">
@@ -46,10 +31,6 @@ export default function Hero({dictionary}: HeroProps) {
 								<Link href="/register">{dictionary.startButton}</Link>
 								<ArrowRight className="ml-2 h-4 w-4" />
 							</Button>
-							<Button size="lg" variant="outline" onClick={() => setShowGuide(true)}>
-								{dictionary.starTour}
-								<MessageSquare className="ml-2 h-4 w-4" />
-							</Button>
 						</div>
 						<div className="flex items-center gap-4 text-sm text-muted-foreground">
 							<div className="flex items-center">
@@ -69,21 +50,6 @@ export default function Hero({dictionary}: HeroProps) {
 					</div>
 				</div>
 			</div>
-
-			{/* Guide interactif */}
-			<IntroDisclosure
-				steps={steps}
-				open={showGuide}
-				setOpen={setShowGuide}
-				featureId="main-tour"
-				showProgressBar={true}
-				onComplete={() => {
-					console.log("Tour completed")
-				}}
-				onSkip={() => {
-					console.log("Tour skipped")
-				}}
-			/>
 		</div>
 	)
 }

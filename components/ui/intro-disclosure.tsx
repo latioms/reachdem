@@ -150,6 +150,28 @@ interface Step {
   }
 }
 
+interface IntroDisclosureLabels {
+  title?: string
+  skipAll?: string
+  previous?: string
+  next?: string
+  done?: string
+  dontShowAgain?: string
+  stepOf?: (current: number, total: number) => string
+  swipeToNavigate?: string
+}
+
+const defaultLabels: Required<IntroDisclosureLabels> = {
+  title: "Découvrez ReachDem",
+  skipAll: "Passer",
+  previous: "Précédent",
+  next: "Suivant",
+  done: "Terminer",
+  dontShowAgain: "Ne plus afficher",
+  stepOf: (current, total) => `Étape ${current} sur ${total}`,
+  swipeToNavigate: "Glissez pour naviguer",
+}
+
 interface IntroDisclosureProps {
   steps: Step[]
   featureId: string
@@ -158,6 +180,7 @@ interface IntroDisclosureProps {
   showProgressBar?: boolean
   open: boolean
   setOpen: (open: boolean) => void
+  labels?: IntroDisclosureLabels
 }
 
 function StepContent({
@@ -172,6 +195,7 @@ function StepContent({
   direction,
   stepRef,
   isMobile = false,
+  labels = defaultLabels,
 }: {
   steps: Step[]
   currentStep: number
@@ -184,7 +208,9 @@ function StepContent({
   direction: 1 | -1
   stepRef: React.RefObject<HTMLButtonElement>
   isMobile?: boolean
+  labels?: IntroDisclosureLabels
 }) {
+  const l = { ...defaultLabels, ...labels }
   const [skipNextTime, setSkipNextTime] = React.useState(false)
 
   const renderActionButton = (action: Step["action"]) => {
@@ -216,7 +242,7 @@ function StepContent({
         <div className="border-b p-4">
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm text-muted-foreground">
-              Step {currentStep + 1} of {steps.length}
+              {l.stepOf(currentStep + 1, steps.length)}
             </span>
             <Progress value={((currentStep + 1) / steps.length) * 100} className="h-1 w-20" />
           </div>
@@ -291,7 +317,7 @@ function StepContent({
 
               {/* Swipe indicator */}
               <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-xs text-muted-foreground opacity-50">
-                Swipe to navigate
+                {l.swipeToNavigate}
               </div>
             </motion.div>
           </AnimatePresence>
@@ -308,12 +334,12 @@ function StepContent({
         <div className="p-4 border-t bg-muted/30">
           <div className="flex items-center justify-between mb-4">
             <Button variant="ghost" onClick={onSkip} className="text-muted-foreground">
-              Skip all
+              {l.skipAll}
             </Button>
             <div className="flex gap-2">
               {currentStep > 0 && (
                 <Button onClick={onPrevious} size="sm" variant="outline">
-                  Previous
+                  {l.previous}
                 </Button>
               )}
               <Button
@@ -326,7 +352,7 @@ function StepContent({
                 size="sm"
                 ref={stepRef}
               >
-                {currentStep === steps.length - 1 ? "Done" : "Next"}
+                {currentStep === steps.length - 1 ? l.done : l.next}
               </Button>
             </div>
           </div>
@@ -345,7 +371,7 @@ function StepContent({
                     ? "bg-primary/60"
                     : "bg-muted-foreground/30"
                 )}
-                aria-label={`Go to step ${index + 1}`}
+                aria-label={`Aller à l'étape ${index + 1}`}
                 whileHover={{ scale: 1.2 }}
                 whileTap={{ scale: 0.9 }}
               />
@@ -354,12 +380,12 @@ function StepContent({
 
           <div className="flex items-center justify-center space-x-2">
             <Checkbox
-              id="skipNextTime"
+              id="skipNextTimeMobile"
               checked={skipNextTime}
               onCheckedChange={(checked) => setSkipNextTime(checked as boolean)}
             />
-            <label htmlFor="skipNextTime" className="text-sm text-muted-foreground">
-              Don&rsquo;t show this again
+            <label htmlFor="skipNextTimeMobile" className="text-sm text-muted-foreground">
+              {l.dontShowAgain}
             </label>
           </div>
         </div>
@@ -398,12 +424,12 @@ function StepContent({
           {/* Navigation buttons */}
           <div className="flex items-center justify-between pr-4">
             <Button variant="ghost" onClick={onSkip} className="text-muted-foreground hover:bg-card rounded-full">
-              Skip all
+              {l.skipAll}
             </Button>
             <div className="space-x-2">
               {currentStep > 0 && (
                 <Button onClick={onPrevious} size="sm" variant="ghost" className="rounded-full hover:bg-transparent">
-                  Previous
+                  {l.previous}
                 </Button>
               )}
               <Button
@@ -417,18 +443,18 @@ function StepContent({
                 ref={stepRef}
                 className="rounded-full"
               >
-                {currentStep === steps.length - 1 ? "Done" : "Next"}
+                {currentStep === steps.length - 1 ? l.done : l.next}
               </Button>
             </div>
           </div>
           <div className="flex items-center space-x-2 pb-4 px-4">
             <Checkbox
-              id="skipNextTime"
+              id="skipNextTimeDesktop"
               checked={skipNextTime}
               onCheckedChange={(checked) => setSkipNextTime(checked as boolean)}
             />
-            <label htmlFor="skipNextTime" className="text-sm text-muted-foreground">
-              Don&rsquo;t show this again
+            <label htmlFor="skipNextTimeDesktop" className="text-sm text-muted-foreground">
+              {l.dontShowAgain}
             </label>
           </div>
         </motion.div>
@@ -445,7 +471,9 @@ export function IntroDisclosure({
   onComplete,
   onSkip,
   showProgressBar = true,
+  labels,
 }: IntroDisclosureProps) {
+  const l = { ...defaultLabels, ...labels }
   const [currentStep, setCurrentStep] = React.useState(0)
   const [completedSteps, setCompletedSteps] = React.useState<number[]>([0])
   const [direction, setDirection] = React.useState<1 | -1>(1)
@@ -529,8 +557,8 @@ export function IntroDisclosure({
           onKeyDown={handleKeyDown}
         >
           <SheetHeader className="sr-only">
-            <SheetTitle>Feature Tour</SheetTitle>
-            <SheetDescription>Interactive tour of features</SheetDescription>
+            <SheetTitle>{l.title}</SheetTitle>
+            <SheetDescription>{l.title}</SheetDescription>
           </SheetHeader>
           
           <StepContent
@@ -545,6 +573,7 @@ export function IntroDisclosure({
             direction={direction}
             stepRef={stepRef}
             isMobile={true}
+            labels={l}
           />
         </SheetContent>
       </Sheet>
@@ -556,7 +585,7 @@ export function IntroDisclosure({
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="max-w-5xl p-0 gap-0 overflow-hidden" onKeyDown={handleKeyDown}>
         <DialogHeader className="p-6 space-y-2 bg-muted border-b border-border">
-          <DialogTitle>Feature Tour</DialogTitle>
+          <DialogTitle>{l.title}</DialogTitle>
           {showProgressBar && (
             <div className="flex mt-2 w-full justify-center">
               <Progress value={((currentStep + 1) / steps.length) * 100} className="h-1" />
@@ -578,6 +607,7 @@ export function IntroDisclosure({
               direction={direction}
               stepRef={stepRef}
               isMobile={false}
+              labels={l}
             />
           </div>
           <AnimatePresence mode="wait" initial={false}>

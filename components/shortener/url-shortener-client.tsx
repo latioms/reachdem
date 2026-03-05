@@ -86,15 +86,19 @@ export function UrlShortenerClient({ dictionary: t }: UrlShortenerClientProps) {
     }
   };
 
+  const [deletingSlug, setDeletingSlug] = useState<string | null>(null);
+
   const handleDelete = async (slug: string) => {
     if (!confirm(t.deleteConfirm)) return;
+    setDeletingSlug(slug);
     try {
       await deleteShortLink(slug);
-      persistLinks(links.filter((l) => l.slug !== slug));
-      toast.success("Lien supprimé");
     } catch {
-      toast.error("Erreur lors de la suppression");
+      // API delete may fail but we still clean up locally
     }
+    persistLinks(links.filter((l) => l.slug !== slug));
+    toast.success("Lien supprimé");
+    setDeletingSlug(null);
   };
 
   const copyToClipboard = (text: string) => {
@@ -215,8 +219,13 @@ export function UrlShortenerClient({ dictionary: t }: UrlShortenerClientProps) {
                       size="icon"
                       className="h-7 w-7 text-destructive hover:text-destructive"
                       onClick={() => handleDelete(link.slug)}
+                      disabled={deletingSlug === link.slug}
                     >
-                      <Trash2 className="h-3.5 w-3.5" />
+                      {deletingSlug === link.slug ? (
+                        <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                      ) : (
+                        <Trash2 className="h-3.5 w-3.5" />
+                      )}
                     </Button>
                   </TableCell>
                 </TableRow>
