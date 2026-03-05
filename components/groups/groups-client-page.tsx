@@ -5,9 +5,11 @@ import { GroupList, GroupSearch, DialogAddGroup } from "@/components/groups"
 import { Button } from "@/components/ui/button"
 import { Plus, UsersRound, RefreshCw } from "lucide-react"
 import { getGroups } from "@/app/actions/mail/groups/getGroups"
+import { deleteGroup } from "@/app/actions/mail/groups/deleteGroup"
 import { getContactsCountByGroup } from "@/app/actions/mail/group-contacts/getContactsCountByGroup"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useSearchDebounce } from "@/hooks/use-search-debounce"
+import { toast } from "sonner"
 import type { Group } from "@/components/groups/group-list"
 
 interface GroupsClientPageProps {
@@ -87,8 +89,25 @@ export function GroupsClientPage({ dictionary }: GroupsClientPageProps) {
   }
 
   const handleDeleteGroup = async (groupId: string) => {
-    // TODO: Implémenter la suppression
-    console.log("Delete group:", groupId)
+    if (!window.confirm(dictionary?.groups?.deleteConfirmMessage || "Êtes-vous sûr de vouloir supprimer ce groupe ?")) {
+      return
+    }
+
+    try {
+      const result = await deleteGroup(groupId)
+
+      if (result.error) {
+        toast.error(result.error)
+        return
+      }
+
+      toast.success(dictionary?.groups?.deleteSuccess || "Groupe supprimé avec succès")
+      // Refresh the list after deletion
+      fetchGroups()
+    } catch (error) {
+      console.error("Error deleting group:", error)
+      toast.error(dictionary?.groups?.deleteError || "Une erreur s'est produite lors de la suppression du groupe")
+    }
   }
 
   const handleEditGroup = (group: Group) => {

@@ -21,7 +21,7 @@ import { Trash2, Check, UsersRound, Edit, Loader2, ArrowLeft } from "lucide-reac
 import { updateGroup, deleteGroup } from "@/app/actions/mail/groups"
 import { removeContactFromGroup } from "@/app/actions/mail/group-contacts"
 import { toast } from "sonner"
-import { useRouter } from "next/navigation"
+import { useRouter, useParams } from "next/navigation"
 import type { Contact, Group } from "@/types/schema"
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
@@ -39,6 +39,8 @@ interface GroupDetailPageProps {
 
 export function GroupDetailPage({ group, contacts, dictionary }: GroupDetailPageProps) {
   const router = useRouter()
+  const params = useParams()
+  const locale = params?.locale || 'en'
   const t = dictionary?.groups || {}
   const [isEditing, setIsEditing] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
@@ -101,7 +103,7 @@ export function GroupDetailPage({ group, contacts, dictionary }: GroupDetailPage
       
       toast.success("Groupe supprimé avec succès")
       // Navigate back to groups list
-      router.push(`/groups`)
+      router.push(`/${locale}/groups`)
     } catch (error) {
       console.error("Error deleting group:", error)
       toast.error("Une erreur s'est produite lors de la suppression du groupe")
