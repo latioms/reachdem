@@ -45,7 +45,8 @@
         "campaigns": "Campaigns",
         "history": "History",
         "projects": "Projects",
-        "billing": "Billing"
+        "billing": "Billing",
+        "shortener": "URL Shortener"
       }
     },
     "platform": {

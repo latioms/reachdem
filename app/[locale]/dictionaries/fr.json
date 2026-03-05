@@ -48,7 +48,8 @@
         "campaigns": "Campagnes",
         "history": "Historiques",
         "projects": "Projets",
-        "billing": "Facturation"
+        "billing": "Facturation",
+        "shortener": "Raccourcisseur"
       }
     },
     "platform": {

@@ -8,7 +8,8 @@ import {
   Info,
   Settings,
   User, 
-  Users
+  Users,
+  Link2
 } from "lucide-react";
 
 interface DictionaryType {
@@ -28,6 +29,7 @@ interface DictionaryType {
         history: string;
         projects: string;
         billing: string;
+        shortener: string;
       };
     };
     platform: {
@@ -92,6 +94,12 @@ export const getSidebarData = (dictionary: DictionaryType) => {
             url: "/billing",
             icon: CreditCard,
             active: true
+          },
+          {
+            title: dictionary.sidebar.SMS.items.shortener || "URL Shortener",
+            url: "/shortener",
+            icon: Link2,
+            active: true
           }
         ]
       },
@@ -138,7 +146,8 @@ export const data = {
         { title: "Campagnes", url: "/campaigns", icon: MessageSquare, active: true },
         { title: "Historiques", url: "/history", icon: History, active: true },
         { title: "Projets", url: "/projects", icon: FolderDot, active: true },
-        { title: "Facturation", url: "/billing", icon: CreditCard, active: true }
+        { title: "Facturation", url: "/billing", icon: CreditCard, active: true },
+        { title: "Raccourcisseur", url: "/shortener", icon: Link2, active: true }
       ],
     },
     {
