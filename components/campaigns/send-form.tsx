@@ -132,7 +132,7 @@ export default function SMSForm({ dictionary }: SendFormProps) {
         phones.map(async (phone) => {
           const smsResp = await sendSMSAction(selectedProject.sender_name, data.message, phone)
           await decreaseSMSCredit(selectedProject.id, 1)
-          await storeMessage(currentUser?.id!, data.message, phone, smsResp?.response?.message)
+          await storeMessage(currentUser?.id!, data.message, phone, smsResp?.response?.message ?? "")
           return smsResp
         })
       ),
