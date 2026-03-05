@@ -12,7 +12,7 @@ export async function sendSMSAction(sender: string, message: string, phone: stri
     try {
         const response = await sendSMS(senderName, message, phone);
 
-        if (response.success === true || response.message === "SUCCESS") {
+        if (response.success) {
             return {
                 response: {
                     message: response.message,

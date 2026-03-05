@@ -172,10 +172,10 @@ export const sendSMSToContact = async (
     
     console.log(`Envoi SMS à ${contact.phone} depuis ${finalSenderName}: ${message}`);
     
-    // Envoyer le SMS via l'API MBOA
+    // Envoyer le SMS via l'adapter configuré
     const response = await sendSMS(finalSenderName, message, contact.phone);
     
-    if (response.success === true || response.message === "SUCCESS") {
+    if (response.success) {
       return { success: true };
     } else {
       return { 
