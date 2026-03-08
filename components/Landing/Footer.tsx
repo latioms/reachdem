@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { FaFacebook, FaLinkedin, FaXTwitter, FaTelegram } from "react-icons/fa6";
+import { Input } from "@/components/ui/input";
 import LocaleSwitcher from "../ui/LocaleSwitcher";
 
 const navigation = [
@@ -67,12 +68,12 @@ export const Footer = () => {
 
 						{/* Newsletter */}
 						<div className="mt-6 flex flex-col gap-3 sm:flex-row">
-							<input
+							<Input
 								type="email"
 								placeholder="Your email&hellip;"
 								autoComplete="email"
 								spellCheck={false}
-								className="h-11 flex-1 rounded-xl border border-white/10 bg-white/5 px-4 text-sm text-white placeholder:text-white/30 outline-none transition-colors focus:border-primary focus-visible:ring-2 focus-visible:ring-primary/20"
+								className="h-11 flex-1 rounded-xl border-white/10 bg-white/5 px-4 py-2 text-sm text-white placeholder:text-white/30 focus-visible:ring-primary/20"
 							/>
 							<button
 								type="button"
