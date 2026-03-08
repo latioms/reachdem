@@ -1,7 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 
-const LOGOS = [
+const LOGOS: { src: string; alt: string; height: string; width?: string; external?: boolean }[] = [
 	{
 		src: 'Orange.png',
 		alt: "Orange Cameroon",
@@ -16,6 +16,13 @@ const LOGOS = [
 		src: 'lowejo.svg',
 		alt: "Lowejo",
 		height: "h-7"
+	},
+	{
+		src: 'https://eleven-public-cdn.elevenlabs.io/payloadcms/pwsc4vchsqt-ElevenLabsGrants.webp',
+		alt: "ElevenLabs",
+		height: "h-8",
+		width: "w-36",
+		external: true,
 	},
 ];
 
@@ -36,14 +43,27 @@ export default function Logos({ dictionary }: LogosProps) {
 				>
 					<div className="flex animate-marquee items-center gap-20 w-max">
 						{[...LOGOS, ...LOGOS, ...LOGOS, ...LOGOS].map((logo, index) => (
-							<Image
-								key={index}
-								src={`/images/${logo.src}`}
-								alt={logo.alt}
-								width={100}
-								height={60}
-								className={`${logo.height} shrink-0 opacity-40 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0`}
-							/>
+							logo.external ? (
+								/* eslint-disable-next-line @next/next/no-img-element */
+								<img
+									key={index}
+									src={logo.src}
+									alt={logo.alt}
+									width={144}
+									height={36}
+									loading="lazy"
+									className={`${logo.height} ${logo.width ?? ''} object-contain shrink-0 opacity-40 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0 dark:invert`}
+								/>
+							) : (
+								<Image
+									key={index}
+									src={`/images/${logo.src}`}
+									alt={logo.alt}
+									width={100}
+									height={60}
+									className={`${logo.height} shrink-0 opacity-40 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0 dark:invert`}
+								/>
+							)
 						))}
 					</div>
 				</div>

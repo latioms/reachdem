@@ -132,7 +132,7 @@ export const Footer = () => {
 								width={180}
 								height={48}
 								loading="lazy"
-								className="h-10 w-auto"
+								className="h-10 w-auto invert brightness-200"
 							/>
 						</a>
 
