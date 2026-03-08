@@ -1,7 +1,9 @@
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
+import { Syne } from "next/font/google";
 import AuthWrapper from "@/components/AuthWrapper";
 import NavBar from "@/components/Layout/Navbar";
+import { Footer } from "@/components/Landing/Footer";
 import { Toaster } from "sonner";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 import { AnalyticsProvider } from "@/providers/AnalyticsProvider";
@@ -16,6 +18,12 @@ import { getDictionary } from "./dictionaries";
 // Force dynamic rendering since we use cookies for authentication
 export const dynamic = 'force-dynamic'
 
+const syne = Syne({
+  subsets: ["latin"],
+  variable: "--font-syne",
+  display: "swap",
+  weight: ["400", "500", "600", "700", "800"],
+});
 
 export async function generateStaticParams() {
   return [{ locale: "en" }, { locale: "fr" }];
@@ -34,7 +42,7 @@ export default async function RootLayout({
   const { locale } = await params;
   const dictionary = await getDictionary(locale as 'en' | 'fr');
   return (
-    <html lang={locale} className={`${GeistSans.variable} ${GeistMono.variable}`} suppressHydrationWarning>
+    <html lang={locale} className={`${GeistSans.variable} ${GeistMono.variable} ${syne.variable}`} suppressHydrationWarning>
       <head>
         <meta name="facebook-domain-verification" content="scys6nt50s3yllrgoz9gfen1bv217d" />
       </head>
@@ -53,6 +61,7 @@ export default async function RootLayout({
                 <>
                   <NavBar dictionary={dictionary.landing.nav} />
                   <main>{children}</main>
+                  <Footer />
                 </>
               )}
               {isAuthenticated && (

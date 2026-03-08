@@ -1,6 +1,10 @@
 import { getLang } from '@/lib/lang';
 import { getDictionary } from './dictionaries';
 import Hero from '@/components/Landing/hero';
+import Logos from '@/components/Landing/logos';
+import Features from '@/components/Landing/Features';
+import HowItWorks from '@/components/Landing/HowItWorks';
+import CTA from '@/components/Landing/CTA';
 import checkAuth from '../actions/chechAuth';
 import { redirect } from 'next/navigation';
 import type { Metadata, ResolvingMetadata } from 'next';
@@ -60,8 +64,12 @@ export default async function Page() {
 	const t = await getDictionary(lang);
 	
 	return (
-		<div className="">
-			<Hero dictionary={t.landing.hero}/>
+		<div>
+			<Hero dictionary={t.landing.hero} />
+			<Logos dictionary={t.landing.logos} />
+			<Features />
+			<HowItWorks />
+			<CTA />
 		</div>
 	);
 }
