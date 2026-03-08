@@ -73,7 +73,7 @@ export const Footer = () => {
 								placeholder="Your email&hellip;"
 								autoComplete="email"
 								spellCheck={false}
-								className="h-11 flex-1 rounded-xl border-white/10 bg-white/5 px-4 py-2 text-sm text-white placeholder:text-white/30 focus-visible:ring-primary/20"
+								className="h-11 flex-1 rounded-md border-white/10 bg-white/5 px-4 py-2 text-sm text-white placeholder:text-white/30 focus-visible:ring-primary/20"
 							/>
 							<button
 								type="button"
